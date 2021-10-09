@@ -1,0 +1,25 @@
+{
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "eslint.validate": ["javascript"],
+    "editor.formatOnPaste": false,
+    "editor.formatOnSave": true,
+    "[javascript]": {
+        "editor.formatOnSave": true,
+        "editor.tabSize": 2
+    },
+    "[html]": {
+        "editor.formatOnSave": false,
+    },
+    "[json]": {
+        "editor.formatOnSave": false,
+    },
+    "[jsx]": {
+        "editor.tabSize": 2
+    },
+    "[react]": {
+        "editor.tabSize": 2
+    },
+    "eslint.alwaysShowStatus": true
+}

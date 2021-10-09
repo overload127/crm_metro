@@ -1,0 +1,44 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "airbnb",
+        "prettier"
+    ],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "parser": "babel-eslint",
+    "plugins": [
+        "react",
+        "prettier"
+    ],
+    "rules": {
+        "no-console": "off",
+        "no-debugger": "off",
+        "jsx-quotes": [
+            1,
+            "prefer-double"
+        ],
+        "semi": ["error", "always"],
+        // "react/jsx-props-no-spreading": [{
+        //     "exceptions": ["DropdownIndicator"]
+        // }]
+
+        "react/jsx-props-no-spreading": ["error", {
+            "html": "ignore",
+            "custom": "ignore",
+            "exceptions": [""]
+        }]
+    }
+    // "react/jsx-props-no-spreading": [{
+    //     "exceptions": ["DropdownIndicator"]
+    // }]
+}
