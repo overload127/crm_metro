@@ -142,6 +142,15 @@ dmypy.json
 # pickle file tmp
 *.pkl
 
+# python loading files
+media
+
+# python migration for bd
+migrations
+
+logging/
+
+secrets_settings.py
 
 ################################################################################################
 # Настройки для веб клиента
