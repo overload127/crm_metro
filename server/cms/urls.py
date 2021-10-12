@@ -1,19 +1,18 @@
-# from django.urls import path
+from django.urls import path
 from . import views
 
 from rest_framework.routers import DefaultRouter
 
 
 router = DefaultRouter()
-router.register(r'advanced_user', views.ProfileUserViewSet, basename='advanced_user')
+# router.register(r'advanced_user', views.ProfileUserViewSet, basename='advanced_user')
 
 app_name = 'api_cms'
 urlpatterns = router.urls
 
-# urlpatterns = [
-#     path(
-#         'user/',
-#         views.UserViewSet,
-#         name='user'
-#     ),
-# ]
+urlpatterns += [
+    # path('current_user/', views.current_user),
+    # path('users/', views.UserList.as_view()),
+    path('public_test/', views.public_test.as_view()),
+    path('private_test/', views.private_test.as_view())
+]
