@@ -4,25 +4,23 @@ import PropTypes from "prop-types";
 import { NavLink } from 'react-router-dom';
 
 
-function GuestNavLink({ isAuth, props }) {
+function GuestNavLink({ isAuth, ...props }) {
   if(isAuth) {
     return <></>;
   }
-  return (<li><NavLink {...props}  /></li>);
+  return (<NavLink {...props}  />);
 }
 
 GuestNavLink.propTypes = {
   isAuth: PropTypes.bool.isRequired,
-  props: PropTypes.shape({}).isRequired,
 };
 
 GuestNavLink.defaultProps = {
 };
 
-function mapStateToProps( state, props ) {
+function mapStateToProps( state ) {
   return {
-    isAuth: state.auth.isAuth,
-    props
+    isAuth: state.auth.isAuth
   };
 }
 

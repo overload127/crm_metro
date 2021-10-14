@@ -4,11 +4,14 @@ import {
 import AuthService from '../../api/AuthService';
 import {
   setIsAuthLogin,
-  setIsAuthLogout
+  setIsAuthLogout,
+  setProcessAuthStart,
+  setProcessAuthEnd,
 } from './actions';
 
 
 export const login = (username, password) => (dispatch) => {
+  dispatch(setProcessAuthStart());
   AuthService.login(username, password)
     .then(response => {
       localStorage.setItem('token', response.data.auth_token);
@@ -24,6 +27,9 @@ export const login = (username, password) => (dispatch) => {
         draggable: true,
       });
     });
+  setTimeout(() => {
+    dispatch(setProcessAuthEnd());
+  }, 2000);
 };
 
 
@@ -35,5 +41,15 @@ export const logout = () => (dispatch) => {
     .catch(() => {
       localStorage.setItem('token', '');
     });
+
+  toast.info('Вы успешно вышли из системы.', {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+  });
+
   dispatch(setIsAuthLogout());
 };

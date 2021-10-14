@@ -8,7 +8,7 @@ function Main() {
   return (
     <div>
       <h1>Вход</h1>
-      <LoginFormContainer />
+        <LoginFormContainer />
     </div>
   );
 }

@@ -1,21 +1,21 @@
-export const AUTH_SET_IS_AUTH = 'AUTH_SET_IS_AUTH';
-export const AUTH_SET_NEXT_URL = 'AUTH_SET_NEXT_URL';
+export const AUTH_SET_IS_AUTH_LOGIN = 'AUTH_SET_IS_AUTH';
+export const AUTH_SET_IS_AUTH_LOGOUT = 'AUTH_SET_IS_AUTH_LOGOUT';
+export const AUTH_SET_PROCESS_AUTH_START = 'AUTH_SET_PROCESS_AUTH_START';
+export const AUTH_SET_PROCESS_AUTH_END = 'AUTH_SET_PROCESS_AUTH_END';
 
-
-export const setIsAuth = (value) => ({
-  type: AUTH_SET_IS_AUTH,
-  value,
-});
 
 export const setIsAuthLogin = () => ({
-  ...setIsAuth(true),
+  type: AUTH_SET_IS_AUTH_LOGIN,
 });
 
 export const setIsAuthLogout = () => ({
-  ...setIsAuth(false),
+  type: AUTH_SET_IS_AUTH_LOGOUT,
 });
 
-export const setNextUrl = (url) => ({
-  type: AUTH_SET_NEXT_URL,
-  url,
+export const setProcessAuthStart = () => ({
+  type: AUTH_SET_PROCESS_AUTH_START,
+});
+
+export const setProcessAuthEnd = () => ({
+  type: AUTH_SET_PROCESS_AUTH_END,
 });

@@ -38,10 +38,9 @@ AuthRoute.propTypes = {
 AuthRoute.defaultProps = {
 };
 
-function mapStateToProps( state, props ) {
+function mapStateToProps( state ) {
   return {
-    isAuth: state.auth.isAuth,
-    props
+    isAuth: state.auth.isAuth
   };
 }
 

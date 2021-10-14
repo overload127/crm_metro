@@ -5,12 +5,12 @@ import { Route, Redirect, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 
-function GuestRoute({ isAuth, ...props }) {
+function GuestRoute({ isAuth, processAuth, ...props }) {
   if(isAuth) {
     const location = useLocation();
-    if(location.pathname === "/login") {
+    if(!processAuth) {
       useEffect(() => {
-        toast.info('Вы уже авторизованы.', {
+        toast.info(`Страница [${location.pathname}] доступна только не авторизоавным пользователям.`, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -20,7 +20,6 @@ function GuestRoute({ isAuth, ...props }) {
         });
       }, []);
     }
-    
     return <Redirect to={{ pathname: "/", state: { from: location } }} />;
   }
   return (<Route {...props} />);
@@ -28,15 +27,16 @@ function GuestRoute({ isAuth, ...props }) {
 
 GuestRoute.propTypes = {
   isAuth: PropTypes.bool.isRequired,
+  processAuth: PropTypes.bool.isRequired,
 };
 
 GuestRoute.defaultProps = {
 };
 
-function mapStateToProps( state, props ) {
+function mapStateToProps( state ) {
   return {
     isAuth: state.auth.isAuth,
-    props
+    processAuth: state.auth.processAuth,
   };
 }
 
