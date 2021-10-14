@@ -6,8 +6,8 @@ import { toast } from 'react-toastify';
 
 
 function GuestRoute({ isAuth, ...props }) {
-  const location = useLocation();
   if(isAuth) {
+    const location = useLocation();
     if(location.pathname === "/login") {
       useEffect(() => {
         toast.info('Вы уже авторизованы.', {
@@ -20,6 +20,7 @@ function GuestRoute({ isAuth, ...props }) {
         });
       }, []);
     }
+    
     return <Redirect to={{ pathname: "/", state: { from: location } }} />;
   }
   return (<Route {...props} />);
