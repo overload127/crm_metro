@@ -40,7 +40,6 @@ class public_test(APIView):
         return Response({"details": "public_test"}, status=status.HTTP_200_OK)
 
 
-
 class private_test(APIView):
     """
     """
@@ -51,3 +50,16 @@ class private_test(APIView):
         # q = TPTypeWork.objects.all()
         # serializer = TPTypeWorkSerializers(q)
         return Response({"details": "private_test"}, status=status.HTTP_200_OK)
+
+
+class WikiTP(APIView):
+    """Возвращает все варианты техпроцессов"""
+
+    permission_classes = (permissions.AllowAny,)
+
+    def get(self, request):
+        queryset = TPTypeWork.objects.all()
+        queryset = queryset.values('id', 'code', 'name', 'du46')
+        
+        serializer = TPTypeWorkSerializers(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

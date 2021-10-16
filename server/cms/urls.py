@@ -14,5 +14,6 @@ urlpatterns += [
     # path('current_user/', views.current_user),
     # path('users/', views.UserList.as_view()),
     path('public_test/', views.public_test.as_view()),
-    path('private_test/', views.private_test.as_view())
+    path('private_test/', views.private_test.as_view()),
+    path('wiki/tp/', views.WikiTP.as_view(), name='wiki_get_tp'),
 ]
