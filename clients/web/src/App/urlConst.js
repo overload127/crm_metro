@@ -1,6 +1,6 @@
 import PageMain from '../pages/Main/Main';
 import PageWiki from '../pages/Wiki/Wiki';
-import PageWikiTP from '../pages/WikiTP/WikiTP';
+import PageWikiTP from '../pages/WikiTP/WikiTPContainer';
 
 import PageLogin from '../pages/Login/Login';
 import PageLogout from '../pages/Logout/Logout';
