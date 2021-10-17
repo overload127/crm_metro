@@ -10,8 +10,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .serializers import TPTypeWorkSerializers
-from .models import TPTypeWork
+from .serializers import TPTypeWorkSerializers, StationSerializers
+from .models import TPTypeWork, Station
 
 
 # class ProfileUserViewSet(viewsets.ModelViewSet):
@@ -62,4 +62,17 @@ class WikiTP(APIView):
         queryset = queryset.values('id', 'code', 'name', 'du46')
         
         serializer = TPTypeWorkSerializers(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class WikiStation(APIView):
+    """Возвращает все варианты станций"""
+
+    permission_classes = (permissions.AllowAny,)
+
+    def get(self, request):
+        queryset = Station.objects.all()
+        queryset = queryset.values('id', 'name', 'short_name')
+        
+        serializer = StationSerializers(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)

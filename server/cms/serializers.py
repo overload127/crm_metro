@@ -55,7 +55,7 @@ class StationSerializers(serializers.ModelSerializer):
     
     class Meta:
         model = Station
-        fields = ['short_name', 'name', 'okolotok']
+        fields = ['id', 'name', 'short_name']
 
 
 class OkolotokSerializers(serializers.ModelSerializer):
