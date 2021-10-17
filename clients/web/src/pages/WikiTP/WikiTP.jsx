@@ -115,7 +115,8 @@ class TestTable extends React.Component {
         title: 'Название',
         dataIndex: 'title',
         key: 'title',
-        ...this.getColumnSearchProps('code'),
+        width: 200,
+        ...this.getColumnSearchProps('title'),
       },
       {
         title: 'Тэги',
