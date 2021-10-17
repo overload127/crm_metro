@@ -8,6 +8,9 @@ import {
   setStartLoadingTP,
   setEndLoadingTP,
   setDataTP,
+  setStartLoadingStation,
+  setEndLoadingStation,
+  setDataStation,
 } from './actions';
 
 
@@ -20,7 +23,7 @@ export const loadWikiData = () => (dispatch) => {
       dispatch(setDataTP(response.data));
     })
     .catch(() => {
-      toast.error('Не удалось загрузить данные раздела wiki.', {
+      toast.error('Не удалось загрузить данные [Техпроцессы] раздела wiki.', {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -31,6 +34,24 @@ export const loadWikiData = () => (dispatch) => {
     });
 
   dispatch(setEndLoadingTP());
+  dispatch(setStartLoadingStation());
+
+  WikiService.getStation()
+    .then(response => {
+      dispatch(setDataStation(response.data));
+    })
+    .catch(() => {
+      toast.error('Не удалось загрузить данные [Станции] раздела wiki.', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    });
+
+  dispatch(setEndLoadingStation());
   dispatch(setEndLoadingData());
 };
 

@@ -1,6 +1,7 @@
 import PageMain from '../pages/Main/Main';
 import PageWiki from '../pages/Wiki/Wiki';
 import PageWikiTP from '../pages/WikiTP/WikiTPContainer';
+import PageWikiStation from '../pages/WikiStation/WikiStationContainer';
 
 import PageLogin from '../pages/Login/Login';
 import PageLogout from '../pages/Logout/Logout';
@@ -45,6 +46,14 @@ const urlConst = {
         permission: PERMISSION_PUBLIC,
         exact: true,
         component: PageWikiTP,
+        menu: null,
+      },
+      PAGE_WIKI_STATION: {
+        url: '/station',
+        title: 'Станции',
+        permission: PERMISSION_PUBLIC,
+        exact: true,
+        component: PageWikiStation,
         menu: null,
       },
     },

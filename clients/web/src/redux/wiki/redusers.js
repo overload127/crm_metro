@@ -4,6 +4,9 @@ import {
   WIKI_SET_START_LOADING_TP,
   WIKI_SET_END_LOADING_TP,
   WIKI_SET_DATA_TP,
+  WIKI_SET_START_LOADING_STATION,
+  WIKI_SET_END_LOADING_STATION,
+  WIKI_SET_DATA_STATION,
 } from './actions';
 
 const defaultState = {
@@ -11,7 +14,11 @@ const defaultState = {
   tp: {
     loading: false,
     data: [],
-  }
+  },
+  station: {
+    loading: false,
+    data: [],
+  },
 };
 
 
@@ -46,6 +53,32 @@ const authReduser = (state = defaultState, action) => {
         ...state,
         tp: {
           ...state.tp,
+          data: [
+            ...action.data,
+          ],
+        }
+      };
+    case WIKI_SET_START_LOADING_STATION:
+      return {
+        ...state,
+        station: {
+          ...state.station,
+          loading: true,
+        }
+      };
+    case WIKI_SET_END_LOADING_STATION:
+      return {
+        ...state,
+        station: {
+          ...state.station,
+          loading: false,
+        }
+      };
+    case WIKI_SET_DATA_STATION:
+      return {
+        ...state,
+        station: {
+          ...state.station,
           data: [
             ...action.data,
           ],
