@@ -1,7 +1,14 @@
+import React from 'react';
+
+import {
+  QuestionCircleOutlined
+} from '@ant-design/icons';
 import PageMain from '../pages/Main/Main';
 import PageWiki from '../pages/Wiki/Wiki';
-import PageWikiTP from '../pages/WikiTP/WikiTPContainer';
+import PageWikiTP from '../pages/WikiTechCard/WikiTechCardContainer';
 import PageWikiStation from '../pages/WikiStation/WikiStationContainer';
+import PageActions from '../pages/Actions/Actions';
+import PageAddTP from '../pages/AddTP/AddTP';
 
 import PageLogin from '../pages/Login/Login';
 import PageLogout from '../pages/Logout/Logout';
@@ -23,22 +30,25 @@ const urlConst = {
     permission: PERMISSION_PUBLIC,
     exact: true,
     component: PageMain,
+    icon: null,
     menu: null,
   },
-  PAGE_WIKI: {
+  PAGE_PUBLIC: {
     url: '/public',
     title: 'Public',
     permission: PERMISSION_PUBLIC,
     exact: true,
     component: Pub,
+    icon: null,
     menu: null,
   },
-  PAGE_PUBLIC: {
+  PAGE_WIKI: {
     url: '/wiki',
     title: 'Wiki',
     permission: PERMISSION_PUBLIC,
     exact: true,
     component: PageWiki,
+    icon: <QuestionCircleOutlined />,
     menu: {
       PAGE_WIKI_TP: {
         url: '/tp',
@@ -46,6 +56,7 @@ const urlConst = {
         permission: PERMISSION_PUBLIC,
         exact: true,
         component: PageWikiTP,
+        icon: null,
         menu: null,
       },
       PAGE_WIKI_STATION: {
@@ -54,6 +65,25 @@ const urlConst = {
         permission: PERMISSION_PUBLIC,
         exact: true,
         component: PageWikiStation,
+        icon: null,
+        menu: null,
+      },
+    },
+  },
+  PAGE_ACTIONS: {
+    url: '/actions',
+    title: 'Действия',
+    permission: PERMISSION_PRIVATE,
+    exact: true,
+    component: PageActions,
+    icon: null,
+    menu: {
+      PAGE_ADD_TP: {
+        url: '/add_tp',
+        title: 'Добавить ТП',
+        permission: PERMISSION_PRIVATE,
+        exact: true,
+        component: PageAddTP,
         menu: null,
       },
     },
@@ -64,6 +94,7 @@ const urlConst = {
     permission: PERMISSION_PRIVATE,
     exact: true,
     component: Priv,
+    icon: null,
     menu: null,
   },
   PAGE_LOGIN: {
@@ -72,6 +103,7 @@ const urlConst = {
     permission: PERMISSION_GUEST,
     exact: true,
     component: PageLogin,
+    icon: null,
     menu: null,
   },
   PAGE_LOGOUT: {
@@ -80,6 +112,7 @@ const urlConst = {
     permission: PERMISSION_PRIVATE,
     exact: true,
     component: PageLogout,
+    icon: null,
     menu: null,
   },
 };

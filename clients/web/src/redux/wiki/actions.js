@@ -1,11 +1,11 @@
 export const WIKI_SET_START_LOADING_DATA = 'WIKI_SET_START_LOADING_DATA';
 export const WIKI_SET_END_LOADING_DATA = 'WIKI_SET_END_LOADING_DATA';
-export const WIKI_SET_START_LOADING_TP = 'WIKI_SET_START_LOADING_TP';
-export const WIKI_SET_END_LOADING_TP = 'WIKI_SET_END_LOADING_TP';
-export const WIKI_SET_DATA_TP = 'WIKI_SET_DATA_TP';
-export const WIKI_SET_START_LOADING_STATION = 'WIKI_SET_START_LOADING_STATION';
-export const WIKI_SET_END_LOADING_STATION = 'WIKI_SET_END_LOADING_STATION';
-export const WIKI_SET_DATA_STATION = 'WIKI_SET_DATA_STATION';
+export const WIKI_SET_START_LOADING_TECH_CARDS = 'WIKI_SET_START_LOADING_TECH_CARDS';
+export const WIKI_SET_END_LOADING_TECH_CARDS = 'WIKI_SET_END_LOADING_TECH_CARDS';
+export const WIKI_SET_DATA_TECH_CARDS = 'WIKI_SET_DATA_TECH_CARDS';
+export const WIKI_SET_START_LOADING_STATIONS = 'WIKI_SET_START_LOADING_STATIONS';
+export const WIKI_SET_END_LOADING_STATIONS = 'WIKI_SET_END_LOADING_STATIONS';
+export const WIKI_SET_DATA_STATIONS = 'WIKI_SET_DATA_STATIONS';
 
 
 export const setStartLoadingData = () => ({
@@ -16,28 +16,28 @@ export const setEndLoadingData = () => ({
   type: WIKI_SET_END_LOADING_DATA,
 });
 
-export const setStartLoadingTP = () => ({
-  type: WIKI_SET_START_LOADING_TP,
+export const setStartLoadingTechCards = () => ({
+  type: WIKI_SET_START_LOADING_TECH_CARDS,
 });
 
-export const setEndLoadingTP = () => ({
-  type: WIKI_SET_END_LOADING_TP,
+export const setEndLoadingTechCards = () => ({
+  type: WIKI_SET_END_LOADING_TECH_CARDS,
 });
 
-export const setDataTP = (data) => ({
-  type: WIKI_SET_DATA_TP,
+export const setDataTechCards = (data) => ({
+  type: WIKI_SET_DATA_TECH_CARDS,
   data,
 });
 
-export const setStartLoadingStation = () => ({
-  type: WIKI_SET_START_LOADING_STATION,
+export const setStartLoadingStations = () => ({
+  type: WIKI_SET_START_LOADING_STATIONS,
 });
 
-export const setEndLoadingStation = () => ({
-  type: WIKI_SET_END_LOADING_STATION,
+export const setEndLoadingStations = () => ({
+  type: WIKI_SET_END_LOADING_STATIONS,
 });
 
-export const setDataStation = (data) => ({
-  type: WIKI_SET_DATA_STATION,
+export const setDataStations = (data) => ({
+  type: WIKI_SET_DATA_STATIONS,
   data,
 });

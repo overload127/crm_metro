@@ -64,9 +64,8 @@ WikiStation.propTypes = {
     PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number.isRequired,
-        code: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
-        du46: PropTypes.bool.isRequired,
+        short_name: PropTypes.string.isRequired,
       })).isRequired,
     PropTypes.array.isRequired,
   ]).isRequired,

@@ -5,25 +5,25 @@ import WikiService from '../../api/WikiService';
 import {
   setStartLoadingData,
   setEndLoadingData,
-  setStartLoadingTP,
-  setEndLoadingTP,
-  setDataTP,
-  setStartLoadingStation,
-  setEndLoadingStation,
-  setDataStation,
+  setStartLoadingTechCards,
+  setEndLoadingTechCards,
+  setDataTechCards,
+  setStartLoadingStations,
+  setEndLoadingStations,
+  setDataStations,
 } from './actions';
 
 
 export const loadWikiData = () => (dispatch) => {
   dispatch(setStartLoadingData());
-  dispatch(setStartLoadingTP());
+  dispatch(setStartLoadingTechCards());
 
-  WikiService.getTP()
+  WikiService.getTechCards()
     .then(response => {
-      dispatch(setDataTP(response.data));
+      dispatch(setDataTechCards(response.data));
     })
     .catch(() => {
-      toast.error('Не удалось загрузить данные [Техпроцессы] раздела wiki.', {
+      toast.error('Не удалось загрузить данные [Техкарты] раздела wiki.', {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -33,12 +33,12 @@ export const loadWikiData = () => (dispatch) => {
       });
     });
 
-  dispatch(setEndLoadingTP());
-  dispatch(setStartLoadingStation());
+  dispatch(setEndLoadingTechCards());
+  dispatch(setStartLoadingStations());
 
-  WikiService.getStation()
+  WikiService.getStations()
     .then(response => {
-      dispatch(setDataStation(response.data));
+      dispatch(setDataStations(response.data));
     })
     .catch(() => {
       toast.error('Не удалось загрузить данные [Станции] раздела wiki.', {
@@ -51,7 +51,7 @@ export const loadWikiData = () => (dispatch) => {
       });
     });
 
-  dispatch(setEndLoadingStation());
+  dispatch(setEndLoadingStations());
   dispatch(setEndLoadingData());
 };
 

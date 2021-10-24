@@ -106,12 +106,7 @@ class MakeTable extends React.Component {
 MakeTable.propTypes = {
   data: PropTypes.oneOfType([
     PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        code: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        du46: PropTypes.bool.isRequired,
-      })).isRequired,
+      PropTypes.shape({})).isRequired,
     PropTypes.array.isRequired,
   ]).isRequired,
   createColumns: PropTypes.func.isRequired,

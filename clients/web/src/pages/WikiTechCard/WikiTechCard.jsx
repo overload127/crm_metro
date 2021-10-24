@@ -6,7 +6,7 @@ import { Tag } from 'antd';
 import MakeTable from '../../components/MakeTable/MakeTable';
 
 
-function WikiTP({ data }) {
+function WikiTechCard({ data }) {
   const makeDatat = (outData) => {
     const newData = outData.map((lineData) => {
       const tagDU46 = (lineData.du46) ? 'Du46' : 'NotDu';
@@ -97,7 +97,7 @@ function WikiTP({ data }) {
   );
 }
 
-WikiTP.propTypes = {
+WikiTechCard.propTypes = {
   data: PropTypes.oneOfType([
     PropTypes.arrayOf(
       PropTypes.shape({
@@ -110,8 +110,8 @@ WikiTP.propTypes = {
   ]).isRequired,
 };
 
-WikiTP.defaultProps = {
+WikiTechCard.defaultProps = {
 };
 
 
-export default WikiTP;
+export default WikiTechCard;

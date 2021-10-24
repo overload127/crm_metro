@@ -1,9 +1,16 @@
 import { connect } from 'react-redux';
-import { login } from '../../redux/auth/thunks';
+import { login } from '../../../redux/auth/thunks';
 
 // Общие компоненты
 // Локальные компоненты
 import Login from './LoginForm';
+
+
+function mapStateToProps( state ) {
+  return {
+    processAuth: state.auth.processAuth,
+  };
+}
 
 
 function mapDispatchToProps( dispatch ) {
@@ -15,4 +22,4 @@ function mapDispatchToProps( dispatch ) {
 }
 
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -1,21 +1,21 @@
 import {
   WIKI_SET_START_LOADING_DATA,
   WIKI_SET_END_LOADING_DATA,
-  WIKI_SET_START_LOADING_TP,
-  WIKI_SET_END_LOADING_TP,
-  WIKI_SET_DATA_TP,
-  WIKI_SET_START_LOADING_STATION,
-  WIKI_SET_END_LOADING_STATION,
-  WIKI_SET_DATA_STATION,
+  WIKI_SET_START_LOADING_TECH_CARDS,
+  WIKI_SET_END_LOADING_TECH_CARDS,
+  WIKI_SET_DATA_TECH_CARDS,
+  WIKI_SET_START_LOADING_STATIONS,
+  WIKI_SET_END_LOADING_STATIONS,
+  WIKI_SET_DATA_STATIONS,
 } from './actions';
 
 const defaultState = {
   loading: false,
-  tp: {
+  techCards: {
     loading: false,
     data: [],
   },
-  station: {
+  stations: {
     loading: false,
     data: [],
   },
@@ -32,53 +32,53 @@ const authReduser = (state = defaultState, action) => {
       return {
         ...state, loading: false,
       };
-    case WIKI_SET_START_LOADING_TP:
+    case WIKI_SET_START_LOADING_TECH_CARDS:
       return {
         ...state,
-        tp: {
-          ...state.tp,
+        techCards: {
+          ...state.techCards,
           loading: true,
         }
       };
-    case WIKI_SET_END_LOADING_TP:
+    case WIKI_SET_END_LOADING_TECH_CARDS:
       return {
         ...state,
-        tp: {
-          ...state.tp,
+        techCards: {
+          ...state.techCards,
           loading: false,
         }
       };
-    case WIKI_SET_DATA_TP:
+    case WIKI_SET_DATA_TECH_CARDS:
       return {
         ...state,
-        tp: {
-          ...state.tp,
+        techCards: {
+          ...state.techCards,
           data: [
             ...action.data,
           ],
         }
       };
-    case WIKI_SET_START_LOADING_STATION:
+    case WIKI_SET_START_LOADING_STATIONS:
       return {
         ...state,
-        station: {
-          ...state.station,
+        stations: {
+          ...state.stations,
           loading: true,
         }
       };
-    case WIKI_SET_END_LOADING_STATION:
+    case WIKI_SET_END_LOADING_STATIONS:
       return {
         ...state,
-        station: {
-          ...state.station,
+        stations: {
+          ...state.stations,
           loading: false,
         }
       };
-    case WIKI_SET_DATA_STATION:
+    case WIKI_SET_DATA_STATIONS:
       return {
         ...state,
-        station: {
-          ...state.station,
+        stations: {
+          ...state.stations,
           data: [
             ...action.data,
           ],

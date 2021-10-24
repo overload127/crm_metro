@@ -27,9 +27,8 @@ export const login = (username, password) => (dispatch) => {
         draggable: true,
       });
     });
-  setTimeout(() => {
-    dispatch(setProcessAuthEnd());
-  }, 2000);
+
+  dispatch(setProcessAuthEnd());
 };
 
 

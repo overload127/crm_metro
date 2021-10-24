@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from "prop-types";
 
 import { Layout, Menu } from 'antd';
-import { QuestionCircleOutlined } from '@ant-design/icons';
+// import { QuestionCircleOutlined } from '@ant-design/icons';
 
 import urlConst, { PERMISSION_PUBLIC, PERMISSION_GUEST, PERMISSION_PRIVATE } from '../../App/urlConst';
 
@@ -24,7 +24,7 @@ function renderMenu(urlTree, isAuth, urlPrefix='') {
     if(urlTree[key].menu) {
       const localMenuTree = renderMenu(urlTree[key].menu, isAuth, urlPrefix+urlTree[key].url);
       
-      currentElement =<SubMenu key={urlPrefix+urlTree[key].url} icon={<QuestionCircleOutlined />} title={urlTree[key].title}>{localMenuTree}</SubMenu>;
+      currentElement =<SubMenu key={urlPrefix+urlTree[key].url} icon={urlTree[key].icon} title={urlTree[key].title}>{localMenuTree}</SubMenu>;
     } else {
       currentElement = <Menu.Item key={urlPrefix+urlTree[key].url}><Link to={urlPrefix+urlTree[key].url}>{urlTree[key].title}</Link></Menu.Item>;
     }

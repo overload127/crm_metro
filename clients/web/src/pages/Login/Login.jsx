@@ -1,14 +1,11 @@
 import React from 'react';
 
-import LoginFormContainer from '../../components/LoginForm/LoginFormContainer';
+import LoginFormContainer from './LoginForm/LoginFormContainer';
 
 function Main() {
-
-
   return (
     <div>
-      <h1>Вход</h1>
-        <LoginFormContainer />
+      <LoginFormContainer />
     </div>
   );
 }

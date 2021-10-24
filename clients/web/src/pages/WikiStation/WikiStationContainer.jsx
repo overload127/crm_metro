@@ -6,7 +6,7 @@ import WikiStation from './WikiStation';
 
 function mapStateToProps( state ) {
   return {
-    data: state.wiki.station.data,
+    data: state.wiki.stations.data,
   };
 }
 

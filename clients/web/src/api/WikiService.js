@@ -4,11 +4,11 @@ import {
 
 
 export default class WikiService {
-  static async getTP() {
+  static async getTechCards() {
     return apiCMSPublic.get('wiki/tp/', {});
   };
 
-  static async getStation() {
+  static async getStations() {
     return apiCMSPublic.get('wiki/station/', {});
   };
 }
