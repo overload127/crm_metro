@@ -190,7 +190,9 @@ class ReportOfWork(models.Model):
         ds = self.data_start.strftime("%d %m %Y")
         de = self.data_end.strftime("%d %m %Y")
         station = str(self.station)
-        return f'{station} [{ds} - {de}] {self.type_work}' # TODO: А как он отображает manytomany?
+        type_work = ", ".join(self.type_work.all().values_list('code', flat=True))
+        
+        return f'{station} [{ds} - {de}] {type_work}'
 
     class Meta:
         verbose_name = 'Запись ТП со временем отключения'

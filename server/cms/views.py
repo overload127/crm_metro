@@ -10,8 +10,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .serializers import TPTypeWorkSerializers, StationSerializers
-from .models import TPTypeWork, Station
+from .serializers import TPTypeWorkSerializers, StationSerializers, ReportOfWorkSerializersIn, AdvandedReportOfWorkSerializersIn
+from .models import TPTypeWork, Station, ReportOfWork, ProfileUser
 
 
 # class ProfileUserViewSet(viewsets.ModelViewSet):
@@ -53,7 +53,7 @@ class private_test(APIView):
 
 
 class WikiTP(APIView):
-    """Возвращает все варианты техпроцессов"""
+    """Возвращает все варианты техкарт"""
 
     permission_classes = (permissions.AllowAny,)
 
@@ -76,3 +76,48 @@ class WikiStation(APIView):
         
         serializer = StationSerializers(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class UserTPWorkCreate(APIView):
+    """Создает выполненый техпроцесс для текущего пользователя"""
+
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request):
+        serializer = ReportOfWorkSerializersIn(data=request.data)
+        if(serializer.is_valid(raise_exception=True)):
+            try:
+                profile_user = ProfileUser.objects.get(user_site=request.user)
+            except ProfileUser.ObjectDoesNotExist:
+                return Response({'profile_user': 'Пользователь не найден. Возможно он был удален или обратитесь к администрации.'}, status=status.HTTP_400_BAD_REQUEST)
+
+            new_tp_work = serializer.create(serializer.data, user=profile_user)
+            if not new_tp_work:
+                return Response({'error': 'Возникла ошибка во время создания записи.'}, status=status.HTTP_400_BAD_REQUEST)
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+
+
+class AdminTPWorkCreate(APIView):
+    """Создает выполненый техпроцесс для любого пользователя"""
+
+    # permission_classes = (permissions.IsAdminUser,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request):
+        serializer = AdvandedReportOfWorkSerializersIn(data=request.data)
+        if(serializer.is_valid(raise_exception=True)):
+            try:
+                profile_user = ProfileUser.objects.get(user_site_id=request.data.profile_user_id)
+            except ProfileUser.ObjectDoesNotExist:
+                return Response({'profile_user': 'Пользователь не найден. Возможно он был удален или обратитесь к администрации.'}, status=status.HTTP_400_BAD_REQUEST)
+
+            new_tp_work = serializer.create(serializer.data, user=profile_user)
+            if not new_tp_work:
+                return Response({'error': 'Возникла ошибка во время создания записи.'}, status=status.HTTP_400_BAD_REQUEST)
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)

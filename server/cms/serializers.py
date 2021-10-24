@@ -68,11 +68,13 @@ class OkolotokSerializers(serializers.ModelSerializer):
         fields = ['id', 'name']
 
 
+# 
 class ReportOfWorkSerializers(serializers.ModelSerializer):
     """
     Serializer for ReportOfWork model
 
     Не используется т.к. медленный
+    Пока не используется. Думаю понадобится для вывода данных в таблицу
     """
     type_work = TPTypeWorkSerializers(many=True)
     station = StationSerializers()
@@ -82,10 +84,70 @@ class ReportOfWorkSerializers(serializers.ModelSerializer):
         fields = ['id', 'data_start', 'data_end', 'note', 'subdivision', 'station', 'type_work']
 
 
+class ReportOfWorkSerializersIn(serializers.ModelSerializer):
+    """
+    Serializer for ReportOfWork model
+
+    Набор данных для выполненого техпроцеса.
+    """
+    # type_work = TPTypeWorkSerializers(many=True)
+    # station = StationSerializers()
+    station_id=serializers.IntegerField()
+    type_work_list=serializers.ListField(
+        child=serializers.IntegerField()
+    )
+    
+    class Meta:
+        model = ReportOfWork
+        fields = ('data_start', 'data_end', 'note', 'subdivision', 'station_id', 'type_work_list')
+        extra_kwargs = {
+            'data_start': {'required': True},
+            'data_end': {'required': True},
+            'station_id': {'required': True},
+            'type_work_list': {'required': True},
+            }
+
+    def check_db_id(self):
+        return True
+    
+    def create(self, validated_data, user):
+        report_of_work = ReportOfWork(
+            data_start=validated_data['data_start'],
+            data_end=validated_data['data_end'],
+            station_id=validated_data['station_id'],
+            profile_user_id=user.id,
+            subdivision=validated_data.get('subdivision', ''),
+            note=validated_data.get('note', ''))
+        
+        try:
+            report_of_work.save()
+            report_of_work.type_work.add(*validated_data['type_work_list'])
+        except Exception:
+            print("ЛОГ - Не удалось создать объект ReportOfWork")
+            report_of_work.delete()
+            return None
+
+        return report_of_work
+
+
+class AdvandedReportOfWorkSerializersIn(ReportOfWorkSerializersIn):
+    """
+    Serializer for ReportOfWork model
+
+    Набор данных для выполненого техпроцеса для выбранного пользователя
+    """
+    profile_user_id=serializers.IntegerField()
+
+    class Meta(ReportOfWorkSerializersIn.Meta):
+        fields = ReportOfWorkSerializersIn.Meta.fields + ('profile_user_id',)
+
+
 
 class ReportOfWorkSerializers_for_fast_query(serializers.ModelSerializer):
     """
     Serializer for ReportOfWork model
+
+    Пока не используется. Думаю понадобится для вывода данных в таблицу
     """
     station__short_name = serializers.CharField(max_length=20, allow_blank=False)
     type_work__code = serializers.CharField(max_length=20, allow_blank=False)

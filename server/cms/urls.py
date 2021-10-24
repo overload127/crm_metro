@@ -17,4 +17,5 @@ urlpatterns += [
     path('private_test/', views.private_test.as_view()),
     path('wiki/tp/', views.WikiTP.as_view(), name='wiki_get_tp'),
     path('wiki/station/', views.WikiStation.as_view(), name='wiki_get_station'),
+    path('tp_work/create/', views.UserTPWorkCreate.as_view(), name='tp_work_create'),
 ]
