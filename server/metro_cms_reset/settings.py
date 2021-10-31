@@ -33,6 +33,7 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     '192.168.1.103',
     'localhost',
+    '91.122.40.167',
 ]
 
 INTERNAL_IPS = [
@@ -43,6 +44,7 @@ INTERNAL_IPS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -85,6 +87,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
             ],
         },
     },

@@ -9,3 +9,6 @@ python manage.py dumpdata app.model_name --indent 4 > fixtures/file_name.json
 To load data:
 python manage.py loaddata fixtures/model_name.json --app app.model_name
 
+init static for new admin theme 'grappelli'
+python manage.py collectstatic
+
