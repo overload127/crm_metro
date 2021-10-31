@@ -143,6 +143,14 @@ python-versions = ">=3.6"
 Django = ">=2.2"
 
 [[package]]
+name = "django-grappelli"
+version = "2.15.3"
+description = "A jazzy skin for the Django Admin-Interface."
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "django-templated-mail"
 version = "1.1.1"
 description = "Send emails using Django template system."
@@ -430,7 +438,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "0502f8e71786da3f8b817ffbfa6bbfa2408e522fcaf9b31212b8419c5661b774"
+content-hash = "60f044572e3e588a6d20ef5cf597cf2ee3c9d660f3c627696d46f0bfa6b5667d"
 
 [metadata.files]
 asgiref = [
@@ -541,6 +549,10 @@ django-debug-toolbar = [
 django-filter = [
     {file = "django-filter-21.1.tar.gz", hash = "sha256:632a251fa8f1aadb4b8cceff932bb52fe2f826dd7dfe7f3eac40e5c463d6836e"},
     {file = "django_filter-21.1-py3-none-any.whl", hash = "sha256:f4a6737a30104c98d2e2a5fb93043f36dd7978e0c7ddc92f5998e85433ea5063"},
+]
+django-grappelli = [
+    {file = "django-grappelli-2.15.3.tar.gz", hash = "sha256:e21dc664faef6990006c05a6939ee1e2839e13834a338b1f644ea6edb19f68de"},
+    {file = "django_grappelli-2.15.3-py2.py3-none-any.whl", hash = "sha256:edfb8539d000d5908836d909134021c6b3ab3bd2975e7524385b9b3736548598"},
 ]
 django-templated-mail = [
     {file = "django-templated-mail-1.1.1.tar.gz", hash = "sha256:8db807effebb42a532622e2d142dfd453dafcd0d7794c4c3332acb90656315f9"},
