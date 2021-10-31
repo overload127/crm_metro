@@ -5,7 +5,7 @@ source ./env/bin/activate
 
 python manage.py loaddata cms/fixtures/cms.Okolotok.json
 python manage.py loaddata cms/fixtures/cms.Station.json
-python manage.py loaddata cms/fixtures/cms.TPTypeWork.json
+python manage.py loaddata cms/fixtures/cms.TechCard.json
 
 deactivate
 echo "END"
