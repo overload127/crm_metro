@@ -1,197 +1,320 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 # from rest_framework_jwt.settings import api_settings
-from .models import ReportOfWork, PreReportOfWork, TPTypeWork, Station, Okolotok, ProfileUser
-
-
-class UserSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = User
-        fields = ['id', 'username', 'email']
-
-
-# class UserSerializerWithToken(serializers.ModelSerializer):
-
-#     token = serializers.SerializerMethodField()
-#     password = serializers.CharField(write_only=True)
-
-#     def get_token(self, obj):
-#         jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
-#         jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
-
-#         payload = jwt_payload_handler(obj)
-#         token = jwt_encode_handler(payload)
-#         return token
-
-#     def create(self, validated_data):
-#         password = validated_data.pop('password', None)
-#         instance = self.Meta.model(**validated_data)
-#         if password is not None:
-#             instance.set_password(password)
-#         instance.save()
-#         return instance
-
-#     class Meta:
-#         model = User
-#         fields = ('token', 'username', 'password')
-
-
-
-class TPTypeWorkSerializers(serializers.ModelSerializer):
-    """
-    Serializer for TPTypeWork model
-    """
-    
-    class Meta:
-        model = TPTypeWork
-        fields = ['id', 'code', 'name', 'du46']
-
-
-class StationSerializers(serializers.ModelSerializer):
-    """
-    Serializer for Station model
-    """
-    
-    class Meta:
-        model = Station
-        fields = ['id', 'name', 'short_name']
+from .models import ReportOfWork, TechCard, Station, Okolotok, UserProfile, DeviceForWork
 
 
 class OkolotokSerializers(serializers.ModelSerializer):
-    """
-    Serializer for Okolotok model
-    """
+    """"""
     
     class Meta:
         model = Okolotok
-        fields = ['id', 'name']
+        fields = ('id', 'name',)
+        read_only_fields = ('id', 'name',)
 
 
-# 
-class ReportOfWorkSerializers(serializers.ModelSerializer):
-    """
-    Serializer for ReportOfWork model
+class DeviceForWorkSerializers(serializers.ModelSerializer):
+    """"""
+    class Meta:
+        model = DeviceForWork
+        fields = ('id', 'name', 'description',)
+        read_only_fields = ('id', 'name', 'description',)
 
-    Не используется т.к. медленный
-    Пока не используется. Думаю понадобится для вывода данных в таблицу
-    """
-    type_work = TPTypeWorkSerializers(many=True)
-    station = StationSerializers()
+
+class TechCardSerializers(serializers.ModelSerializer):
+    """"""
+    device_for_work__name = serializers.CharField(max_length=200, allow_blank=False)
+
+    class Meta:
+        model = TechCard
+        fields = (
+            'id',
+            'code',
+            'name',
+            'description',
+            'du46',
+            'order',
+            'device_for_work__name',)
+        read_only_fields = (
+            'id',
+            'code',
+            'name',
+            'description',
+            'du46',
+            'order',
+            'device_for_work__name',)
+
+
+class StationSerializers(serializers.ModelSerializer):
+    """"""
+    
+    class Meta:
+        model = Station
+        fields = ('id', 'name', 'short_name',)
+        read_only_fields = ('id', 'name', 'short_name',)
+
+
+class ReportOfWorkCreateSerializers(serializers.ModelSerializer):
+    """"""
+    station = serializers.PrimaryKeyRelatedField(
+        queryset=Station.objects.all())
+    type_work = serializers.PrimaryKeyRelatedField(
+        many=True, queryset=TechCard.objects.all())
+    okolotok = serializers.PrimaryKeyRelatedField(
+        queryset=Okolotok.objects.all())
+    userprofile = serializers.PrimaryKeyRelatedField(
+        many=True, queryset=UserProfile.objects.all())
     
     class Meta:
         model = ReportOfWork
-        fields = ['id', 'data_start', 'data_end', 'note', 'subdivision', 'station', 'type_work']
-
-
-class ReportOfWorkSerializersIn(serializers.ModelSerializer):
-    """
-    Serializer for ReportOfWork model
-
-    Набор данных для выполненого техпроцеса.
-    """
-    # type_work = TPTypeWorkSerializers(many=True)
-    # station = StationSerializers()
-    station_id=serializers.IntegerField()
-    type_work_list=serializers.ListField(
-        child=serializers.IntegerField()
-    )
-    
-    class Meta:
-        model = ReportOfWork
-        fields = ('data_start', 'data_end', 'note', 'subdivision', 'station_id', 'type_work_list')
+        fields = (
+            'date_start',
+            'date_end',
+            'station',
+            'type_work',
+            'okolotok',
+            'userprofile',
+            'note',
+            'subdivision')
+        read_only_fields = (
+            'station',
+            'type_work',
+            'okolotok',
+            'userprofile',)
         extra_kwargs = {
-            'data_start': {'required': True},
-            'data_end': {'required': True},
-            'station_id': {'required': True},
-            'type_work_list': {'required': True},
+            'date_start': {'required': True},
+            'date_end': {'required': True},
+            'station': {'required': True},
+            'type_work': {'required': True},
+            'okolotok': {'required': True},
+            'userprofile': {'required': True},
             }
 
-    def check_db_id(self):
-        return True
+
+class RequstReportOfWorkSerializer(serializers.Serializer):
+    """"""
+    # def filter_bool_field(queryset, field, value):
+
+
+    def filter_du(value):
+        """Создает ленивый запрос, с замыканием для параметра ДУ46"""
+        def wrapper(queryset):
+            return queryset.filter(type_work__du46=value)
+
+        return wrapper
+
+
+    def filter_order(value):
+        """Создает ленивый запрос, с замыканием для параметра записи в Журнал Распоряжений"""
+        def wrapper(queryset):
+            return queryset.filter(type_work__order=value)
+
+        return wrapper
     
-    def create(self, validated_data, user):
-        report_of_work = ReportOfWork(
-            data_start=validated_data['data_start'],
-            data_end=validated_data['data_end'],
-            station_id=validated_data['station_id'],
-            profile_user_id=user.id,
-            subdivision=validated_data.get('subdivision', ''),
-            note=validated_data.get('note', ''))
-        
-        try:
-            report_of_work.save()
-            report_of_work.type_work.add(*validated_data['type_work_list'])
-        except Exception:
-            print("ЛОГ - Не удалось создать объект ReportOfWork")
-            report_of_work.delete()
-            return None
+    def not_filter(queryset):
+        return queryset
 
-        return report_of_work
+    TYPE_WORK_DU46_CHOICES = {
+        'all': not_filter,
+        'true': filter_du(True),
+        'false': filter_du(False),
+    }
 
+    TYPE_WORK_ORDER_CHOICES = {
+        'all': not_filter,
+        'true': filter_order(True),
+        'false': filter_order(False),
+    }
 
-class AdvandedReportOfWorkSerializersIn(ReportOfWorkSerializersIn):
-    """
-    Serializer for ReportOfWork model
+    date_start = serializers.DateField(required=False)
+    date_end = serializers.DateField(required=False)
+    okolotok = serializers.PrimaryKeyRelatedField(
+        required=False,
+        queryset=Okolotok.objects.all())
+    station = serializers.PrimaryKeyRelatedField(
+        required=False,
+        queryset=Station.objects.all())
+    userprofiles = serializers.PrimaryKeyRelatedField(
+        required=False,
+        many=True,
+        queryset=UserProfile.objects.all())
+    du46 = serializers.ChoiceField(
+        default='all',
+        choices=TYPE_WORK_DU46_CHOICES)
+    order = serializers.ChoiceField(
+        default='all',
+        choices=TYPE_WORK_ORDER_CHOICES)
+    type_works = serializers.PrimaryKeyRelatedField(
+        required=False,
+        many=True,
+        queryset=TechCard.objects.all())
 
-    Набор данных для выполненого техпроцеса для выбранного пользователя
-    """
-    profile_user_id=serializers.IntegerField()
+    def get_queryset(self):
+        queryset = ReportOfWork.objects.all()
 
-    class Meta(ReportOfWorkSerializersIn.Meta):
-        fields = ReportOfWorkSerializersIn.Meta.fields + ('profile_user_id',)
+        date_start = self.validated_data.get('date_start', None)
+        if date_start:
+            date_start = date_start.replace(hour=0, minute=0, second=0, microsecond=0)
+            queryset.filter(date_start__gte=date_start)
 
+        date_end = self.validated_data.get('date_end', None)
+        if date_end:
+            date_end = date_end.replace(hour=23, minute=59, second=59, microsecond=0)
+            queryset.filter(date_start__lte=date_end)
+
+        station = self.validated_data.get('station', None)
+        if station:
+            queryset.filter(station=station)
+
+        okolotok = self.validated_data.get('okolotok', None)
+        if station:
+            queryset.filter(okolotok=okolotok)
+
+        queryset = self.TYPE_WORK_DU46_CHOICES[self.validated_data['du46']](queryset)
+        queryset = self.TYPE_WORK_ORDER_CHOICES[self.validated_data['order']](queryset)
+
+        userprofiles = self.validated_data.get('userprofiles', None)
+        if userprofiles:
+            queryset.filter(userprofile__in=userprofiles)
+
+        type_works = self.validated_data.get('type_works', None)
+        if userprofiles:
+            queryset.filter(type_work__in=type_works)
+
+        return queryset
 
 
 class ReportOfWorkSerializers_for_fast_query(serializers.ModelSerializer):
-    """
-    Serializer for ReportOfWork model
-
-    Пока не используется. Думаю понадобится для вывода данных в таблицу
-    """
+    """"""
+    station__name = serializers.CharField(max_length=50, allow_blank=False)
     station__short_name = serializers.CharField(max_length=20, allow_blank=False)
     type_work__code = serializers.CharField(max_length=20, allow_blank=False)
-    
+    type_work__name = serializers.CharField(max_length=200, allow_blank=False)
+    type_work__du46 = serializers.BooleanField(default=False)
+    type_work__order = serializers.BooleanField(default=False)
+
     class Meta:
         model = ReportOfWork
-        fields = ['id', 'data_start', 'data_end', 'note', 'subdivision', 'station__short_name', 'type_work__code']
+        fields = (
+            'id',
+            'date_start',
+            'date_end',
+            'station__name',
+            'station__short_name',
+            'type_work__code',
+            'type_work__name',
+            'type_work__du46',
+            'type_work__order',
+            'note',
+            'subdivision',)
+        read_only_fields = (
+            'id',
+            'date_start',
+            'date_end',
+            'station__name',
+            'station__short_name',
+            'type_work__code',
+            'type_work__name',
+            'type_work__du46',
+            'type_work__order',
+            'note',
+            'subdivision',)
 
 
-class PreReportOfWorkSerializers(serializers.ModelSerializer):
-    """
-    Serializer for PreReportOfWork model
 
-    Не используется т.к. медленный
-    """
-    type_work = TPTypeWorkSerializers(many=True)
-    station = StationSerializers()
+
+
+
+
+# # Пока не использую
+# class ReportOfWorkSerializers(serializers.ModelSerializer):
+#     """
+#     Serializer for ReportOfWork model
+
+#     Не используется т.к. медленный
+#     Пока не используется. Думаю понадобится для вывода данных в таблицу
+#     """
+#     type_work = TechCardSerializers(many=True)
+#     station = StationSerializers()
     
-    class Meta:
-        model = PreReportOfWork
-        fields = ['id', 'data_start', 'data_end', 'note', 'subdivision', 'station', 'type_work']
+#     class Meta:
+#         model = ReportOfWork
+#         fields = ['id', 'date_start', 'date_end', 'note', 'subdivision', 'station', 'type_work']
 
 
-class PreReportOfWorkSerializers_for_fast_query(serializers.ModelSerializer):
-    """
-    Serializer for PreReportOfWork model
-    """
-    station__short_name = serializers.CharField(max_length=20, allow_blank=False)
-    type_work__code = serializers.CharField(max_length=20, allow_blank=False)
-    profile_user__user_site__first_name = serializers.CharField(max_length=20, allow_blank=False)
-    profile_user__user_site__last_name = serializers.CharField(max_length=20, allow_blank=False)
+
+
+
+# class AdvandcedReportOfWorkSerializersIn(ReportOfWorkSerializersIn):
+#     """
+#     Serializer for ReportOfWork model
+
+#     Набор данных для выполненого техпроцеса для выбранного пользователя
+#     """
+#     profile_user_id=serializers.IntegerField()
+
+#     class Meta(ReportOfWorkSerializersIn.Meta):
+#         fields = ReportOfWorkSerializersIn.Meta.fields + ('profile_user_id',)
+
+
+
+# # Этот сериализатор подходит если мы запрашиваем данные при сменен ильтра.
+# # Но я решил попробовать реализовать отдачу всей инфы на фронт, что бы манипуляция данными осуществлялась от туда.
+# class ReportOfWorkSerializers_for_fast_query_OLD(serializers.ModelSerializer):
+#     """
+#     Serializer for ReportOfWork model
+
+#     Пока не используется. Думаю понадобится для вывода данных в таблицу
+#     """
+#     station__short_name = serializers.CharField(max_length=20, allow_blank=False)
+#     type_work__code = serializers.CharField(max_length=20, allow_blank=False)
     
-    class Meta:
-        model = PreReportOfWork
-        fields = ['id', 'data_start', 'data_end', 'note', 'subdivision', 'station__short_name', 'type_work__code', 'profile_user__user_site__first_name', 'profile_user__user_site__last_name']
+#     class Meta:
+#         model = ReportOfWork
+#         fields = ['id', 'date_start', 'date_end', 'note', 'subdivision', 'station__short_name', 'type_work__code']
 
 
-class ProfileUserSerializer(serializers.ModelSerializer):
-    """
-    Serializer for ProfileUser model
-    """
-    user_site = UserSerializer()
-    okolotok = OkolotokSerializers()
+
+
+# # TYPE_WORK_CHOICES = (
+# #     ('0', 'all'),
+# #     ('1', 'du'),
+# #     ('2', 'notdu'),
+# # )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# class UserSerializer(serializers.ModelSerializer):
+#     """"""
+
+#     class Meta:
+#         model = User
+#         fields = ['id', 'username', 'email']
+
+
+# class UserProfileSerializer(serializers.ModelSerializer):
+#     """"""
+#     user = UserSerializer()
+#     okolotok = OkolotokSerializers()
     
-    class Meta:
-        model = ProfileUser
-        fields = ['id', 'user_site', 'active', 'okolotok']
+#     class Meta:
+#         model = UserProfile
+#         fields = ['id', 'user', 'active', 'okolotok']
+
