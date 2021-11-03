@@ -20,10 +20,10 @@ class Okolotok(models.Model):
         verbose_name='Номер'
     )
 
-    def count_userprofile(self):
-        return self.userprofile.count()
+    def count_userprofiles(self):
+        return self.userprofiles.count()
 
-    def count_report_of_work(self):
+    def count_reports_of_work(self):
         return self.report_of_work.count()
 
     def __str__(self):
@@ -50,11 +50,11 @@ class UserProfile(models.Model):
         default=DEFAULT_OKOLOTOK_ID,
         on_delete=models.PROTECT,
         verbose_name='Околоток',
-        related_name='userprofile'
+        related_name='userprofiles'
     )
 
-    def count_report_of_work(self):
-        return self.report_of_work.count()
+    def count_reports_of_work(self):
+        return self.reports_of_work.count()
 
     def __str__(self):
         if self.id is None:
@@ -81,8 +81,8 @@ class DeviceForWork(models.Model):
         verbose_name='Описание',
     )
 
-    def count_tech_card(self):
-        return self.tech_card.count()
+    def count_tech_cards(self):
+        return self.tech_cards.count()
 
     def __str__(self):
         return self.name
@@ -116,12 +116,15 @@ class TechCard(models.Model):
         default=False,
         verbose_name='журнал распоряжений'
     )
-    device_for_work = models.ManyToManyField(
+    devices_for_work = models.ManyToManyField(
         DeviceForWork,
         blank=True,
         verbose_name='Инструмент для работы',
-        related_name='tech_card',
+        related_name='tech_cards',
     )
+
+    def count_reports_of_work(self):
+        return self.reports_of_work.count()
 
     def __str__(self):
         return f'{self.code} {self.name}'
@@ -144,7 +147,7 @@ class Station(models.Model):
         verbose_name='Сокращение'
     )
 
-    def count_report_of_work(self):
+    def count_reports_of_work(self):
         return self.report_of_work.count()
 
     def __str__(self):
@@ -170,23 +173,23 @@ class ReportOfWork(models.Model):
         Station,
         on_delete=models.PROTECT,
         verbose_name='Место (станция)',
-        related_name='report_of_work'
+        related_name='reports_of_work'
     )
-    type_work = models.ManyToManyField(
+    tech_cards = models.ManyToManyField(
         TechCard,
         verbose_name='ТехПроцессы',
-        related_name='report_of_work'
+        related_name='reports_of_work'
     )
-    userprofile = models.ManyToManyField(
+    userprofiles = models.ManyToManyField(
         UserProfile,
         verbose_name='Исполнитель',
-        related_name='report_of_work'
+        related_name='reports_of_work'
     )
     okolotok = models.ForeignKey(
         Okolotok,
         on_delete=models.PROTECT,
         verbose_name='Околоток',
-        related_name='report_of_work'
+        related_name='reports_of_work'
     )
     note = models.TextField(
         max_length=500,
@@ -207,9 +210,9 @@ class ReportOfWork(models.Model):
         ds = self.date_start.strftime("%d %m %Y")
         de = self.date_end.strftime("%d %m %Y")
         station = str(self.station)
-        type_work = ", ".join(self.type_work.all().values_list('code', flat=True))
+        tech_cards = ", ".join(self.tech_cards.all().values_list('code', flat=True))
         
-        return f'{station} [{ds} - {de}] {type_work}'
+        return f'{station} [{ds} - {de}] {tech_cards}'
 
     class Meta:
         verbose_name = 'Запись ТП со временем отключения'

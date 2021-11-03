@@ -30,35 +30,35 @@ class ReportOfWorkInline(admin.TabularInline):
 
 @admin.register(Okolotok)
 class OkolotokAdmin(admin.ModelAdmin):
-    list_display = ('name', 'count_userprofile', 'count_report_of_work', 'id',)
-    fields = ('id', 'name', 'count_userprofile', 'count_report_of_work',)
-    readonly_fields = ('count_userprofile', 'count_report_of_work', 'id',)
-    search_fields = ('name', 'count_userprofile', 'count_report_of_work',)
+    list_display = ('name', 'count_userprofiles', 'count_reports_of_work', 'id',)
+    fields = ('id', 'name', 'count_userprofiles', 'count_reports_of_work',)
+    readonly_fields = ('count_userprofiles', 'count_reports_of_work', 'id',)
+    search_fields = ('name', 'count_userprofiles', 'count_reports_of_work',)
     ordering = ('id',)
 
     def get_queryset(self, request):
         qs = super(OkolotokAdmin, self).get_queryset(request)
-        qs = qs.annotate(count_userprofile=Count('userprofile')).order_by('-count_userprofile')
-        qs = qs.annotate(count_report_of_work=Count('report_of_work')).order_by('-count_report_of_work')
+        qs = qs.annotate(count_userprofiles=Count('userprofiles')).order_by('-count_userprofiles')
+        qs = qs.annotate(count_reports_of_work=Count('reports_of_work')).order_by('-count_reports_of_work')
         return qs
 
-    def count_userprofile(self, instance):
-        return instance.count_userprofile
+    def count_userprofiles(self, instance):
+        return instance.count_userprofiles
     
-    count_userprofile.short_description = 'Работников'
-    count_userprofile.admin_order_field = 'count_userprofile'
+    count_userprofiles.short_description = 'Работников'
+    count_userprofiles.admin_order_field = 'count_userprofiles'
 
-    def count_report_of_work(self, instance):
-        return instance.count_report_of_work
+    def count_reports_of_work(self, instance):
+        return instance.count_reports_of_work
 
-    count_report_of_work.short_description = 'Выполненных техпроцессов'
-    count_report_of_work.admin_order_field = 'count_report_of_work'
+    count_reports_of_work.short_description = 'Выполненных техпроцессов'
+    count_reports_of_work.admin_order_field = 'count_reports_of_work'
 
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'okolotok', 'count_report_of_work', 'id',)
-    fields = ('user', 'okolotok', 'count_report_of_work', 'id',)
-    readonly_fields = ('id', 'count_report_of_work',)
+    list_display = ('user', 'okolotok', 'count_reports_of_work', 'id',)
+    fields = ('user', 'okolotok', 'count_reports_of_work', 'id',)
+    readonly_fields = ('id', 'count_reports_of_work',)
     search_fields = ('user__username', 'okolotok__name',)
 
     # This will help you to disbale add functionality
@@ -71,72 +71,83 @@ class UserProfileAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super(UserProfileAdmin, self).get_queryset(request)
-        qs = qs.annotate(count_report_of_work=Count('report_of_work')).order_by('-count_report_of_work')
+        qs = qs.annotate(count_reports_of_work=Count('reports_of_work')).order_by('-count_reports_of_work')
         return qs
 
-    def count_report_of_work(self, instance):
-        return instance.count_report_of_work
+    def count_reports_of_work(self, instance):
+        return instance.count_reports_of_work
 
-    count_report_of_work.short_description = 'Выполненных техпроцессов'
-    count_report_of_work.admin_order_field = 'count_report_of_work'
+    count_reports_of_work.short_description = 'Выполненных техпроцессов'
+    count_reports_of_work.admin_order_field = 'count_reports_of_work'
 
 
 @admin.register(DeviceForWork)
 class DeviceForWorkAdmin(admin.ModelAdmin):
-    list_display = ('name', 'count_tech_card', 'id')
-    fields = ('name', 'description', 'count_tech_card', 'id')
+    list_display = ('name', 'count_tech_cards', 'id')
+    fields = ('name', 'description', 'count_tech_cards', 'id')
     ordering = ('id',)
     search_fields = ('name',)
-    readonly_fields = ('count_tech_card', 'id',)
+    readonly_fields = ('count_tech_cards', 'id',)
 
     def get_queryset(self, request):
         qs = super(DeviceForWorkAdmin, self).get_queryset(request)
-        qs = qs.annotate(count_tech_card=Count('tech_card')).order_by('-count_tech_card')
+        qs = qs.annotate(count_tech_cards=Count('tech_cards')).order_by('-count_tech_cards')
         return qs
 
-    def count_tech_card(self, instance):
-        return instance.count_tech_card
+    def count_tech_cards(self, instance):
+        return instance.count_tech_cards
 
-    count_tech_card.short_description = 'Количество техкарт'
-    count_tech_card.admin_order_field = 'count_tech_card'
+    count_tech_cards.short_description = 'Количество техкарт'
+    count_tech_cards.admin_order_field = 'count_tech_cards'
 
 
 @admin.register(TechCard)
 class TechCardAdmin(admin.ModelAdmin):
     list_display_links = ('code', 'name',)
-    list_display = ('code', 'name', 'du46', 'order', 'id')
-    fields = ('code', 'name', 'description', 'device_for_work', 'du46', 'order', 'id')
+    list_display = ('code', 'name', 'du46', 'order', 'count_reports_of_work', 'id')
+    fields = ('code', 'name', 'description', 'devices_for_work', 'du46', 'order', 'count_reports_of_work', 'id')
     ordering = ('code',)
-    search_fields = ('code', 'name', 'description')
-    list_filter = ('du46', 'order', 'device_for_work',)
-    filter_horizontal = ('device_for_work',)
-    readonly_fields = ['id']
+    search_fields = ('code', 'name', 'description', 'count_reports_of_work', 'id',)
+    list_filter = ('du46', 'order', 'devices_for_work',)
+    filter_horizontal = ('devices_for_work',)
+    readonly_fields = ('id', 'count_reports_of_work',)
+
+    def get_queryset(self, request):
+        qs = super(TechCardAdmin, self).get_queryset(request)
+        qs = qs.annotate(count_reports_of_work=Count('reports_of_work')).order_by('-count_reports_of_work')
+        return qs
+
+    def count_reports_of_work(self, instance):
+        return instance.count_reports_of_work
+
+    count_reports_of_work.short_description = 'Выполненных техпроцессов'
+    count_reports_of_work.admin_order_field = 'count_reports_of_work'
 
 
 @admin.register(Station)
 class StationAdmin(admin.ModelAdmin):
-    list_display = ('name', 'short_name', 'count_report_of_work', 'id',)
-    fields = ('name', 'short_name', 'count_report_of_work', 'id',)
+    list_display = ('name', 'short_name', 'count_reports_of_work', 'id',)
+    fields = ('name', 'short_name', 'count_reports_of_work', 'id',)
     search_fields = ('name', 'short_name',)
-    readonly_fields = ('count_report_of_work', 'id',)
+    readonly_fields = ('count_reports_of_work', 'id',)
 
     def get_queryset(self, request):
         qs = super(StationAdmin , self).get_queryset(request)
-        qs = qs.annotate(count_report_of_work=Count('report_of_work')).order_by('-count_report_of_work')
+        qs = qs.annotate(count_reports_of_work=Count('reports_of_work')).order_by('-count_reports_of_work')
         return qs
 
-    def count_report_of_work(self, instance):
-        return instance.count_report_of_work
+    def count_reports_of_work(self, instance):
+        return instance.count_reports_of_work
 
-    count_report_of_work.short_description = 'Выполненных техпроцессов'
-    count_report_of_work.admin_order_field = 'count_report_of_work'
+    count_reports_of_work.short_description = 'Выполненных техпроцессов'
+    count_reports_of_work.admin_order_field = 'count_reports_of_work'
 
 
 @admin.register(ReportOfWork)
 class ReportOfWorkAdmin(admin.ModelAdmin):
     list_display = ('date_start', 'date_end', 'station', 'okolotok', 'note', 'subdivision', 'id')
-    fields = ('date_start', 'date_end', 'station', 'note', 'userprofile', 'okolotok', 'subdivision', 'id', 'type_work')
-    filter_horizontal = ('type_work', 'userprofile',)
+    fields = ('date_start', 'date_end', 'station', 'note', 'userprofiles', 'okolotok', 'subdivision', 'id', 'tech_cards')
+    filter_horizontal = ('tech_cards', 'userprofiles',)
     readonly_fields = ('id',)
     ordering = ('date_start', 'date_end')
 

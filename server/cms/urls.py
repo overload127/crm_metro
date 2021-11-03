@@ -11,17 +11,14 @@ app_name = 'api_cms'
 urlpatterns = router.urls
 
 urlpatterns += [
+    path('userprofile/info/', views.UserProfileInfo.as_view(), name='userprofile_info'),
     path('wiki/okolotok/', views.WikiOkolotok.as_view(), name='wiki_okolotok'),
     path('wiki/device_for_work/', views.WikiDeviceForWork.as_view(), name='wiki_device_for_work'),
     path('wiki/tech_card/', views.WikiTechCard.as_view(), name='wiki_tech_card'),
     path('wiki/station/', views.WikiStation.as_view(), name='wiki_station'),
-    path('service/report_of_work/', views.ServiceReportOfWork.as_view(), name='service_report_of_work'),
+    path('service/report_of_work/', views.ServiceReportOfWork.as_view(), name='service_create_report_of_work'),
+    path('service/report_of_work/<str:date_start>/<str:date_end>/<int:okolotok>/<int:station>/<int:userprofiles>/<str:du46>/<str:order>/<int:tech_cards>/', views.ServiceReportOfWork.as_view(), name='service_request_report_of_work'),
 
-    path('service/report_of_work/<str:date_start>/<str:date_end>/<int:okolotok>/<int:station>/<int:userprofiles>/<str:du46>/<str:order>/<int:type_works>/', views.ServiceReportOfWork.as_view(), name='service_request_report_of_work'),
-
-    # path('tp_work/', views.TPWorkCreate.as_view(), name='tp_work'),
-    # path('tp_work/<str:date_start>/<str:date_end>/<int:all_user>/<int:station_id>/', views.TPWorkCreate.as_view(), name='tp_work'),
-    # path('tp_work/', views.TPWorkCreate.as_view(), name='tp_work_create'),
 
     # тестовые и не нужные линки
 

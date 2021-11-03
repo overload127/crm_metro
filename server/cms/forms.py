@@ -30,7 +30,7 @@ class OkolotokAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(OkolotokAdminForm, self).__init__(*args, **kwargs)
         if self.instance.pk is not None:
-            self.fields['userprofiles'].initial = self.instance.userprofile.all()
+            self.fields['userprofiles'].initial = self.instance.userprofiles.all()
 
     def save(self, commit=True):
         okolotok = super(OkolotokAdminForm, self).save(commit=False)
@@ -38,7 +38,7 @@ class OkolotokAdminForm(forms.ModelForm):
             okolotok.save()
 
         if okolotok.pk is not None:
-            okolotok.userprofile.set(self.cleaned_data['userprofiles'])
+            okolotok.userprofiles.set(self.cleaned_data['userprofiles'])
             self.save_m2m()
 
         return okolotok
