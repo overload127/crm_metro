@@ -8,7 +8,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -20,7 +20,7 @@
         "description": "",
         "du46": false,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -32,7 +32,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -44,7 +44,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -56,7 +56,7 @@
         "description": "",
         "du46": false,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -68,7 +68,7 @@
         "description": "",
         "du46": false,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -80,7 +80,10 @@
         "description": "",
         "du46": false,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": [
+            1,
+            2
+        ]
     }
 },
 {
@@ -92,7 +95,7 @@
         "description": "",
         "du46": false,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -104,7 +107,7 @@
         "description": "",
         "du46": false,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -116,7 +119,7 @@
         "description": "",
         "du46": false,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -128,7 +131,7 @@
         "description": "",
         "du46": false,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -140,7 +143,7 @@
         "description": "",
         "du46": false,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -152,7 +155,7 @@
         "description": "",
         "du46": false,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -164,7 +167,7 @@
         "description": "",
         "du46": false,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -176,7 +179,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -188,7 +191,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -200,7 +203,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -212,7 +215,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -224,7 +227,7 @@
         "description": "",
         "du46": false,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -236,7 +239,7 @@
         "description": "",
         "du46": false,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -248,7 +251,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -260,7 +263,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -272,7 +275,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -284,7 +287,7 @@
         "description": "",
         "du46": false,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -296,7 +299,7 @@
         "description": "",
         "du46": false,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -308,7 +311,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -320,7 +323,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -332,7 +335,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -344,7 +347,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -356,7 +359,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -368,7 +371,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -380,7 +383,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -392,7 +395,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -404,7 +407,7 @@
         "description": "",
         "du46": false,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -416,7 +419,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -428,7 +431,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -440,7 +443,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -452,7 +455,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -464,7 +467,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -476,7 +479,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -488,7 +491,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -500,7 +503,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -512,7 +515,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -524,7 +527,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -536,7 +539,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -548,7 +551,7 @@
         "description": "",
         "du46": false,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -560,7 +563,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -572,7 +575,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -584,7 +587,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -596,7 +599,7 @@
         "description": "",
         "du46": true,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 },
 {
@@ -608,7 +611,7 @@
         "description": "",
         "du46": false,
         "order": false,
-        "device_for_work": []
+        "devices_for_work": []
     }
 }
 ]
