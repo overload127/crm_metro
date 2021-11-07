@@ -10,16 +10,27 @@ from .serializers import UserProfileSerializer, OkolotokSerializers, TechCardSer
 from .models import TechCard, DeviceForWork, Station, ReportOfWork, UserProfile, Okolotok
 
 
-class UserProfileInfo(APIView):
+class UserProfileMe(APIView):
     """Возвращает информацию о авторизованном сотруднике"""
 
     # TODO: Настройти и проверить права
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):
-        # queryset = UserProfile.objects
-        queryset = UserProfile.objects.values('id', 'user__first_name', 'okolotok__id', 'okolotok__name').get(user__id=request.user.id)
+        queryset = UserProfile.objects.values('id', 'user__id', 'user__first_name', 'okolotok__id', 'okolotok__name').get(user__id=request.user.id)
         serializer = UserProfileSerializer(queryset)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class UserProfileAll(APIView):
+    """Возвращает информацию о всех сотруднике"""
+
+    # TODO: Настройти и проверить права
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request):
+        queryset = UserProfile.objects.values('id', 'user__id', 'user__first_name', 'okolotok__id', 'okolotok__name').all()
+        serializer = UserProfileSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -88,7 +99,8 @@ class ServiceReportOfWork(APIView):
         return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request):
-        reques_serializer = RequstReportOfWorkSerializer(data=request.query_params)
+        query_params = RequstReportOfWorkSerializer.pre_validate(request.query_params)
+        reques_serializer = RequstReportOfWorkSerializer(data=query_params) #, read_only=True
         if(reques_serializer.is_valid(raise_exception=True)):
             queryset = reques_serializer.get_queryset_v1()
             serializer = ReportOfWorkSerializer(queryset, many=True)

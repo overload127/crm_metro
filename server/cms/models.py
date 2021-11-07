@@ -54,7 +54,7 @@ class UserProfile(models.Model):
     )
 
     def count_reports_of_work(self):
-        return self.reports_of_work.count()
+        return self.user.reports_of_work.count()
 
     def __str__(self):
         if self.id is None:
@@ -180,9 +180,9 @@ class ReportOfWork(models.Model):
         verbose_name='ТехПроцессы',
         related_name='reports_of_work'
     )
-    userprofiles = models.ManyToManyField(
-        UserProfile,
-        verbose_name='Исполнитель',
+    users = models.ManyToManyField(
+        User,
+        verbose_name='Исполнители',
         related_name='reports_of_work'
     )
     okolotok = models.ForeignKey(

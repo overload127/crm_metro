@@ -71,7 +71,7 @@ class UserProfileAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super(UserProfileAdmin, self).get_queryset(request)
-        qs = qs.annotate(count_reports_of_work=Count('reports_of_work')).order_by('-count_reports_of_work')
+        qs = qs.annotate(count_reports_of_work=Count('user__reports_of_work')).order_by('-count_reports_of_work')
         return qs
 
     def count_reports_of_work(self, instance):
@@ -146,8 +146,8 @@ class StationAdmin(admin.ModelAdmin):
 @admin.register(ReportOfWork)
 class ReportOfWorkAdmin(admin.ModelAdmin):
     list_display = ('date_start', 'date_end', 'station', 'okolotok', 'note', 'subdivision', 'id')
-    fields = ('date_start', 'date_end', 'station', 'note', 'userprofiles', 'okolotok', 'subdivision', 'id', 'tech_cards')
-    filter_horizontal = ('tech_cards', 'userprofiles',)
+    fields = ('date_start', 'date_end', 'station', 'note', 'users', 'okolotok', 'subdivision', 'id', 'tech_cards')
+    filter_horizontal = ('tech_cards', 'users',)
     readonly_fields = ('id',)
     ordering = ('date_start', 'date_end')
 

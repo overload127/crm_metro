@@ -28,12 +28,13 @@ class OkolotokSerializers(serializers.ModelSerializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     """"""
     user__first_name = serializers.CharField(max_length=150, allow_blank=True)
+    user__id = serializers.IntegerField()
     okolotok__id = serializers.IntegerField()
     okolotok__name = serializers.CharField(max_length=150, allow_blank=True)
     
     class Meta:
         model = UserProfile
-        fields = ('id', 'user__first_name', 'okolotok__id', 'okolotok__name',)
+        fields = ('id', 'user__id', 'user__first_name', 'okolotok__id', 'okolotok__name',)
 
 
 class DeviceForWorkSerializers(serializers.ModelSerializer):
@@ -85,18 +86,18 @@ class ReportOfWorkCreateSerializers(serializers.ModelSerializer):
         many=True, queryset=TechCard.objects.all())
     okolotok = serializers.PrimaryKeyRelatedField(
         queryset=Okolotok.objects.all())
-    userprofiles = serializers.PrimaryKeyRelatedField(
-        many=True, queryset=UserProfile.objects.all())
+    users = serializers.PrimaryKeyRelatedField(
+        many=True, queryset=User.objects.all())
     
     def validate_tech_cards(self, tech_cards):
         if len(tech_cards) == 0:
             raise serializers.ValidationError("must be one or more")
         return tech_cards
 
-    def validate_userprofiles(self, userprofiles):
-        if len(userprofiles) == 0:
+    def validate_users(self, users):
+        if len(users) == 0:
             raise serializers.ValidationError("must be one or more")
-        return userprofiles
+        return users
     
     class Meta:
         model = ReportOfWork
@@ -106,7 +107,7 @@ class ReportOfWorkCreateSerializers(serializers.ModelSerializer):
             'station',
             'tech_cards',
             'okolotok',
-            'userprofiles',
+            'users',
             'note',
             'subdivision')
         extra_kwargs = {
@@ -119,6 +120,23 @@ class ReportOfWorkCreateSerializers(serializers.ModelSerializer):
 
 class RequstReportOfWorkSerializer(serializers.Serializer):
     """"""
+    @staticmethod
+    def pre_validate(in_query_params):
+        out_query_params = in_query_params.copy()
+
+        # проверка параметра users
+        if 'users' in out_query_params:
+            in_list = out_query_params.getlist('users')
+            out_list = [item for item in in_list if item != '']
+            out_query_params.setlist('users', out_list)
+
+        # проверка параметра users
+        if 'tech_cards' in out_query_params:
+            in_list = out_query_params.getlist('tech_cards')
+            out_list = [item for item in in_list if item != '']
+            out_query_params.setlist('tech_cards', out_list)
+        
+        return out_query_params
 
     def filter_du(value):
         """Создает ленивый запрос, с замыканием для параметра ДУ46"""
@@ -158,10 +176,16 @@ class RequstReportOfWorkSerializer(serializers.Serializer):
     station = serializers.PrimaryKeyRelatedField(
         required=False,
         queryset=Station.objects.all())
-    userprofiles = serializers.PrimaryKeyRelatedField(
-        required=False,
+    users = serializers.PrimaryKeyRelatedField(
         many=True,
-        queryset=UserProfile.objects.all())
+        queryset=User.objects.all(),
+        required=False,
+        default=None)
+    users = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=User.objects.all(),
+        required=False,
+        default=None)
     du46 = serializers.ChoiceField(
         default='all',
         choices=TECH_CARD_DU46_CHOICES)
@@ -179,79 +203,83 @@ class RequstReportOfWorkSerializer(serializers.Serializer):
         date_start = self.validated_data.get('date_start', None)
         if date_start is None:
             date_start = datetime.now().replace(day=1)
+        else:
+            date_start = datetime.combine(date_start, datetime.min.time())
         date_start = date_start.replace(hour=0, minute=0, second=0, microsecond=0)
         date_start = make_aware(date_start)
-        queryset.filter(date_start__gte=date_start)
+        queryset = queryset.filter(date_start__gte=date_start)
 
         date_end = self.validated_data.get('date_end', None)
         if date_end is None:
             date_end = datetime.now()
             date_end = datetime.now().replace(day=calendar.monthrange(date_end.year, date_end.month)[1])
+        else:
+            date_end = datetime.combine(date_end, datetime.max.time())
         date_end = date_end.replace(hour=23, minute=59, second=59, microsecond=0)
         date_end = make_aware(date_end)
-        queryset.filter(date_start__lte=date_end)
+        queryset = queryset.filter(date_start__lte=date_end)
 
         station = self.validated_data.get('station', None)
         if station:
-            queryset.filter(station=station)
+            queryset = queryset.filter(station=station)
 
         okolotok = self.validated_data.get('okolotok', None)
-        if station:
-            queryset.filter(okolotok=okolotok)
+        if okolotok:
+            queryset = queryset.filter(okolotok=okolotok)
 
         queryset = self.TECH_CARD_DU46_CHOICES[self.validated_data['du46']](queryset)
         queryset = self.TECH_CARD_ORDER_CHOICES[self.validated_data['order']](queryset)
 
-        userprofiles = self.validated_data.get('userprofiles', None)
-        if userprofiles:
-            queryset.filter(userprofile__in=userprofiles)
+        users = self.validated_data.get('users', None)
+        if users:
+            queryset = queryset.filter(users__in=users)
 
         tech_cards = self.validated_data.get('tech_cards', None)
-        if userprofiles:
-            queryset.filter(tech_cards__in=tech_cards)
+        if tech_cards:
+            queryset = queryset.filter(tech_cards__in=tech_cards)
 
         return queryset
 
-    def get_queryset_report_of_work(self):
-        queryset = ReportOfWork.objects.all()
+    # def get_queryset_report_of_work(self):
+    #     queryset = ReportOfWork.objects.all()
 
-        date_start = self.validated_data.get('date_start', None)
-        if date_start:
-            date_start = date_start.replace(hour=0, minute=0, second=0, microsecond=0)
-            queryset.filter(date_start__gte=date_start)
+    #     date_start = self.validated_data.get('date_start', None)
+    #     if date_start:
+    #         date_start = date_start.replace(hour=0, minute=0, second=0, microsecond=0)
+    #         queryset = queryset.filter(date_start__gte=date_start)
 
-        date_end = self.validated_data.get('date_end', None)
-        if date_end:
-            date_end = date_end.replace(hour=23, minute=59, second=59, microsecond=0)
-            queryset.filter(date_start__lte=date_end)
+    #     date_end = self.validated_data.get('date_end', None)
+    #     if date_end:
+    #         date_end = date_end.replace(hour=23, minute=59, second=59, microsecond=0)
+    #         queryset = queryset.filter(date_start__lte=date_end)
         
-        station = self.validated_data.get('station', None)
-        if station:
-            queryset.filter(station=station)
+    #     station = self.validated_data.get('station', None)
+    #     if station:
+    #         queryset = queryset.filter(station=station)
 
-        okolotok = self.validated_data.get('okolotok', None)
-        if station:
-            queryset.filter(okolotok=okolotok)
+    #     okolotok = self.validated_data.get('okolotok', None)
+    #     if okolotok:
+    #         queryset = queryset.filter(okolotok=okolotok)
         
-        userprofiles = self.validated_data.get('userprofiles', None)
-        if userprofiles:
-            queryset.filter(userprofile__in=userprofiles)
+    #     users = self.validated_data.get('users', None)
+    #     if users:
+    #         queryset = queryset.filter(users__in=users)
 
-        tech_cards = self.validated_data.get('tech_cards', None)
-        if userprofiles:
-            queryset.filter(tech_cards__in=tech_cards)
+    #     tech_cards = self.validated_data.get('tech_cards', None)
+    #     if tech_cards:
+    #         queryset = queryset.filter(tech_cards__in=tech_cards)
         
-        queryset = queryset.values_list('id', 'date_start', 'date_end', 'station__name', 'station__short_name', 'okolotok__name', 'userprofiles', 'tech_cards', 'note', 'subdivision')
-        return queryset
+    #     queryset = queryset.values_list('id', 'date_start', 'date_end', 'station__name', 'station__short_name', 'okolotok__name', 'users', 'tech_cards', 'note', 'subdivision')
+    #     return queryset
 
-    def get_queryset_tech_catd(self):
-        queryset = TechCard.objects.all().values_list('id', 'name', 'devices_for_work__name')
+    # def get_queryset_tech_catd(self):
+    #     queryset = TechCard.objects.all().values_list('id', 'name', 'devices_for_work__name')
 
-        queryset = self.TECH_CARD_DU46_CHOICES[self.validated_data['du46']](queryset)
-        queryset = self.TECH_CARD_ORDER_CHOICES[self.validated_data['order']](queryset)
+    #     queryset = self.TECH_CARD_DU46_CHOICES[self.validated_data['du46']](queryset)
+    #     queryset = self.TECH_CARD_ORDER_CHOICES[self.validated_data['order']](queryset)
         
-        queryset = queryset.values_list('id', 'name', 'devices_for_work__name')
-        return queryset
+    #     queryset = queryset.values_list('id', 'name', 'devices_for_work__name')
+    #     return queryset
 
 
 
@@ -260,7 +288,7 @@ class ReportOfWorkSerializer(serializers.ModelSerializer):
     station = StationSerializers(read_only=True)
     okolotok = OkolotokSerializers(read_only=True)
     tech_cards = TechCardSerializers(many=True, read_only=True)
-    userprofiles = UserProfileSerializer(read_only=True)
+    users = UserSerializer(many=True, read_only=True)
 
     class Meta:
         model = ReportOfWork
@@ -270,7 +298,7 @@ class ReportOfWorkSerializer(serializers.ModelSerializer):
             'date_end',
             'station',
             'okolotok',
-            'userprofiles',
+            'users',
             'tech_cards',
             'note',
             'subdivision',)
@@ -280,7 +308,7 @@ class ReportOfWorkSerializer(serializers.ModelSerializer):
             'date_end',
             'station',
             'okolotok',
-            'userprofiles',
+            'users',
             'tech_cards',
             'note',
             'subdivision',)
