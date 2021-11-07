@@ -1,15 +1,14 @@
-// import api from "./main";
+import {
+  apiCMSPrivate,
+} from "./instances";
 
 
-// export default class UserService {
-//   static async login(username, password) {
-//     return api.post('auth/token/login', {
-//       username,
-//       password
-//     });
-//   }
+export default class UserService {
+  static async getUserProfileMe() {
+    return apiCMSPrivate.get('userprofile/me', {});
+  }
 
-//   static async logout() {
-//     return api.post('auth/token/logout');
-//   }
-// }
+  static async getUserProfileAll() {
+    return apiCMSPrivate.get('userprofile/all', {});
+  }
+}

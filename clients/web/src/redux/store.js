@@ -6,13 +6,13 @@ import {
 import thunkMiddkeware from 'redux-thunk';
 import authReduser from './auth/redusers';
 import wikiReduser from './wiki/redusers';
-import TPActionsReduser from './TPActions/redusers';
+import TPWorkReduser from './tpwork/redusers';
 
 
 const rootRedusers = combineReducers({
   auth: authReduser,
   wiki: wikiReduser,
-  TPActions: TPActionsReduser,
+  tpwork: TPWorkReduser,
 });
 
 const store = createStore(rootRedusers, applyMiddleware(thunkMiddkeware));

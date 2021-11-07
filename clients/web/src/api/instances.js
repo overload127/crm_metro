@@ -1,9 +1,13 @@
 import * as axios from 'axios';
 
 
+// const URL = 'http://91.122.40.167:8000';
+// const URL = 'http://192.168.1.103:8000';
+const URL = 'http://localhost:8000';
+
+
 export const apiCMSPrivate = axios.create({
-  baseURL: 'http://192.168.1.103:8000/api/v1/cms',
-  // baseURL: 'http://localhost:8000/api/v1/cms',
+  baseURL: `${URL}/api/v1/cms`,
 });
 
 apiCMSPrivate.interceptors.request.use((config) => {
@@ -16,13 +20,11 @@ apiCMSPrivate.interceptors.request.use((config) => {
 });
 
 export const apiCMSPublic = axios.create({
-  baseURL: 'http://192.168.1.103:8000/api/v1/cms',
-  // baseURL: 'http://localhost:8000/api/v1/cms',
+  baseURL: `${URL}/api/v1/cms`,
 });
 
 export const authApi = axios.create({
-  baseURL: 'http://192.168.1.103:8000/auth',
-  // baseURL: 'http://localhost:8000/auth',
+  baseURL: `${URL}/auth`,
 });
 
 authApi.interceptors.request.use((config) => {

@@ -28,7 +28,9 @@ export const login = (username, password) => (dispatch) => {
       });
     });
 
-  dispatch(setProcessAuthEnd());
+  // Задержка для того, что бы приложение успело обновиться и не вывело сообщение о том,
+  // что страница логин доступна только не авторизованным пользователям
+  setTimeout(() => dispatch(setProcessAuthEnd()), 2000);
 };
 
 

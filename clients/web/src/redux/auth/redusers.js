@@ -7,7 +7,6 @@ import {
 
 
 const defaultState = {
-  user: {},
   isAuth: Boolean(localStorage.getItem('token')),
   processAuth: false,
   nextUrl: '/',
