@@ -83,8 +83,8 @@ class UserProfileAdmin(admin.ModelAdmin):
 
 @admin.register(DeviceForWork)
 class DeviceForWorkAdmin(admin.ModelAdmin):
-    list_display = ('name', 'short_name', 'model', 'count_tech_cards', 'id')
-    fields = ('name', 'short_name', 'model', 'description', 'count_tech_cards', 'id')
+    list_display = ('name', 'short_name', 'count_tech_cards', 'id')
+    fields = ('name', 'short_name', 'description', 'count_tech_cards', 'id')
     ordering = ('id',)
     search_fields = ('name', 'short_name',)
     readonly_fields = ('count_tech_cards', 'id',)

@@ -1,13 +1,16 @@
 import calendar
+import requests
 from datetime import datetime, timedelta
 
+from django.conf import settings
 from django.contrib.auth.models import User
-from django.db.models import Prefetch
+from django.db.models import Prefetch, OuterRef, Subquery, BooleanField
 from django.db.models.aggregates import Count
-from django.db.models import OuterRef, Subquery
 from django.utils.timezone import make_aware
 
 from rest_framework import serializers
+
+from djoser.serializers import TokenCreateSerializer
 
 from .models import ReportOfWork, TechCard, Station, Okolotok, UserProfile, DeviceForWork
 
@@ -45,8 +48,8 @@ class DeviceForWorkSerializers(serializers.ModelSerializer):
     """"""
     class Meta:
         model = DeviceForWork
-        fields = ('id', 'short_name', 'name', 'model', 'description',)
-        read_only_fields = ('id', 'short_name', 'name', 'model', 'description',)
+        fields = ('id', 'short_name', 'name', 'description',)
+        read_only_fields = ('id', 'short_name', 'name', 'description',)
 
 
 class TechCardSerializers(serializers.ModelSerializer):
@@ -360,3 +363,28 @@ class ReportOfWorkSerializer(serializers.ModelSerializer):
             'tech_cards',
             'note',
             'subdivision',)
+
+
+
+class CapchaTokenCreateSerializer(TokenCreateSerializer):
+    g_recaptcha_response = serializers.CharField()
+
+    def is_recaptcha_valid(self, response):
+        # https://developers.google.com/recaptcha/docs/verify
+        url = 'https://www.google.com/recaptcha/api/siteverify'
+        recaptcha_key = settings.RECAPTCHA_PRIVATE_KEY
+        r = requests.post(url, data={'secret': recaptcha_key, 'response': response})
+        success = BooleanField().to_python(r.json().get('success'))
+        return success
+
+    def validate(self, attrs):
+        attrs = super().validate(attrs)
+        if not self.is_recaptcha_valid(attrs['g_recaptcha_response']):
+            raise serializers.ValidationError('invalid captcha response')
+        return attrs
+
+    def update(self, instance, validated_data):
+        super().update(instance, validated_data)
+
+    def create(self, validated_data):
+        super().create(validated_data)

@@ -11,7 +11,7 @@ from django.views import generic
 
 
 class AdminHoneypot(generic.FormView):
-    template_name = 'login.html'
+    template_name = 'admin_honeypot/login.html'
     form_class = HoneypotLoginForm
 
     def dispatch(self, request, *args, **kwargs):

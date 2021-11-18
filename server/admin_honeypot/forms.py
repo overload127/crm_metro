@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.admin.forms import AdminAuthenticationForm
 
 from captcha.fields import ReCaptchaField
-from captcha.widgets import ReCaptchaV3
+from captcha.widgets import ReCaptchaV2Checkbox
 
 
 class HoneypotLoginForm(AdminAuthenticationForm):
@@ -21,4 +21,4 @@ class HoneypotLoginForm(AdminAuthenticationForm):
             params={'username': self.username_field.verbose_name}
         )
     
-    captcha = ReCaptchaField(widget=ReCaptchaV3)
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)

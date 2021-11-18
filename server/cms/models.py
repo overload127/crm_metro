@@ -81,11 +81,6 @@ class DeviceForWork(models.Model):
         blank=False,
         verbose_name='Сокращение'
     )
-    model = models.CharField(
-        max_length=200,
-        blank=False,
-        verbose_name='Модель',
-    )
     description = models.TextField(
         blank = True,
         verbose_name='Описание',

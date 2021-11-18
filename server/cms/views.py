@@ -68,7 +68,7 @@ class WikiDeviceForWork(APIView):
 
     def get(self, request):
         queryset = DeviceForWork.objects.all()
-        queryset = queryset.values('id', 'name', 'short_name', 'model', 'description')
+        queryset = queryset.values('id', 'name', 'short_name', 'description')
         serializer = DeviceForWorkSerializers(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 

@@ -1,8 +1,12 @@
 from django import forms
 from django.utils.translation import gettext, gettext_lazy as _
 from django.contrib.admin.widgets import FilteredSelectMultiple
+from django.contrib.auth.forms import AuthenticationForm
 
 from .models import Okolotok, UserProfile, ReportOfWork
+
+from captcha.fields import ReCaptchaField
+from captcha.widgets import ReCaptchaV2Checkbox
 
 
 class OkolotokAdminForm(forms.ModelForm):
@@ -45,18 +49,8 @@ class OkolotokAdminForm(forms.ModelForm):
         return okolotok
 
 
-
-
-from django.contrib.auth.forms import AuthenticationForm
-
-from django import forms
-
-from captcha.fields import ReCaptchaField
-from captcha.widgets import ReCaptchaV3
-
-
 class AuthAdminForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super(AuthAdminForm, self).__init__(*args, **kwargs)
 
-    captcha = ReCaptchaField(widget=ReCaptchaV3)
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)

@@ -27,7 +27,7 @@ from cms.forms import AuthAdminForm
 
 admin.autodiscover()
 admin.site.login_form = AuthAdminForm
-admin.site.login_template = 'login.html'
+admin.site.login_template = 'cms/login.html'
 
 
 urlpatterns = [

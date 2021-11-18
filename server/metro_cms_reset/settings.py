@@ -169,6 +169,12 @@ CORS_ORIGIN_ALLOW_ALL = True
 #     'http://localhost:3000',
 # )
 
+DJOSER = {
+    'SERIALIZERS': {
+         'token_create': 'cms.serializers.CapchaTokenCreateSerializer'
+    }
+}
+
 RECAPTCHA_PUBLIC_KEY = secrets_settings.RECAPTCHA_PUBLIC_KEY
 RECAPTCHA_PRIVATE_KEY = secrets_settings.RECAPTCHA_PRIVATE_KEY
 RECAPTCHA_REQUIRED_SCORE = 0.85
