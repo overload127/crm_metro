@@ -151,6 +151,17 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "django-recaptcha"
+version = "2.0.6"
+description = "Django recaptcha form field/widget app."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+django = ">1.11,<4.0"
+
+[[package]]
 name = "django-templated-mail"
 version = "1.1.1"
 description = "Send emails using Django template system."
@@ -438,7 +449,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "60f044572e3e588a6d20ef5cf597cf2ee3c9d660f3c627696d46f0bfa6b5667d"
+content-hash = "0c0445b87927b8889c03ba46da48149f443f278f31076f318286c2295c40f028"
 
 [metadata.files]
 asgiref = [
@@ -553,6 +564,9 @@ django-filter = [
 django-grappelli = [
     {file = "django-grappelli-2.15.3.tar.gz", hash = "sha256:e21dc664faef6990006c05a6939ee1e2839e13834a338b1f644ea6edb19f68de"},
     {file = "django_grappelli-2.15.3-py2.py3-none-any.whl", hash = "sha256:edfb8539d000d5908836d909134021c6b3ab3bd2975e7524385b9b3736548598"},
+]
+django-recaptcha = [
+    {file = "django_recaptcha-2.0.6-py2.py3-none-any.whl", hash = "sha256:567784963fd5400feaf92e8951d8dbbbdb4b4c48a76e225d4baa63a2c9d2cd8c"},
 ]
 django-templated-mail = [
     {file = "django-templated-mail-1.1.1.tar.gz", hash = "sha256:8db807effebb42a532622e2d142dfd453dafcd0d7794c4c3332acb90656315f9"},

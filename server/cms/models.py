@@ -76,6 +76,16 @@ class DeviceForWork(models.Model):
         blank=False,
         verbose_name='Наименование',
     )
+    short_name = models.CharField(
+        max_length=20,
+        blank=False,
+        verbose_name='Сокращение'
+    )
+    model = models.CharField(
+        max_length=200,
+        blank=False,
+        verbose_name='Модель',
+    )
     description = models.TextField(
         blank = True,
         verbose_name='Описание',
@@ -88,8 +98,8 @@ class DeviceForWork(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'Инструмент для работы'
-        verbose_name_plural = 'Инструменты для работы'
+        verbose_name = 'Прибор для работы'
+        verbose_name_plural = 'Приборы для работы'
 
 
 # Есть готовые данные в фикстуре. Можно попробовать загрузить.
@@ -116,10 +126,18 @@ class TechCard(models.Model):
         default=False,
         verbose_name='журнал распоряжений'
     )
+    pafu = models.BooleanField(
+        default=False,
+        verbose_name='Паспорт АФУ'
+    )
+    jtp  = models.BooleanField(
+        default=False,
+        verbose_name='Журнал технических параметров'
+    )
     devices_for_work = models.ManyToManyField(
         DeviceForWork,
         blank=True,
-        verbose_name='Инструмент для работы',
+        verbose_name='Приборы для работы',
         related_name='tech_cards',
     )
 
@@ -210,6 +228,7 @@ class ReportOfWork(models.Model):
         ds = self.date_start.strftime("%d %m %Y")
         de = self.date_end.strftime("%d %m %Y")
         station = str(self.station)
+        # TODO: Есть ошибка. Возможно придется отказаться от вывода списка тп
         tech_cards = ", ".join(self.tech_cards.all().values_list('code', flat=True))
         
         return f'{station} [{ds} - {de}] {tech_cards}'

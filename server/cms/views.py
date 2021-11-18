@@ -1,4 +1,5 @@
 from datetime import datetime
+import time
 
 from django.utils.timezone import make_aware
 
@@ -60,14 +61,14 @@ class WikiTechCard(APIView):
 
 
 class WikiDeviceForWork(APIView):
-    """Возвращает все варианты инструментов и измерительных приборов"""
+    """Возвращает все варианты приборов и измерительных приборов"""
 
     # TODO: Настройти и проверить права
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):
         queryset = DeviceForWork.objects.all()
-        queryset = queryset.values('id', 'name', 'description')
+        queryset = queryset.values('id', 'name', 'short_name', 'model', 'description')
         serializer = DeviceForWorkSerializers(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -100,7 +101,7 @@ class ServiceReportOfWork(APIView):
 
     def get(self, request):
         query_params = RequstReportOfWorkSerializer.pre_validate(request.query_params)
-        reques_serializer = RequstReportOfWorkSerializer(data=query_params) #, read_only=True
+        reques_serializer = RequstReportOfWorkSerializer(data=query_params)
         if(reques_serializer.is_valid(raise_exception=True)):
             queryset = reques_serializer.get_queryset_v1()
             serializer = ReportOfWorkSerializer(queryset, many=True)

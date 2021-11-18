@@ -83,10 +83,10 @@ class UserProfileAdmin(admin.ModelAdmin):
 
 @admin.register(DeviceForWork)
 class DeviceForWorkAdmin(admin.ModelAdmin):
-    list_display = ('name', 'count_tech_cards', 'id')
-    fields = ('name', 'description', 'count_tech_cards', 'id')
+    list_display = ('name', 'short_name', 'model', 'count_tech_cards', 'id')
+    fields = ('name', 'short_name', 'model', 'description', 'count_tech_cards', 'id')
     ordering = ('id',)
-    search_fields = ('name',)
+    search_fields = ('name', 'short_name',)
     readonly_fields = ('count_tech_cards', 'id',)
 
     def get_queryset(self, request):
@@ -104,11 +104,11 @@ class DeviceForWorkAdmin(admin.ModelAdmin):
 @admin.register(TechCard)
 class TechCardAdmin(admin.ModelAdmin):
     list_display_links = ('code', 'name',)
-    list_display = ('code', 'name', 'du46', 'order', 'count_reports_of_work', 'id')
-    fields = ('code', 'name', 'description', 'devices_for_work', 'du46', 'order', 'count_reports_of_work', 'id')
+    list_display = ('code', 'name', 'du46', 'pafu', 'jtp', 'order', 'count_reports_of_work', 'id')
+    fields = ('code', 'name', 'description', 'devices_for_work', 'du46', 'order', 'pafu', 'jtp', 'count_reports_of_work', 'id')
     ordering = ('code',)
     search_fields = ('code', 'name', 'description', 'count_reports_of_work', 'id',)
-    list_filter = ('du46', 'order', 'devices_for_work',)
+    list_filter = ('du46', 'pafu', 'jtp', 'order', 'devices_for_work',)
     filter_horizontal = ('devices_for_work',)
     readonly_fields = ('id', 'count_reports_of_work',)
 
@@ -149,5 +149,5 @@ class ReportOfWorkAdmin(admin.ModelAdmin):
     fields = ('date_start', 'date_end', 'station', 'note', 'users', 'okolotok', 'subdivision', 'id', 'tech_cards')
     filter_horizontal = ('tech_cards', 'users',)
     readonly_fields = ('id',)
-    ordering = ('date_start', 'date_end')
+    ordering = ('-date_start', '-date_end')
 

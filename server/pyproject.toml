@@ -15,6 +15,7 @@ django-filter = "^21.1"
 djangorestframework-jsonapi = "^4.2.1"
 PyJWT = "~2.1.0"
 django-grappelli = "^2.15.3"
+django-recaptcha = "^2.0.6"
 
 [tool.poetry.dev-dependencies]
 

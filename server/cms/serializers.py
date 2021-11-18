@@ -2,7 +2,11 @@ import calendar
 from datetime import datetime, timedelta
 
 from django.contrib.auth.models import User
+from django.db.models import Prefetch
+from django.db.models.aggregates import Count
+from django.db.models import OuterRef, Subquery
 from django.utils.timezone import make_aware
+
 from rest_framework import serializers
 
 from .models import ReportOfWork, TechCard, Station, Okolotok, UserProfile, DeviceForWork
@@ -41,8 +45,8 @@ class DeviceForWorkSerializers(serializers.ModelSerializer):
     """"""
     class Meta:
         model = DeviceForWork
-        fields = ('id', 'name', 'description',)
-        read_only_fields = ('id', 'name', 'description',)
+        fields = ('id', 'short_name', 'name', 'model', 'description',)
+        read_only_fields = ('id', 'short_name', 'name', 'model', 'description',)
 
 
 class TechCardSerializers(serializers.ModelSerializer):
@@ -58,6 +62,8 @@ class TechCardSerializers(serializers.ModelSerializer):
             'description',
             'du46',
             'order',
+            'pafu',
+            'jtp',
             'devices_for_work',)
         read_only_fields = (
             'id',
@@ -66,6 +72,8 @@ class TechCardSerializers(serializers.ModelSerializer):
             'description',
             'du46',
             'order',
+            'pafu',
+            'jtp',
             'devices_for_work',)
 
 
@@ -139,17 +147,30 @@ class RequstReportOfWorkSerializer(serializers.Serializer):
         return out_query_params
 
     def filter_du(value):
-        """Создает ленивый запрос, с замыканием для параметра ДУ46"""
+        """Создает ленивый запрос, с замыканием для параметра записи в Журнал ДУ46"""
         def wrapper(queryset):
-            return queryset.filter(tech_cards__du46=value)
+            return queryset.filter(du46=value)
 
         return wrapper
-
 
     def filter_order(value):
         """Создает ленивый запрос, с замыканием для параметра записи в Журнал Распоряжений"""
         def wrapper(queryset):
-            return queryset.filter(tech_cards__order=value)
+            return queryset.filter(order=value)
+
+        return wrapper
+
+    def filter_pafu(value):
+        """Создает ленивый запрос, с замыканием для параметра записи в журнал ПАФУ"""
+        def wrapper(queryset):
+            return queryset.filter(pafu=value)
+
+        return wrapper
+
+    def filter_jtp(value):
+        """Создает ленивый запрос, с замыканием для параметра записи в Журнал ЖТП"""
+        def wrapper(queryset):
+            return queryset.filter(jtp=value)
 
         return wrapper
     
@@ -168,6 +189,18 @@ class RequstReportOfWorkSerializer(serializers.Serializer):
         'false': filter_order(False),
     }
 
+    TECH_CARD_PAFU_CHOICES = {
+        'all': not_filter,
+        'true': filter_pafu(True),
+        'false': filter_pafu(False),
+    }
+
+    TECH_CARD_JTP_CHOICES = {
+        'all': not_filter,
+        'true': filter_jtp(True),
+        'false': filter_jtp(False),
+    }
+
     date_start = serializers.DateField(required=False)
     date_end = serializers.DateField(required=False)
     okolotok = serializers.PrimaryKeyRelatedField(
@@ -181,24 +214,46 @@ class RequstReportOfWorkSerializer(serializers.Serializer):
         queryset=User.objects.all(),
         required=False,
         default=None)
-    users = serializers.PrimaryKeyRelatedField(
-        many=True,
-        queryset=User.objects.all(),
-        required=False,
-        default=None)
     du46 = serializers.ChoiceField(
         default='all',
         choices=TECH_CARD_DU46_CHOICES)
     order = serializers.ChoiceField(
         default='all',
         choices=TECH_CARD_ORDER_CHOICES)
+    pafu = serializers.ChoiceField(
+        default='all',
+        choices=TECH_CARD_PAFU_CHOICES)
+    jtp = serializers.ChoiceField(
+        default='all',
+        choices=TECH_CARD_JTP_CHOICES)
     tech_cards = serializers.PrimaryKeyRelatedField(
         required=False,
         many=True,
         queryset=TechCard.objects.all())
 
     def get_queryset_v1(self):
-        queryset = ReportOfWork.objects.all()
+        queryset_tech_card = TechCard.objects.all()
+
+        queryset_tech_card = self.TECH_CARD_DU46_CHOICES[self.validated_data['du46']](queryset_tech_card)
+        queryset_tech_card = self.TECH_CARD_ORDER_CHOICES[self.validated_data['order']](queryset_tech_card)
+        queryset_tech_card = self.TECH_CARD_PAFU_CHOICES[self.validated_data['pafu']](queryset_tech_card)
+        queryset_tech_card = self.TECH_CARD_JTP_CHOICES[self.validated_data['jtp']](queryset_tech_card)
+
+        tech_cards = self.validated_data.get('tech_cards', None)
+        if tech_cards:
+            queryset_tech_card = queryset_tech_card.filter(id__in=[_.id for _ in tech_cards])
+
+
+        queryset = ReportOfWork.objects.prefetch_related(
+            Prefetch('tech_cards', queryset=queryset_tech_card)).annotate(
+                tech_cards_count=Subquery(
+                    queryset_tech_card.filter(reports_of_work=OuterRef('pk'))
+                        .values('reports_of_work')
+                        .annotate(count=Count('pk'))
+                        .values('count')
+                )).filter(tech_cards_count__gte=1)
+
+        # queryset = queryset.filter(tech_cards__in=queryset_tech_card)
 
         date_start = self.validated_data.get('date_start', None)
         if date_start is None:
@@ -227,16 +282,9 @@ class RequstReportOfWorkSerializer(serializers.Serializer):
         if okolotok:
             queryset = queryset.filter(okolotok=okolotok)
 
-        queryset = self.TECH_CARD_DU46_CHOICES[self.validated_data['du46']](queryset)
-        queryset = self.TECH_CARD_ORDER_CHOICES[self.validated_data['order']](queryset)
-
         users = self.validated_data.get('users', None)
         if users:
-            queryset = queryset.filter(users__in=users)
-
-        tech_cards = self.validated_data.get('tech_cards', None)
-        if tech_cards:
-            queryset = queryset.filter(tech_cards__in=tech_cards)
+            queryset = queryset.filter(users__in=users).distinct()
 
         return queryset
 

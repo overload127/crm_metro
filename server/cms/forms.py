@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext, gettext_lazy as _
 from django.contrib.admin.widgets import FilteredSelectMultiple
 
 from .models import Okolotok, UserProfile, ReportOfWork
@@ -42,3 +43,20 @@ class OkolotokAdminForm(forms.ModelForm):
             self.save_m2m()
 
         return okolotok
+
+
+
+
+from django.contrib.auth.forms import AuthenticationForm
+
+from django import forms
+
+from captcha.fields import ReCaptchaField
+from captcha.widgets import ReCaptchaV3
+
+
+class AuthAdminForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super(AuthAdminForm, self).__init__(*args, **kwargs)
+
+    captcha = ReCaptchaField(widget=ReCaptchaV3)

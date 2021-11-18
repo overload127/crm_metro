@@ -17,14 +17,23 @@ Including another URLconf
 
 from django.conf import settings
 from django.contrib import admin
+from django.contrib.auth import views
 from django.urls import path
 from django.urls import include
+# from cms.views import MyLoginView
+from cms.forms import AuthAdminForm
 # from rest_framework_simplejwt import views as jwt_views
+
+
+admin.autodiscover()
+admin.site.login_form = AuthAdminForm
+admin.site.login_template = 'login.html'
 
 
 urlpatterns = [
     path('grappelli/', include('grappelli.urls')),
-    path('admin/', admin.site.urls),
+    path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
+    path('boss_admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     # Ваоиент 1
     # path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),

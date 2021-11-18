@@ -44,6 +44,7 @@ INTERNAL_IPS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'captcha',
     'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -59,6 +60,7 @@ INSTALLED_APPS = [
     'corsheaders',
     # my app
     'cms',
+    'admin_honeypot',
 ]
 
 MIDDLEWARE = [
@@ -166,3 +168,9 @@ CORS_ORIGIN_ALLOW_ALL = True
 # CORS_ORIGIN_WHITELIST = (
 #     'http://localhost:3000',
 # )
+
+RECAPTCHA_PUBLIC_KEY = secrets_settings.RECAPTCHA_PUBLIC_KEY
+RECAPTCHA_PRIVATE_KEY = secrets_settings.RECAPTCHA_PRIVATE_KEY
+RECAPTCHA_REQUIRED_SCORE = 0.85
+
+ADMINS = secrets_settings.ADMINS
