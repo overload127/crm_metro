@@ -1,13 +1,13 @@
 import { connect } from 'react-redux';
 
 // Локальные компоненты
-import WikiStation from './WikiStation';
+import WikiStation from './WikiDeviceForWork';
 
 
 function mapStateToProps( state ) {
   return {
-    isLoading: state.wiki.stations.isLoading,
-    data: state.wiki.stations.data,
+    isLoading: state.wiki.deviceForWork.isLoading,
+    data: state.wiki.deviceForWork.data,
   };
 }
 

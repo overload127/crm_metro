@@ -4,10 +4,12 @@ import {
 
 
 export default class AuthService {
-  static async login(username, password) {
+  static async login(username, password, capcha) {
+    debugger;
     return authApi.post('token/login', {
       username,
-      password
+      password,
+      g_recaptcha_response: capcha
     });
   }
 

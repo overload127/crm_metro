@@ -1,0 +1,16 @@
+@import "design-tokens/css-variables.scss";
+
+.table{
+  thead > tr > th {
+    background-color: #bcbdbf;
+  }
+}
+
+.tableRowLight {
+  background-color: #ffffff;
+}
+
+.tableRowDark {
+  // background-color: #D9E1F2;
+  background-color: #b8a9dd;
+}

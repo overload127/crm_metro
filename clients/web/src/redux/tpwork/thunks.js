@@ -14,17 +14,23 @@ import {
   setDataTPWorks,
 } from './actions';
 
+import {
+  nextStepBarInit,
+  failBarInit,
+} from '../progressBar/thunks';
 
-export const loadTPWorkData = (dateStart, dateEnd, okolotokID, stationID, userProfiles, typeDU46, typeOrder, techCards) => (dispatch) => {
+
+export const loadTPWorkData = (dateStart, dateEnd, okolotokID, stationID, users, typeDU46, typeOrder, typePafu, typeJtp, techCards) => async (dispatch) => {
   dispatch(setStartLoadingTPWorks());
 
-  TPWorkService.getTPWorks(dateStart, dateEnd, okolotokID, stationID, userProfiles, typeDU46, typeOrder, techCards)
+  await TPWorkService.getTPWorks(dateStart, dateEnd, okolotokID, stationID, users, typeDU46, typeOrder, typePafu, typeJtp, techCards)
     .then(response => {
       const wrapData = wrapTPWork(response.data);
-      console.log(wrapData);
       dispatch(setDataTPWorks(wrapData));
+      dispatch(nextStepBarInit());
     })
     .catch(() => {
+      dispatch(failBarInit());
       toast.error('Не удалось загрузить выполненые работы. Попробуйте позже или обратитесь к администратору.', {
         position: "top-right",
         autoClose: 5000,
@@ -39,27 +45,28 @@ export const loadTPWorkData = (dateStart, dateEnd, okolotokID, stationID, userPr
 };
 
 
-export const loadTPWorkDataFull = () => (dispatch) => {
+export const loadTPWorkDataFull = (okolotokId, userProfileId) => async (dispatch) => {
   dispatch(setStartLoadingDataFull());
 
   const dateStart = moment().startOf('month').format('YYYY-MM-DD');
   const dateEnd = moment().endOf('month').format('YYYY-MM-DD');
-  const okolotokID = null;
-  const stationID = null;
-  const userProfiles = [];
+  const stationId = null;
+  const userProfiles = [userProfileId];
   const typeDU46 = 'all';
   const typeOrder = 'all';
+  const typePafu = 'all';
+  const typeJtp = 'all';
   const techCards = [];
 
-  dispatch(loadTPWorkData(dateStart, dateEnd, okolotokID, stationID, userProfiles, typeDU46, typeOrder, techCards));
+  await dispatch(loadTPWorkData(dateStart, dateEnd, okolotokId, stationId, userProfiles, typeDU46, typeOrder, typePafu, typeJtp, techCards));
 
   dispatch(setEndLoadingDataFull());
 };
 
 
-export const createTPWorkToServer = (datetimeStart, datetimeEnd, station, typeWorks) => (dispatch) => {
+export const createTPWorkToServer = (datetimeStart, datetimeEnd, station, typeWorks, okolotok, users) => async (dispatch) => {
   dispatch(setStartCreating());
-  TPWorkService.createTPWork(datetimeStart, datetimeEnd, station, typeWorks)
+  await TPWorkService.createTPWork(datetimeStart, datetimeEnd, station, typeWorks, okolotok, users)
     .then(() => {
       toast.success('Работа добавлена успешно.', {
         position: "top-right",
@@ -71,6 +78,7 @@ export const createTPWorkToServer = (datetimeStart, datetimeEnd, station, typeWo
       });
     })
     .catch(() => {
+      dispatch(failBarInit());
       toast.error('Возникла ошибка при добавлении работы. Попробуйте ещё раз или обратитесь к администратору.', {
         position: "top-right",
         autoClose: 5000,

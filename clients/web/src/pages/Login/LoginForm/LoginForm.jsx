@@ -2,17 +2,38 @@ import React from 'react';
 import PropTypes from "prop-types";
 import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined, InfoCircleOutlined, LoadingOutlined } from '@ant-design/icons';
+import ReCAPTCHA from "react-google-recaptcha";
 import {
   toast
 } from 'react-toastify';
 
 import style from './LoginForm.module.scss';
 
+const CapchaAnt = (inValue) => {
+  const capchaChange = async (resValue) => {
+    inValue.onChange(resValue);
+  };
+
+  return (
+    <ReCAPTCHA
+      sitekey="6LdxiTsdAAAAABXuz03ISHOzJsdWV6HB6EYkpRQA"
+      onChange={capchaChange}
+    />
+  );
+};
+
+
 const LoginForm = ({ processAuth, onLogin }) => {
+  const checkCapcha = (_, value) => {
+    if (value) {
+      return Promise.resolve();
+    }
+    return Promise.reject(new Error('Капча пройдена неудачно!'));
+  };
 
   const onFinish = (data) => 
   {
-    onLogin(data.login, data.password);
+    onLogin(data.login, data.password, data.capcha);
   };
 
   const onFinishFailed = () => 
@@ -108,6 +129,27 @@ const LoginForm = ({ processAuth, onLogin }) => {
           ]}
         >
           <Input.Password placeholder="**********" prefix={<LockOutlined style={{ fontSize: 13 }} />}/>
+        </Form.Item>
+
+        <Form.Item
+          required
+          label="Капча"
+          name="capcha"
+          hasFeedback
+          help="Пройдите капчу для подтверждения что вы человек"
+          tooltip={{
+            title: 'Отметте галочку в квадратном поле.',
+            icon: <InfoCircleOutlined />,
+          }}
+          rules={[
+            {
+              required: true,
+              message: 'Пожалуйста, пройдите капчу!',
+            },
+            { validator: checkCapcha }
+          ]}
+        >
+          <CapchaAnt />
         </Form.Item>
 
         <Form.Item {...formItemButton}>

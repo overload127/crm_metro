@@ -1,19 +1,28 @@
-export const USER_SET_USER_DATA = 'USER_SET_USER_DATA';
-export const USER_SET_PROCESS_USER_START = 'USER_SET_PROCESS_USER_START';
-export const USER_SET_PROCESS_USER_END = 'USER_SET_PROCESS_USER_END';
+// USER
+export const USER_START_LOADDING_USER = 'USER_START_LOADDING_USER';
+export const USER_END_LOADDING_USER = 'USER_END_LOADDING_USER';
+export const USER_SET_DATA_USER = 'USER_SET_DATA_USER';
+export const USER_SET_ANONYM_USER = 'USER_SET_ANONYM_USER';
 
 
-export const setUserData = (firtName, okolotokId, okolotokName) => ({
-  type: USER_SET_USER_DATA,
-  firtName,
+
+export const setStartLoadingUser = () => ({
+  type: USER_START_LOADDING_USER,
+});
+
+export const setEndLoadingUser = () => ({
+  type: USER_END_LOADDING_USER,
+});
+
+export const setDataUser = (id, firstName, userProfileId, okolotokId, okolotokName) => ({
+  type: USER_SET_DATA_USER,
+  id,
+  firstName,
+  userProfileId,
   okolotokId,
   okolotokName,
 });
 
-export const setProcessUserSrart = () => ({
-  type: USER_SET_PROCESS_USER_START,
-});
-
-export const setProcessUserEnd = () => ({
-  type: USER_SET_PROCESS_USER_END,
+export const setAnonymUser = () => ({
+  type: USER_SET_ANONYM_USER,
 });

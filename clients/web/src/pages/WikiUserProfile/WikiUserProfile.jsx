@@ -4,14 +4,14 @@ import PropTypes from "prop-types";
 import MakeTable from '../../components/MakeTable/MakeTable';
 
 
-function WikiStation({ isLoading, data }) {
+function WikiUserProfile({ isLoading, data }) {
   const [serializeData, setSerializeData] = useState([]);
   const makeData = (outData) => {
     const newData = outData.map((lineData) => ({
         key: lineData.id,
         id: lineData.id,
-        name: lineData.name,
-        shortName: lineData.shortName,
+        firstName: lineData.firstName,
+        okolotokName: lineData.okolotokName,
       }));
     return newData;
   };
@@ -32,53 +32,55 @@ function WikiStation({ isLoading, data }) {
       sorter: (a, b) => a.id - b.id,
     },
     {
-      title: 'Полное название',
-      dataIndex: 'name',
-      key: 'name',
-      width: 200,
-      sorter: (a, b) => {
-        if(a.name < b.name) { return -1; }
-        if(a.name > b.name) { return 1; }
-        return 0;
-      },
-      ...addSearch('name'),
-    },
-    {
-      title: 'Короткое название',
-      dataIndex: 'shortName',
-      key: 'shortName',
+      title: 'Имя',
+      dataIndex: 'firstName',
+      key: 'firstName',
       width: 100,
       sorter: (a, b) => {
-        if(a.shortName < b.shortName) { return -1; }
-        if(a.shortName > b.shortName) { return 1; }
+        if(a.firstName < b.firstName) { return -1; }
+        if(a.firstName > b.firstName) { return 1; }
         return 0;
       },
-      ...addSearch('shortName'),
+      ...addSearch('firstName'),
+    },
+    {
+      title: 'Околоток',
+      dataIndex: 'okolotokName',
+      key: 'okolotokName',
+      width: 100,
+      sorter: (a, b) => {
+        if(a.okolotokName < b.okolotokName) { return -1; }
+        if(a.okolotokName > b.okolotokName) { return 1; }
+        return 0;
+      },
+      ...addSearch('okolotokName'),
     },
   ];
 
   return (
     <div>
-      <p>Все варианты техпроцессов в виде таблицы</p>
+      <p>Все сотрудников в виде таблицы</p>
       <MakeTable data={serializeData} createColumns={createColumns} tableWidth={500} loading={isLoading} />
     </div>
   );
 }
 
-WikiStation.propTypes = {
+WikiUserProfile.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   data: PropTypes.oneOfType([
     PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired,
-        shortName: PropTypes.string.isRequired,
+        firstName: PropTypes.string.isRequired,
+        profileId: PropTypes.number.isRequired,
+        okolotokId: PropTypes.number.isRequired,
+        okolotokName: PropTypes.string.isRequired,
       })).isRequired,
     PropTypes.array.isRequired,
   ]).isRequired,
 };
 
-WikiStation.defaultProps = {
+WikiUserProfile.defaultProps = {
 };
 
-export default WikiStation;
+export default WikiUserProfile;

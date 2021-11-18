@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 // My components
 import Header from '../components/Header/Header';
+import ProgressBar from '../components/ProgressBar/ProgressBarContainer';
 import SwitchBreadcrumb from '../components/SwitchBreadcrumb/SwitchBreadcrumb';
 import AppRouteContent from '../components/AppRouteContent/AppRouteContent';
 
@@ -25,6 +26,7 @@ function App() {
         <Content>
           <Layout className={`{"site-layout-background"} ${style.container}`}>
             <Layout className={style.containerRightSpace}>
+              <ProgressBar />
               <SwitchBreadcrumb />
                 <Content className={`{"site-layout-background"} ${style.containerContent}`}>
                   <AppRouteContent />

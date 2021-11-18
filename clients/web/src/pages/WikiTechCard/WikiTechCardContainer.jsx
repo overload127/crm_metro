@@ -6,6 +6,7 @@ import WikiTechCard from './WikiTechCard';
 
 function mapStateToProps( state ) {
   return {
+    isLoading: state.wiki.techCards.isLoading,
     data: state.wiki.techCards.data,
   };
 }

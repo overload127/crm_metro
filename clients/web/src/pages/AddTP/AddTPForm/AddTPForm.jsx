@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from "prop-types";
 import moment from 'moment';
-import { Form, Button, DatePicker, Select, Badge, Space, Statistic } from 'antd';
-import { InfoCircleOutlined, ClockCircleOutlined } from '@ant-design/icons';
+import { Form, Button, DatePicker, Select, Badge, Space, Statistic, Popconfirm } from 'antd';
+import { InfoCircleOutlined, ClockCircleOutlined, LoadingOutlined } from '@ant-design/icons';
 import {
   toast
 } from 'react-toastify';
@@ -12,27 +12,46 @@ import style from './AddTPForm.module.scss';
 const { RangePicker } = DatePicker;
 const { Option } = Select;
 
+const format = 'yyyy-MM-DD HH:mm';
 
-const AddTPForm = ({ isCreating, stations, techCards, onCreateTPWorkToServer }) => {
+const styleConfirm = {
+  background: "red",
+  borderColor: "yellow",
+  size: 'large',
+};
+
+const AddTPForm = ({ isCreating, isLoadingWiki, stations, okolotoks, users, techCards, onCreateTPWorkToServer }) => {
+  const [confirm, setConfirm] = useState(false);
   const [countMinutes, setCountMinutes] = useState(0);
-
   let optionStations = [];
-  let optionTechCards = [];
-  
 
-  if(!stations.loading) {
-    optionStations = stations.data.map((station)=><Option key={station.id} value={station.id}>{station.name}</Option>);
+  if(!stations.isLoading) {
+    optionStations = stations.data.map((station)=><Option key={station.id} value={String(station.id)}>{station.name}</Option>);
   }
 
-  if(!stations.loading) {
-    optionTechCards = techCards.data.map((techCard)=><Option key={techCard.id} value={techCard.id}>{techCard.code} {techCard.name}</Option>);
+  let optionOkolotoks = [];
+
+  if(!okolotoks.isLoading) {
+    optionOkolotoks = okolotoks.data.map((okolotok)=><Option key={okolotok.id} value={String(okolotok.id)}>{okolotok.name}</Option>);
+  }
+
+  let optionUserProfiles = [];
+
+  if(!users.isLoading) {
+    optionUserProfiles = users.data.map((user)=><Option key={user.profileId} value={String(user.profileId)}>{user.firstName}</Option>);
+  }
+
+  let optionTechCards = [];
+
+  if(!techCards.isLoading) {
+    optionTechCards = techCards.data.map((techCard)=><Option key={techCard.id} value={String(techCard.id)}>{techCard.code}</Option>);
   }
 
   const onFinish = (data) => 
   {
     const datetimeStart = data.datetimeRange[0].format("yyyy-MM-DD HH:mm");
     const datetimeEnd = data.datetimeRange[1].format("yyyy-MM-DD HH:mm");
-    onCreateTPWorkToServer(datetimeStart, datetimeEnd, data.station, data.techCards);
+    onCreateTPWorkToServer(datetimeStart, datetimeEnd, data.station, data.techCards, data.okolotok, data.userProfile);
   };
 
   const onFinishFailed = () => 
@@ -78,6 +97,15 @@ const AddTPForm = ({ isCreating, stations, techCards, onCreateTPWorkToServer }) 
     }
   };
 
+  const offConfirm = () => {
+    setConfirm(false);
+  };
+
+  const onConfirm = () => {
+    setConfirm(true);
+    setTimeout(offConfirm, 20000);
+  };
+
   return (
     <div>
       <h2>Форма добавления выполненых работ</h2>
@@ -99,7 +127,7 @@ const AddTPForm = ({ isCreating, stations, techCards, onCreateTPWorkToServer }) 
             },
           ]}
         >
-          <RangePicker showTime onChange={calculateMinutes} style={{ width: '100%' }}/>
+          <RangePicker showTime onChange={calculateMinutes} style={{ width: '100%' }} format={format} showNow/>
         </Form.Item>
 
         <Form.Item
@@ -147,10 +175,64 @@ const AddTPForm = ({ isCreating, stations, techCards, onCreateTPWorkToServer }) 
             allowClear
             placeholder="Выберите станцию"
             optionFilterProp="children"
-            filterOption={(input, option) =>
-              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }>
             {optionStations}
+          </Select>
+        </Form.Item>
+
+        <Form.Item
+          label="Околоток"
+          name="okolotok"
+          hasFeedback
+          help="Выберите околоток"
+          tooltip={{
+            title: 'Выберите оклоток для привязки к нему работы. Можно выбрать "Нет околотка".',
+            icon: <InfoCircleOutlined />,
+          }}
+          rules={[
+            {
+              required: true,
+              message: 'Пожалуйста, выберите оклоток!',
+            },
+          ]}
+        >
+          <Select 
+            showSearch
+            allowClear
+            placeholder="Выберите оклоток"
+            optionFilterProp="children"
+            filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            }>
+            {optionOkolotoks}
+          </Select>
+        </Form.Item>
+
+        <Form.Item
+          label="Сотрудники"
+          name="userProfile"
+          hasFeedback
+          help="Выберите сотрудников участвующих в работе"
+          tooltip={{
+            title: 'Выберите сотрудников что бы указать кто выполнял работу',
+            icon: <InfoCircleOutlined />,
+          }}
+          rules={[
+            {
+              required: true,
+              message: 'Пожалуйста, выберите сотрудников!',
+            },
+          ]}
+        >
+          <Select 
+            mode="multiple"
+            showSearch
+            allowClear
+            placeholder="Выберите сотрудников"
+            optionFilterProp="children"
+            filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            }>
+            {optionUserProfiles}
           </Select>
         </Form.Item>
 
@@ -177,21 +259,34 @@ const AddTPForm = ({ isCreating, stations, techCards, onCreateTPWorkToServer }) 
             placeholder="Выберите техпроцесс"
             mode="tags"
             optionFilterProp="children"
-            filterOption={(input, option) =>
-              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }>
             {optionTechCards}
           </Select>
         </Form.Item>
 
-        <Form.Item {...formItemButton}>
-          {
-          (!isCreating) ?
-            <Button type="primary" htmlType="submit">Добавить выполненную работу</Button>
-            :
-            <Button type="primary" htmlType="submit" disabled>Добавить выполненную работу</Button>
+        {
+        (confirm) ?
+          <Form.Item {...formItemButton}>
+            {
+            (!(isCreating || isLoadingWiki)) ?
+              <Button type="primary" htmlType="submit">Добавить выполненную работу</Button>
+              :
+              <Button type="primary" htmlType="submit" disabled>Добавить выполненную работу <LoadingOutlined /></Button>
+            }
+          </Form.Item>
+          :
+          <Form.Item {...formItemButton}>
+            <Popconfirm
+              title="Подтвердите действие"
+              onConfirm={onConfirm}
+              okText="Да"
+              cancelText="Нет"
+            >
+              <Button type="primary" style={styleConfirm}>Разблокировать действие</Button>
+            </Popconfirm>
+          </Form.Item>
           }
-        </Form.Item>
       </Form>
     </div>
   );
@@ -199,21 +294,46 @@ const AddTPForm = ({ isCreating, stations, techCards, onCreateTPWorkToServer }) 
 
 AddTPForm.propTypes = {
   isCreating: PropTypes.bool.isRequired,
+  isLoadingWiki: PropTypes.bool.isRequired,
   stations: PropTypes.shape({
-    loading: PropTypes.bool.isRequired,
+    isLoading: PropTypes.bool.isRequired,
     data: PropTypes.oneOfType([
       PropTypes.arrayOf(
         PropTypes.shape({
           id: PropTypes.number.isRequired,
           name: PropTypes.string.isRequired,
-          short_name: PropTypes.string.isRequired,
+          shortName: PropTypes.string.isRequired,
         })).isRequired,
       PropTypes.array.isRequired,
     ]).isRequired,
   }).isRequired,
-
+  okolotoks: PropTypes.shape({
+    isLoading: PropTypes.bool.isRequired,
+    data: PropTypes.oneOfType([
+      PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number.isRequired,
+          name: PropTypes.string.isRequired,
+        })).isRequired,
+      PropTypes.array.isRequired,
+    ]).isRequired,
+  }).isRequired,
+  users: PropTypes.shape({
+    isLoading: PropTypes.bool.isRequired,
+    data: PropTypes.oneOfType([
+      PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number.isRequired,
+          firstName: PropTypes.string.isRequired,
+          profileId: PropTypes.number.isRequired,
+          okolotokId: PropTypes.number.isRequired,
+          okolotokName: PropTypes.string.isRequired,
+        })).isRequired,
+      PropTypes.array.isRequired,
+    ]).isRequired,
+  }).isRequired,
   techCards: PropTypes.shape({
-    loading: PropTypes.bool.isRequired,
+    isLoading: PropTypes.bool.isRequired,
     data: PropTypes.oneOfType([
       PropTypes.arrayOf(
         PropTypes.shape({
@@ -221,8 +341,13 @@ AddTPForm.propTypes = {
           code: PropTypes.string.isRequired,
           name: PropTypes.string.isRequired,
           du46: PropTypes.bool.isRequired,
+          order: PropTypes.bool.isRequired,
+          devicesForWork: PropTypes.oneOfType([
+            PropTypes.arrayOf(
+              PropTypes.string).isRequired,
+            PropTypes.array.isRequired,
+          ]).isRequired,
         })).isRequired,
-      PropTypes.array.isRequired,
     ]).isRequired,
   }).isRequired,
 

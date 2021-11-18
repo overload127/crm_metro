@@ -2,6 +2,7 @@ import {
   toast
 } from 'react-toastify';
 import WikiService from '../../api/WikiService';
+import UserService from '../../api/UserService';
 import {
   setStartLoadingData,
   setEndLoadingData,
@@ -26,17 +27,38 @@ import {
   setEndLoadingUsers,
   setDataUsers,
 } from './actions';
+import {
+  wrapTechCards,
+  convertUsers,
+  convertStations,
+  convertDeviceForWork,
+} from "./handlers";
+
+import {
+  nextStepBarInit,
+  failBarInit,
+} from '../progressBar/thunks';
 
 
-export const loadWikiData = () => (dispatch) => {
+export const loadWikiData = () => async (dispatch) => {
   dispatch(setStartLoadingData());
+  // Что бы была анимация загрузки, ставим статус загрузки для всех данных разом.
+  dispatch(setStartLoadingTechCards());
+  dispatch(setStartLoadingStations());
+  dispatch(setStartLoadingDeviceForWork());
+  dispatch(setStartLoadingOkolotok());
+  dispatch(setStartLoadingUsers());
+
   dispatch(setStartLoadingTechCards());
 
-  WikiService.getTechCards()
+  await WikiService.getTechCards()
     .then(response => {
-      dispatch(setDataTechCards(response.data));
+      const data = wrapTechCards(response.data);
+      dispatch(setDataTechCards(data));
+      dispatch(nextStepBarInit());
     })
     .catch(() => {
+      dispatch(failBarInit());
       toast.error('Не удалось загрузить данные [Техкарты] раздела wiki.', {
         position: "top-right",
         autoClose: 5000,
@@ -50,11 +72,13 @@ export const loadWikiData = () => (dispatch) => {
   dispatch(setEndLoadingTechCards());
   dispatch(setStartLoadingStations());
 
-  WikiService.getStations()
+  await WikiService.getStations()
     .then(response => {
-      dispatch(setDataStations(response.data));
+      dispatch(setDataStations(convertStations(response.data)));
+      dispatch(nextStepBarInit());
     })
     .catch(() => {
+      dispatch(failBarInit());
       toast.error('Не удалось загрузить данные [Станции] раздела wiki.', {
         position: "top-right",
         autoClose: 5000,
@@ -68,11 +92,13 @@ export const loadWikiData = () => (dispatch) => {
   dispatch(setEndLoadingStations());
   dispatch(setStartLoadingDeviceForWork());
 
-  WikiService.getDeviceForWork()
+  await WikiService.getDeviceForWork()
     .then(response => {
-      dispatch(setDataDeviceForWork(response.data));
+      dispatch(setDataDeviceForWork(convertDeviceForWork(response.data)));
+      dispatch(nextStepBarInit());
     })
     .catch(() => {
+      dispatch(failBarInit());
       toast.error('Не удалось загрузить данные [инструменты] раздела wiki.', {
         position: "top-right",
         autoClose: 5000,
@@ -86,11 +112,13 @@ export const loadWikiData = () => (dispatch) => {
   dispatch(setEndLoadingDeviceForWork());
   dispatch(setStartLoadingOkolotok());
 
-  WikiService.getOkolotoks()
+  await WikiService.getOkolotoks()
     .then(response => {
       dispatch(setDataOkolotok(response.data));
+      dispatch(nextStepBarInit());
     })
     .catch(() => {
+      dispatch(failBarInit());
       toast.error('Не удалось загрузить данные [Околотки] раздела wiki.', {
         position: "top-right",
         autoClose: 5000,
@@ -104,11 +132,13 @@ export const loadWikiData = () => (dispatch) => {
   dispatch(setEndLoadingOkolotok());
   dispatch(setStartLoadingUsers());
 
-  WikiService.getOkolotoks()
+  await UserService.getUserProfileAll()
     .then(response => {
-      dispatch(setDataUsers(response.data));
+      dispatch(setDataUsers(convertUsers(response.data)));
+      dispatch(nextStepBarInit());
     })
     .catch(() => {
+      dispatch(failBarInit());
       toast.error('Не удалось загрузить данные [Пользователи] раздела wiki.', {
         position: "top-right",
         autoClose: 5000,

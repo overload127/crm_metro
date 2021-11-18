@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
 import { login } from '../../../redux/auth/thunks';
 
+
 // Общие компоненты
 // Локальные компоненты
-import Login from './LoginForm';
+import LoginForm from './LoginForm';
 
 
 function mapStateToProps( state ) {
@@ -12,14 +13,12 @@ function mapStateToProps( state ) {
   };
 }
 
-
 function mapDispatchToProps( dispatch ) {
   return {
-    onLogin: (username, password) => {
-      dispatch(login(username, password));
+    onLogin: (username, password, capcha) => {
+      dispatch(login(username, password, capcha));
     },
   };
 }
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

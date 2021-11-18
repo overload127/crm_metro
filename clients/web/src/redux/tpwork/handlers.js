@@ -15,12 +15,18 @@ const wrapTPWork = (rawData) => {
     const techCards = [];
     const preDevices = [];
     item.tech_cards.forEach((techCard) => {
-      techCards.push(techCard.code);
+      techCards.push({
+        code: techCard.code,
+        du46: techCard.du46,
+      });
       techCard.devices_for_work.forEach((device) => preDevices.push(device.name));
     });
     const devices = new Set(preDevices);
 
-    const users = item.users.map((user) => user.first_name);
+    const users = item.users.map((user) => ({
+      id: user.id,
+      firstName: user.first_name
+    }));
 
     outData.push({
       id: item.id,

@@ -19,9 +19,8 @@ export const setStartLoadingDataFull = () => ({
   type: TPWORK_START_LOADING_DATA_FULL,
 });
 
-export const setEndLoadingDataFull = (data) => ({
+export const setEndLoadingDataFull = () => ({
   type: TPWORK_END_LOADDING_DATA_FULL,
-  data,
 });
 
 export const setStartLoadingTPWorks = () => ({
@@ -33,6 +32,6 @@ export const setEndLoadingTPWorks = () => ({
 });
 
 export const setDataTPWorks = (data) => ({
-  type: TPWORK_START_LOADDING_TPWORKS,
+  type: TPWORK_SET_DATA_TPWORKS,
   data,
 });

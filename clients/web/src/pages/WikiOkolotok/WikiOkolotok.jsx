@@ -11,7 +11,6 @@ function WikiStation({ isLoading, data }) {
         key: lineData.id,
         id: lineData.id,
         name: lineData.name,
-        shortName: lineData.shortName,
       }));
     return newData;
   };
@@ -32,7 +31,7 @@ function WikiStation({ isLoading, data }) {
       sorter: (a, b) => a.id - b.id,
     },
     {
-      title: 'Полное название',
+      title: 'Название околотка',
       dataIndex: 'name',
       key: 'name',
       width: 200,
@@ -43,23 +42,11 @@ function WikiStation({ isLoading, data }) {
       },
       ...addSearch('name'),
     },
-    {
-      title: 'Короткое название',
-      dataIndex: 'shortName',
-      key: 'shortName',
-      width: 100,
-      sorter: (a, b) => {
-        if(a.shortName < b.shortName) { return -1; }
-        if(a.shortName > b.shortName) { return 1; }
-        return 0;
-      },
-      ...addSearch('shortName'),
-    },
   ];
 
   return (
     <div>
-      <p>Все варианты техпроцессов в виде таблицы</p>
+      <p>Все варианты околотков в виде таблицы</p>
       <MakeTable data={serializeData} createColumns={createColumns} tableWidth={500} loading={isLoading} />
     </div>
   );
@@ -72,7 +59,6 @@ WikiStation.propTypes = {
       PropTypes.shape({
         id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
-        shortName: PropTypes.string.isRequired,
       })).isRequired,
     PropTypes.array.isRequired,
   ]).isRequired,

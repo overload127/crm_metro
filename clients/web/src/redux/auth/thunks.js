@@ -9,10 +9,14 @@ import {
   setProcessAuthEnd,
 } from './actions';
 
+import {
+  loadAnonymUser
+} from '../user/thunks';
 
-export const login = (username, password) => (dispatch) => {
+
+export const login = (username, password, capcha) => (dispatch) => {
   dispatch(setProcessAuthStart());
-  AuthService.login(username, password)
+  AuthService.login(username, password, capcha)
     .then(response => {
       localStorage.setItem('token', response.data.auth_token);
       dispatch(setIsAuthLogin());
@@ -52,5 +56,6 @@ export const logout = () => (dispatch) => {
     draggable: true,
   });
 
+  dispatch(loadAnonymUser());
   dispatch(setIsAuthLogout());
 };

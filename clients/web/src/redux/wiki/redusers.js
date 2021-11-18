@@ -25,7 +25,7 @@ import {
 
 
 const defaultState = {
-  loading: false,
+  isLoading: false,
   techCards: {
     isLoading: false,
     data: [],
@@ -177,7 +177,7 @@ const wikiReduser = (state = defaultState, action) => {
       return {
         ...state,
         users: {
-          ...state.okolotok,
+          ...state.users,
           isLoading: true,
         }
       };
@@ -185,7 +185,7 @@ const wikiReduser = (state = defaultState, action) => {
       return {
         ...state,
         users: {
-          ...state.okolotok,
+          ...state.users,
           isLoading: false,
         }
       };
@@ -193,7 +193,7 @@ const wikiReduser = (state = defaultState, action) => {
       return {
         ...state,
         users: {
-          ...state.okolotok,
+          ...state.users,
           data: [
             ...action.data,
           ],

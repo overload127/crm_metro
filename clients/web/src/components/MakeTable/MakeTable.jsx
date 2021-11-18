@@ -6,6 +6,8 @@ import { Table, Input, Button, Space } from 'antd';
 import Highlighter from 'react-highlight-words';
 import { SearchOutlined } from '@ant-design/icons';
 
+// import style from './MakeTable.module.scss';
+
 
 class MakeTable extends React.Component {
   constructor(props) {
@@ -91,15 +93,24 @@ class MakeTable extends React.Component {
     });
   };
 
-  handleReset = clearFilters => {
+  handleReset = (clearFilters) => {
     clearFilters();
     this.setState({ searchText: '' });
   };
 
   render() {
-    const { data, createColumns } = this.props;
+    const { data, createColumns, tableWidth, loading } = this.props;
     const columns = createColumns(this.getColumnSearchProps); 
-    return <Table columns={columns} dataSource={data} bordered sticky pagination={{ pageSize: 50, position: ['topCenter', 'bottomCenter'] }} scroll={{ x: true }} />;
+    return (
+      <Table
+        columns={columns}
+        dataSource={data}
+        bordered
+        sticky
+        pagination={{ pageSize: 50, position: ['topCenter', 'bottomCenter'] }}
+        scroll={{ x: tableWidth }}
+        loading={loading}
+        />);
   }
 }
   
@@ -110,9 +121,12 @@ MakeTable.propTypes = {
     PropTypes.array.isRequired,
   ]).isRequired,
   createColumns: PropTypes.func.isRequired,
+  tableWidth: PropTypes.number,
+  loading: PropTypes.bool.isRequired,
 };
   
 MakeTable.defaultProps = {
+  tableWidth:1300,
 };
 
 export default MakeTable;

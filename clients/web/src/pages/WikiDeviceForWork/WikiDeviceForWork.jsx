@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import MakeTable from '../../components/MakeTable/MakeTable';
 
 
-function WikiStation({ isLoading, data }) {
+function WikiUserProfile({ isLoading, data }) {
   const [serializeData, setSerializeData] = useState([]);
   const makeData = (outData) => {
     const newData = outData.map((lineData) => ({
@@ -12,6 +12,7 @@ function WikiStation({ isLoading, data }) {
         id: lineData.id,
         name: lineData.name,
         shortName: lineData.shortName,
+        description: lineData.description,
       }));
     return newData;
   };
@@ -32,7 +33,7 @@ function WikiStation({ isLoading, data }) {
       sorter: (a, b) => a.id - b.id,
     },
     {
-      title: 'Полное название',
+      title: 'Название',
       dataIndex: 'name',
       key: 'name',
       width: 200,
@@ -44,7 +45,7 @@ function WikiStation({ isLoading, data }) {
       ...addSearch('name'),
     },
     {
-      title: 'Короткое название',
+      title: 'Сокращение',
       dataIndex: 'shortName',
       key: 'shortName',
       width: 100,
@@ -55,17 +56,29 @@ function WikiStation({ isLoading, data }) {
       },
       ...addSearch('shortName'),
     },
+    {
+      title: 'Описание',
+      dataIndex: 'description',
+      key: 'description',
+      width: 300,
+      sorter: (a, b) => {
+        if(a.description < b.description) { return -1; }
+        if(a.description > b.description) { return 1; }
+        return 0;
+      },
+      ...addSearch('description'),
+    },
   ];
 
   return (
     <div>
-      <p>Все варианты техпроцессов в виде таблицы</p>
+      <p>Все инструменты в виде таблицы</p>
       <MakeTable data={serializeData} createColumns={createColumns} tableWidth={500} loading={isLoading} />
     </div>
   );
 }
 
-WikiStation.propTypes = {
+WikiUserProfile.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   data: PropTypes.oneOfType([
     PropTypes.arrayOf(
@@ -73,12 +86,13 @@ WikiStation.propTypes = {
         id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
         shortName: PropTypes.string.isRequired,
+        description: PropTypes.string.isRequired,
       })).isRequired,
     PropTypes.array.isRequired,
   ]).isRequired,
 };
 
-WikiStation.defaultProps = {
+WikiUserProfile.defaultProps = {
 };
 
-export default WikiStation;
+export default WikiUserProfile;

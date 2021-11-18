@@ -1,13 +1,13 @@
 import { connect } from 'react-redux';
 
 // Локальные компоненты
-import WikiStation from './WikiStation';
+import WikiStation from './WikiOkolotok';
 
 
 function mapStateToProps( state ) {
   return {
-    isLoading: state.wiki.stations.isLoading,
-    data: state.wiki.stations.data,
+    isLoading: state.wiki.okolotok.isLoading,
+    data: state.wiki.okolotok.data,
   };
 }
 
