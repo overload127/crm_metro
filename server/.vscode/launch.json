@@ -36,6 +36,7 @@
                 "--noreload",
             ],
             "django": true
+            // "justMyCode": false
         },
         {
             "name": "Python: Django bot",
