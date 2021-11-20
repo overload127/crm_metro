@@ -45,13 +45,13 @@ export const loadTPWorkData = (dateStart, dateEnd, okolotokID, stationID, users,
 };
 
 
-export const loadTPWorkDataFull = (okolotokId, userProfileId) => async (dispatch) => {
+export const loadTPWorkDataFull = (okolotokId) => async (dispatch) => {
   dispatch(setStartLoadingDataFull());
 
   const dateStart = moment().startOf('month').format('YYYY-MM-DD');
   const dateEnd = moment().endOf('month').format('YYYY-MM-DD');
   const stationId = null;
-  const userProfiles = [userProfileId];
+  const userProfiles = [];
   const typeDU46 = 'all';
   const typeOrder = 'all';
   const typePafu = 'all';

@@ -19,7 +19,7 @@ function AppContainer({ isAuth, okolotokId, userId, onloadWikiData, onloadTPWork
 
   useEffect(() => {
     if(isAuth && userId && userId !== -1 && okolotokId && okolotokId !== -1) {
-      onloadTPWorkData(okolotokId, userId);
+      onloadTPWorkData(okolotokId);
     }
   }, [userId, okolotokId]);
 
@@ -54,8 +54,8 @@ function mapDispatchToProps( dispatch ) {
     onloadWikiData: () => {
       dispatch(loadWikiData());
     },
-    onloadTPWorkData: (okolotokId, userId) => {
-      dispatch(loadTPWorkDataFull(okolotokId, userId));
+    onloadTPWorkData: (okolotokId) => {
+      dispatch(loadTPWorkDataFull(okolotokId));
     },
   };
 }
