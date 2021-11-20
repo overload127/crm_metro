@@ -1,0 +1,11 @@
+[
+{
+    "model": "cms.deviceforwork",
+    "pk": 3,
+    "fields": {
+        "name": "Индикатор напряженности поля",
+        "short_name": "Ракетка ИНП",
+        "description": ""
+    }
+}
+]

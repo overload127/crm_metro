@@ -10,56 +10,56 @@
     "model": "cms.okolotok",
     "pk": 1,
     "fields": {
-        "name": "1"
+        "name": "2.1"
     }
 },
 {
     "model": "cms.okolotok",
     "pk": 2,
     "fields": {
-        "name": "2"
+        "name": "2.2"
     }
 },
 {
     "model": "cms.okolotok",
     "pk": 3,
     "fields": {
-        "name": "3"
+        "name": "2.3"
     }
 },
 {
     "model": "cms.okolotok",
     "pk": 4,
     "fields": {
-        "name": "4"
+        "name": "2.4"
     }
 },
 {
     "model": "cms.okolotok",
     "pk": 5,
     "fields": {
-        "name": "5"
+        "name": "2.5"
     }
 },
 {
     "model": "cms.okolotok",
     "pk": 6,
     "fields": {
-        "name": "6"
+        "name": "2.6"
     }
 },
 {
     "model": "cms.okolotok",
     "pk": 7,
     "fields": {
-        "name": "7"
+        "name": "2.7"
     }
 },
 {
     "model": "cms.okolotok",
     "pk": 8,
     "fields": {
-        "name": "8"
+        "name": "2.8"
     }
 }
 ]

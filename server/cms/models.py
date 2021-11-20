@@ -129,6 +129,14 @@ class TechCard(models.Model):
         default=False,
         verbose_name='Журнал технических параметров'
     )
+    act  = models.BooleanField(
+        default=False,
+        verbose_name='Акт результатов измерений'
+    )
+    pi  = models.BooleanField(
+        default=False,
+        verbose_name='Протокол измерений'
+    )
     devices_for_work = models.ManyToManyField(
         DeviceForWork,
         blank=True,

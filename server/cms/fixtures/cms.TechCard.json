@@ -7,7 +7,11 @@
         "name": "Текущий осмотр и очистка от пыли системы электропитания радиостационара",
         "description": "",
         "du46": true,
-        "order": false,
+        "order": true,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -20,6 +24,10 @@
         "description": "",
         "du46": false,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -32,6 +40,10 @@
         "description": "",
         "du46": true,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -44,6 +56,10 @@
         "description": "",
         "du46": true,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -56,6 +72,10 @@
         "description": "",
         "du46": false,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -68,6 +88,10 @@
         "description": "",
         "du46": false,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -80,10 +104,11 @@
         "description": "",
         "du46": false,
         "order": false,
-        "devices_for_work": [
-            1,
-            2
-        ]
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
+        "devices_for_work": []
     }
 },
 {
@@ -95,6 +120,10 @@
         "description": "",
         "du46": false,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -107,6 +136,10 @@
         "description": "",
         "du46": false,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -119,6 +152,10 @@
         "description": "",
         "du46": false,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -131,6 +168,10 @@
         "description": "",
         "du46": false,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -143,6 +184,10 @@
         "description": "",
         "du46": false,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -155,6 +200,10 @@
         "description": "",
         "du46": false,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -167,6 +216,10 @@
         "description": "",
         "du46": false,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -179,6 +232,10 @@
         "description": "",
         "du46": true,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -191,6 +248,10 @@
         "description": "",
         "du46": true,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -203,6 +264,10 @@
         "description": "",
         "du46": true,
         "order": false,
+        "pafu": false,
+        "jtp": true,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -215,6 +280,10 @@
         "description": "",
         "du46": true,
         "order": false,
+        "pafu": false,
+        "jtp": true,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -227,6 +296,10 @@
         "description": "",
         "du46": false,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -239,6 +312,10 @@
         "description": "",
         "du46": false,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -251,6 +328,10 @@
         "description": "",
         "du46": true,
         "order": false,
+        "pafu": true,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -263,6 +344,10 @@
         "description": "",
         "du46": true,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -275,7 +360,13 @@
         "description": "",
         "du46": true,
         "order": false,
-        "devices_for_work": []
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
+        "devices_for_work": [
+            3
+        ]
     }
 },
 {
@@ -287,6 +378,10 @@
         "description": "",
         "du46": false,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -299,6 +394,10 @@
         "description": "",
         "du46": false,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -311,6 +410,10 @@
         "description": "",
         "du46": true,
         "order": false,
+        "pafu": true,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -322,7 +425,11 @@
         "name": "Измерение сопротивления изоляции секции волновода в точке подключения АнСУ (АФС ПРС)",
         "description": "",
         "du46": true,
-        "order": false,
+        "order": true,
+        "pafu": true,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -335,6 +442,10 @@
         "description": "",
         "du46": true,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -346,7 +457,11 @@
         "name": "Проверка напряжения, определение наличия мешающих гармоник и измерение акустического мешающего шума системы электропитания радиостационара",
         "description": "",
         "du46": true,
-        "order": false,
+        "order": true,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -359,6 +474,10 @@
         "description": "",
         "du46": true,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -370,7 +489,11 @@
         "name": "Ревизионный осмотр диспетчерского оборудования радиосвязи",
         "description": "",
         "du46": true,
-        "order": false,
+        "order": true,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -383,6 +506,10 @@
         "description": "",
         "du46": true,
         "order": false,
+        "pafu": false,
+        "jtp": true,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -395,6 +522,10 @@
         "description": "",
         "du46": true,
         "order": false,
+        "pafu": false,
+        "jtp": true,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -405,8 +536,12 @@
         "code": "5.10.6",
         "name": "Ревизионный осмотр блока коммутации радиостационара",
         "description": "",
-        "du46": false,
-        "order": false,
+        "du46": true,
+        "order": true,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -419,6 +554,10 @@
         "description": "",
         "du46": true,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -430,7 +569,11 @@
         "name": "Измерение сопротивления изоляции устройств электропитания",
         "description": "",
         "du46": true,
-        "order": false,
+        "order": true,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -442,7 +585,11 @@
         "name": "Ревизионный осмотр системы электропитания радиостационара",
         "description": "",
         "du46": true,
-        "order": false,
+        "order": true,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -455,6 +602,10 @@
         "description": "",
         "du46": true,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -467,6 +618,10 @@
         "description": "",
         "du46": true,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -479,6 +634,10 @@
         "description": "",
         "du46": true,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -490,7 +649,11 @@
         "name": "Измерение параметров и снятие рефлектограммы кабельной линии связи",
         "description": "",
         "du46": true,
-        "order": false,
+        "order": true,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -503,6 +666,10 @@
         "description": "",
         "du46": true,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -515,6 +682,10 @@
         "description": "",
         "du46": true,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -526,7 +697,11 @@
         "name": "Замена аккумуляторных батарей ИБП и ББП(БРП)-24",
         "description": "",
         "du46": true,
-        "order": false,
+        "order": true,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -538,7 +713,11 @@
         "name": "Замена автоматических выключателей системы электропитания радиостационара",
         "description": "",
         "du46": true,
-        "order": false,
+        "order": true,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -551,6 +730,10 @@
         "description": "",
         "du46": false,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -563,6 +746,10 @@
         "description": "",
         "du46": true,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -575,6 +762,10 @@
         "description": "",
         "du46": true,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -587,6 +778,10 @@
         "description": "",
         "du46": true,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -599,6 +794,10 @@
         "description": "",
         "du46": true,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 },
@@ -611,6 +810,74 @@
         "description": "",
         "du46": false,
         "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
+        "devices_for_work": []
+    }
+},
+{
+    "model": "cms.techcard",
+    "pk": 52,
+    "fields": {
+        "code": "-",
+        "name": "Другая работа с записью в журнале ДУ-46",
+        "description": "",
+        "du46": true,
+        "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
+        "devices_for_work": []
+    }
+},
+{
+    "model": "cms.techcard",
+    "pk": 53,
+    "fields": {
+        "code": "-",
+        "name": "Другая работа без ДУ",
+        "description": "",
+        "du46": false,
+        "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
+        "devices_for_work": []
+    }
+},
+{
+    "model": "cms.techcard",
+    "pk": 54,
+    "fields": {
+        "code": "-",
+        "name": "Технадзор без ДУ",
+        "description": "",
+        "du46": false,
+        "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
+        "devices_for_work": []
+    }
+},
+{
+    "model": "cms.techcard",
+    "pk": 55,
+    "fields": {
+        "code": "-",
+        "name": "Технадзор с ДУ",
+        "description": "",
+        "du46": true,
+        "order": false,
+        "pafu": false,
+        "jtp": false,
+        "act": false,
+        "pi": false,
         "devices_for_work": []
     }
 }

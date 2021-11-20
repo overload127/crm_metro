@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.db.models.aggregates import Count
+from django.db.models import Q, Count
 
 from .models import TechCard, Okolotok, Station, ReportOfWork, UserProfile, DeviceForWork
 from .forms import OkolotokAdminForm
@@ -38,8 +38,8 @@ class OkolotokAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super(OkolotokAdmin, self).get_queryset(request)
-        qs = qs.annotate(count_userprofiles=Count('userprofiles')).order_by('-count_userprofiles')
-        qs = qs.annotate(count_reports_of_work=Count('reports_of_work')).order_by('-count_reports_of_work')
+        qs = qs.annotate(count_userprofiles=Count('userprofiles', distinct=True)).order_by('-count_userprofiles')
+        qs = qs.annotate(count_reports_of_work=Count('reports_of_work', distinct=True)).order_by('-count_reports_of_work')
         return qs
 
     def count_userprofiles(self, instance):
@@ -104,11 +104,11 @@ class DeviceForWorkAdmin(admin.ModelAdmin):
 @admin.register(TechCard)
 class TechCardAdmin(admin.ModelAdmin):
     list_display_links = ('code', 'name',)
-    list_display = ('code', 'name', 'du46', 'pafu', 'jtp', 'order', 'count_reports_of_work', 'id')
-    fields = ('code', 'name', 'description', 'devices_for_work', 'du46', 'order', 'pafu', 'jtp', 'count_reports_of_work', 'id')
+    list_display = ('code', 'name', 'du46', 'pafu', 'jtp', 'order', 'act', 'pi', 'count_reports_of_work', 'id')
+    fields = ('code', 'name', 'description', 'devices_for_work', 'du46', 'pafu', 'jtp', 'order', 'act', 'pi', 'count_reports_of_work', 'id')
     ordering = ('code',)
     search_fields = ('code', 'name', 'description', 'count_reports_of_work', 'id',)
-    list_filter = ('du46', 'pafu', 'jtp', 'order', 'devices_for_work',)
+    list_filter = ('du46', 'pafu', 'jtp', 'order', 'act', 'pi', 'devices_for_work',)
     filter_horizontal = ('devices_for_work',)
     readonly_fields = ('id', 'count_reports_of_work',)
 
