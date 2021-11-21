@@ -7,7 +7,6 @@ authors = ["Виноградов Константин <kostya.06.05.1995@gmail.c
 [tool.poetry.dependencies]
 python = "^3.9"
 Django = "^3.2.8"
-django-debug-toolbar = "^3.2.2"
 djangorestframework = "^3.12.4"
 django-cors-headers = "^3.10.0"
 djoser = "^2.1.0"
@@ -16,8 +15,12 @@ djangorestframework-jsonapi = "^4.2.1"
 PyJWT = "~2.1.0"
 django-grappelli = "^2.15.3"
 django-recaptcha = "^2.0.6"
+gunicorn = "^20.1.0"
+uvicorn = "^0.15.0"
+psycopg2-binary = "^2.9.2"
 
 [tool.poetry.dev-dependencies]
+django-debug-toolbar = "^3.2.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
