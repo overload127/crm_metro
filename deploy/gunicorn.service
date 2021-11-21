@@ -1,0 +1,23 @@
+[Unit]
+Description=gunicorn daemon crm_metro for server and client and admin
+Requires=gunicorn_crm_metro.socket
+After=network.target
+
+[Service]
+User=crm_metro_user
+Group=caddy
+WorkingDirectory=~/crm_metro
+Environment="PATH=~/crm_metro/server/evn/bin"
+Environment="PATH=~/crm_metro/server/evn"
+Environment=PYTHONPATH='~/crm_metro/server/evn'
+ExecStart=~/crm_metro/server/env/bin/gunicorn \
+          --access-logfile ~/crm_metro/log/gunicorn/access_old.log \
+          --error-logfile ~/crm_metro/log/gunicorn/error_old.log \
+          --capture-output \
+          -k uvicorn.workers.UvicornWorker \
+          --workers 3 \
+          --bind unix:/run/gunicorn_crm_metro.sock \
+          metro_cms_reset.asgi:application
+
+[Install]
+WantedBy=multi-user.target
