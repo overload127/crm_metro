@@ -30,7 +30,8 @@ SECRET_KEY = secrets_settings.SECRET_KEY
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    'cmsmetro.ru',
+    'admin.drsmetro.ru',
+    'api.drsmetro.ru',
 ]
 
 # Application definition

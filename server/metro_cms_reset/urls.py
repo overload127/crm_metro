@@ -31,10 +31,10 @@ admin.site.login_template = 'cms/login.html'
 
 
 urlpatterns = [
-    path('grappelli/', include('grappelli.urls')),
-    path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
-    path('boss_admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
+    path('inner/grappelli/', include('grappelli.urls')),
+    path('inner/admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
+    path('inner/boss_admin/', admin.site.urls),
+    path('inner/api-auth/', include('rest_framework.urls')),
     # Ваоиент 1
     # path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     # path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
@@ -44,8 +44,8 @@ urlpatterns = [
     # path('auth/', include('djoser.urls.jwt')),
 
     # Ваоиент 3
-    path('auth/', include('djoser.urls')),
-    path('auth/', include('djoser.urls.authtoken')),
+    path('api/auth/', include('djoser.urls')),
+    path('api/auth/', include('djoser.urls.authtoken')),
 
     # Мои приложения
     path('api/v1/cms/', include('cms.urls', namespace='api_cms')),
