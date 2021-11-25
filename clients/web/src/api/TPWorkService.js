@@ -18,7 +18,6 @@ export default class TPWorkService {
   };
 
   static async getTPWorks(dateStart, dateEnd, okolotokID, stationID, users, typeDU46, typeOrder, typePafu, typeJtp, techCards) {
-    // debugger;
     return apiCMSPrivate.get('service/report_of_work', {
       params: {
         date_start: dateStart,

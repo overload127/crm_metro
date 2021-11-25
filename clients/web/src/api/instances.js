@@ -3,7 +3,8 @@ import * as axios from 'axios';
 
 // const URL = 'http://91.122.40.167:8000';
 // const URL = 'http://192.168.1.103:8000';
-const URL = 'http://localhost:8000';
+const URL = 'https://api.drsmetro.ru';
+// const URL = 'http://localhost:8000';
 
 
 export const apiCMSPrivate = axios.create({
@@ -24,7 +25,7 @@ export const apiCMSPublic = axios.create({
 });
 
 export const authApi = axios.create({
-  baseURL: `${URL}/auth`,
+  baseURL: `${URL}/api/auth`,
 });
 
 authApi.interceptors.request.use((config) => {

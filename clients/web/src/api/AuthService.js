@@ -5,7 +5,6 @@ import {
 
 export default class AuthService {
   static async login(username, password, capcha) {
-    debugger;
     return authApi.post('token/login', {
       username,
       password,
