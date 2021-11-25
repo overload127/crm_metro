@@ -15,15 +15,20 @@ cd crm_metro/
 git checkout dev
 echo "Clone git (success)"
 
-echo "Python install env (processing...)"
+echo "Start Python install env (processing...)"
 cd server/
 python3 -m venv env
 source ./env/bin/activate
 pip install poetry
 poetry install
 deactivate
-echo "Python install env (success)"
+echo "End Python install env (success)"
 
+echo "Start settings django (processing...)"
+source ./env/bin/activate
+python manage.py runserver 0.0.0.0:8000
+gunicorn --bind 0.0.0.0:8000 metro_cms_reset.asgi -w 4 -k uvicorn.workers.UvicornWorker
+echo "End settings django (success)"
 
 
 

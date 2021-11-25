@@ -1,49 +1,65 @@
 drsmetro.ru:80 {
     handle * {
-        root * ~/crm_metro/client/web/build/
+        root * /home/crm_metro_user/crm_metro/clients/web/build/
         try_files {path} /index.html
         file_server
     }
 
     tls kostya.06.05.1995@gmail.com
     log {
-        output file ~/crm_metro/log/caddy/drsmetro.ru/access.log {
+        output file /home/crm_metro_user/crm_metro/log/caddy/drsmetro.ru/access.log {
                 roll_size 1mb
-                roll_keep 4
+                roll_keep 10
                 roll_keep_for 24h
         }
     }
 }
 
 api.drsmetro.ru:80 {
+    handle * {
+        respond * "Access denied" 403 {
+
+        }
+    }
+
+    handle /static/rest_framework/* {
+        root * /home/crm_metro_user/crm_metro/server/
+        file_server
+    }
+
     handle /api/* {
-        reverse_proxy unix//var/socket/gunicorn_crm_metro.sock {
+        reverse_proxy unix//run/gunicorn_crm_metro.sock {
             header_up Host {http.request.host}
             header_up X-Real-IP {http.request.remote}
             header_up X-Forwarded-For {http.request.remote}
             header_up X-Forwarded-Port {http.request.port}
-            header_up X-Forwarded-Proto {http.request.scheme}
         }
     }
 
     tls kostya.06.05.1995@gmail.com
     log {
-        output file ~/crm_metro/log/caddy/api.drsmetro.ru/access.log {
+        output file /home/crm_metro_user/crm_metro/log/caddy/api.drsmetro.ru/access.log {
                 roll_size 1mb
-                roll_keep 4
+                roll_keep 10
                 roll_keep_for 24h
         }
     }
 }
 
 admin.drsmetro.ru:80 {
+    handle * {
+        respond * "Access denied" 403 {
+
+        }
+    }
+
     handle /static/* {
-        root * /dels_rt/web_service
+        root * /home/crm_metro_user/crm_metro/server/
         file_server
     }
 
     handle /inner/* {
-        reverse_proxy unix//var/socket/gunicorn_crm_metro.sock {
+        reverse_proxy unix//run/gunicorn_crm_metro.sock {
             header_up Host {http.request.host}
             header_up X-Real-IP {http.request.remote}
             header_up X-Forwarded-For {http.request.remote}
@@ -54,9 +70,9 @@ admin.drsmetro.ru:80 {
 
     tls kostya.06.05.1995@gmail.com
     log {
-        output file ~/crm_metro/log/caddy/admin.drsmetro.ru/access.log {
+        output file /home/crm_metro_user/crm_metro/log/caddy/admin.drsmetro.ru/access.log {
                 roll_size 1mb
-                roll_keep 4
+                roll_keep 10
                 roll_keep_for 24h
         }
     }

@@ -1,26 +1,25 @@
 [Unit]
-Description=Caddy web server
-After=network-online.target
+Description=Caddy for cms_metro
+Documentation=https://caddyserver.com/docs/
+After=network.target network-online.target
+Requires=network-online.target
 
 [Service]
-user=caddy
-Type=exec
+Type=notify
+User=crm_metro_user
+Group=crm_metro_user
 
-ExecStart=/usr/bin/caddy run -config /etc/caddy/Caddyfile
-ExecReload=/usr/bin/caddy reload -config /etc/caddy/Caddyfile
+ExecStart=/usr/bin/caddy run --environ --config /etc/caddy/Caddyfile
+ExecReload=/usr/bin/caddy reload --config /etc/caddy/Caddyfile
 ExecStop=/usr/bin/caddy stop
 
+TimeoutStopSec=5s
 LimitNOFILE=1048576
 LimitNPROC=512
 
-PrivateTmp=false
-PrivateDevices=true
-ProtectHome=true
-ProtectSystem=strict
-
-CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+PrivateTmp=true
+ProtectSystem=full
 AmbientCapabilities=CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
 
 [Install]
 WantedBy=multi-user.target
