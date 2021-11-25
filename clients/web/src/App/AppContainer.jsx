@@ -18,7 +18,7 @@ function AppContainer({ isAuth, okolotokId, userId, onloadWikiData, onloadTPWork
   }, [isAuth]);
 
   useEffect(() => {
-    if(isAuth && userId && userId !== -1 && okolotokId && okolotokId !== -1) {
+    if(isAuth && userId && userId !== -1 && okolotokId !== -1 && okolotokId >= 0) {
       onloadTPWorkData(okolotokId);
     }
   }, [userId, okolotokId]);

@@ -94,10 +94,14 @@ DisplayTP.propTypes = {
     ]).isRequired,
   }).isRequired,
   currentUser: PropTypes.shape({
+    firstName: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
-    okolotok: {
+    isLoading: PropTypes.bool.isRequired,
+    okolotok: PropTypes.shape({
       id: PropTypes.number.isRequired,
-    },
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+    userProfileId: PropTypes.number.isRequired,
   }).isRequired,
   onLoadTPWorkData: PropTypes.func.isRequired,
 };

@@ -298,11 +298,14 @@ TPTable.propTypes = {
     ]).isRequired,
   }).isRequired,
   currentUser: PropTypes.shape({
-    id: PropTypes.number.isRequired,
     firstName: PropTypes.string.isRequired,
-    okolotok: {
+    id: PropTypes.number.isRequired,
+    isLoading: PropTypes.bool.isRequired,
+    okolotok: PropTypes.shape({
       id: PropTypes.number.isRequired,
-    },
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+    userProfileId: PropTypes.number.isRequired,
   }).isRequired,
 };
 
