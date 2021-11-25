@@ -23,7 +23,7 @@ const CapchaAnt = (inValue) => {
 };
 
 
-const LoginForm = ({ processAuth, onLogin }) => {
+const LoginForm = ({ useCapcha, processAuth, onLogin }) => {
   const checkCapcha = (_, value) => {
     if (value) {
       return Promise.resolve();
@@ -131,26 +131,32 @@ const LoginForm = ({ processAuth, onLogin }) => {
           <Input.Password placeholder="**********" prefix={<LockOutlined style={{ fontSize: 13 }} />}/>
         </Form.Item>
 
-        <Form.Item
-          required
-          label="Капча"
-          name="capcha"
-          hasFeedback
-          help="Пройдите капчу для подтверждения что вы человек"
-          tooltip={{
-            title: 'Отметте галочку в квадратном поле.',
-            icon: <InfoCircleOutlined />,
-          }}
-          rules={[
-            {
-              required: true,
-              message: 'Пожалуйста, пройдите капчу!',
-            },
-            { validator: checkCapcha }
-          ]}
-        >
-          <CapchaAnt />
-        </Form.Item>
+        {
+          (useCapcha) ? 
+            <Form.Item
+              required
+              label="Капча"
+              name="capcha"
+              hasFeedback
+              help="Пройдите капчу для подтверждения что вы человек"
+              tooltip={{
+                title: 'Отметте галочку в квадратном поле.',
+                icon: <InfoCircleOutlined />,
+              }}
+              rules={[
+                {
+                  required: true,
+                  message: 'Пожалуйста, пройдите капчу!',
+                },
+                { validator: checkCapcha }
+              ]}
+            >
+              <CapchaAnt />
+            </Form.Item>
+          :
+            <></>
+        }
+        
 
         <Form.Item {...formItemButton}>
           {
@@ -166,6 +172,7 @@ const LoginForm = ({ processAuth, onLogin }) => {
 };
 
 LoginForm.propTypes = {
+  useCapcha: PropTypes.bool.isRequired,
   processAuth: PropTypes.bool.isRequired,
   onLogin: PropTypes.func.isRequired,
 };

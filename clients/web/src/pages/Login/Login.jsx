@@ -5,7 +5,7 @@ import LoginFormContainer from './LoginForm/LoginFormContainer';
 function Main() {
   return (
     <div>
-      <LoginFormContainer />
+      <LoginFormContainer useCapcha />
     </div>
   );
 }
