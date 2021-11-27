@@ -34,20 +34,7 @@ urlpatterns = [
     path('inner/grappelli/', include('grappelli.urls')),
     path('inner/admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
     path('inner/boss_admin/', admin.site.urls),
-    path('inner/api-auth/', include('rest_framework.urls')),
-    # Вариант 1
-    # path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    # path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
-    
-    # Вариант 2
-    # path('auth/', include('djoser.urls')),
-    # path('auth/', include('djoser.urls.jwt')),
-
-    # Вариант 3
-    path('api/auth/', include('djoser.urls')),
     path('api/auth/', include('djoser.urls.authtoken')),
-
-    # Мои приложения
     path('api/v1/cms/', include('cms.urls', namespace='api_cms')),
 ]
 
@@ -58,7 +45,5 @@ from django.conf.urls.static import static
 
 if settings.DEBUG:
     import debug_toolbar
-    urlpatterns += path('__debug__/', include(debug_toolbar.urls)),
-
-
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns.append(path('__debug__/', include(debug_toolbar.urls)))
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

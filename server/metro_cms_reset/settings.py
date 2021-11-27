@@ -27,7 +27,7 @@ SECRET_KEY = secrets_settings.SECRET_KEY
 # SECRET_KEY = 'django-insecure-)azpsamn75jf@29nfz5b_fgqh1j#90_bp&k!@bm#&d+wy&c=(!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = secrets_settings.DEBUG
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
@@ -52,8 +52,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # other
-    'debug_toolbar',
+]
+
+if DEBUG:
+    INSTALLED_APPS.append('debug_toolbar')
+
+INSTALLED_APPS += [
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
@@ -67,7 +71,12 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+]
+
+if DEBUG:
+    MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
+
+MIDDLEWARE += [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
