@@ -19,12 +19,4 @@ urlpatterns += [
     path('wiki/station', views.WikiStation.as_view(), name='wiki_station'),
     path('service/report_of_work', views.ServiceReportOfWork.as_view(), name='service_create_report_of_work'),
     path('service/report_of_work/<str:date_start>/<str:date_end>/<int:okolotok>/<int:station>/<int:userprofiles>/<str:du46>/<str:order>/<int:tech_cards>', views.ServiceReportOfWork.as_view(), name='service_request_report_of_work'),
-
-
-    # тестовые и не нужные линки
-
-    # path('current_user/', views.current_user),
-    # path('users/', views.UserList.as_view()),
-    # path('public_test/', views.public_test.as_view()),
-    # path('private_test/', views.private_test.as_view()),
 ]
