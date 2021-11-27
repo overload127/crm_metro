@@ -6,13 +6,13 @@ After=network.target
 [Service]
 User=crm_metro_user
 Group=caddy
-WorkingDirectory=/home/crm_metro_user/crm_metro
-Environment="PATH=/home/crm_metro_user/crm_metro/server/evn/bin"
-Environment="PATH=/home/crm_metro_user/crm_metro/server/evn"
-Environment=PYTHONPATH='/home/crm_metro_user/crm_metro/server/evn'
-ExecStart=/home/crm_metro_user/crm_metro/server/env/bin/gunicorn \
-          --access-logfile /home/crm_metro_user/crm_metro/log/gunicorn/access.log \
-          --error-logfile /home/crm_metro_user/crm_metro/log/gunicorn/error.log \
+WorkingDirectory=/crm_service
+Environment="PATH=/crm_service/server/evn/bin"
+Environment="PATH=/crm_service/server/evn"
+Environment=PYTHONPATH='/crm_service/server/evn'
+ExecStart=/crm_service/server/env/bin/gunicorn \
+          --access-logfile /crm_service/log/gunicorn/access.log \
+          --error-logfile /crm_service/log/gunicorn/error.log \
           --capture-output \
           -k uvicorn.workers.UvicornWorker \
           --workers 3 \

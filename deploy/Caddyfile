@@ -1,16 +1,16 @@
 drsmetro.ru:80 {
     handle * {
-        root * /home/crm_metro_user/crm_metro/clients/web/build/
+        root * /crm_service/web/build/
         try_files {path} /index.html
         file_server
     }
 
     tls kostya.06.05.1995@gmail.com
     log {
-        output file /home/crm_metro_user/crm_metro/log/caddy/drsmetro.ru/access.log {
-                roll_size 1mb
-                roll_keep 10
-                roll_keep_for 24h
+        output file /crm_service/log/caddy/drsmetro.ru/access.log {
+            roll_size 10mb
+            roll_keep 10
+            roll_keep_for 24h
         }
     }
 }
@@ -23,7 +23,7 @@ api.drsmetro.ru:80 {
     }
 
     handle /static/rest_framework/* {
-        root * /home/crm_metro_user/crm_metro/server/
+        root * /crm_service/server/
         file_server
     }
 
@@ -38,10 +38,10 @@ api.drsmetro.ru:80 {
 
     tls kostya.06.05.1995@gmail.com
     log {
-        output file /home/crm_metro_user/crm_metro/log/caddy/api.drsmetro.ru/access.log {
-                roll_size 1mb
-                roll_keep 10
-                roll_keep_for 24h
+        output file /crm_service/log/caddy/api.drsmetro.ru/access.log {
+            roll_size 10mb
+            roll_keep 10
+            roll_keep_for 24h
         }
     }
 }
@@ -54,7 +54,7 @@ admin.drsmetro.ru:80 {
     }
 
     handle /static/* {
-        root * /home/crm_metro_user/crm_metro/server/
+        root * /crm_service/server/
         file_server
     }
 
@@ -70,10 +70,10 @@ admin.drsmetro.ru:80 {
 
     tls kostya.06.05.1995@gmail.com
     log {
-        output file /home/crm_metro_user/crm_metro/log/caddy/admin.drsmetro.ru/access.log {
-                roll_size 1mb
-                roll_keep 10
-                roll_keep_for 24h
+        output file /crm_service/log/caddy/admin.drsmetro.ru/access.log {
+            roll_size 10mb
+            roll_keep 10
+            roll_keep_for 24h
         }
     }
 }

@@ -2,18 +2,11 @@
 echo "Start"
 
 echo "Delete autostart (systemctl) (processing...)"
-sudo systemctl stop caddy
 sudo systemctl disable caddy
-sudo systemctl stop gunicorn
-sudo systemctl disable gunicorn
+sudo systemctl stop caddy
+sudo systemctl disable gunicorn_crm_metro
+sudo systemctl stop gunicorn_crm_metro
 echo "Delete autostart (systemctl) (success)"
-
-echo "Create backup from [rt_web_2] to [rt_web_2_back] (processing...)"
-cd /dels_rt
-rm -rf rt_web_2_back
-cp -r rt_web_2 rt_web_2_back
-sudo rm -rf rt_web_2
-echo "Create backup from [rt_web_2] to [rt_web_2_back] (success)"
 
 echo "Connect git (processing...)"
 eval `ssh-agent`
@@ -21,6 +14,7 @@ ssh-add ~/.ssh/dels_web_id_rsa
 echo "Connect git (success)"
 
 echo "Clone git (processing...)"
+cd /crm_metro/
 git clone git@gitlab.com:e_vladimir/rt_web_2.git
 cd rt_web_2/
 git checkout dev
