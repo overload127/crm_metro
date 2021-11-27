@@ -3,10 +3,18 @@ from django.db.models import Q, Count
 
 from .models import TechCard, Okolotok, Station, ReportOfWork, UserProfile, DeviceForWork
 from .forms import OkolotokAdminForm
+from django.utils.text import capfirst
 
 ###########################################################
 # Вспомогательные классы для отображения                  #
 ###########################################################
+
+def format_callback(obj):
+    model = obj.__class__
+    opts = obj._meta
+
+    no_edit_link = '%s: %s' % (capfirst(opts.verbose_name), obj)
+    return no_edit_link
 
 
 class UserProfileInline(admin.TabularInline):
@@ -65,9 +73,11 @@ class UserProfileAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
         return False
 
-    # This will help you to disable delete functionaliyt
-    def has_delete_permission(self, request, obj=None):
-        return False
+    def get_deleted_objects(self, objs, request):
+        """Собирает список объектов и разрешает удалить только те, которые не имеют связей с пользователем"""
+        deleted_objects, model_count, perms_needed, protected = super().get_deleted_objects(objs, request)
+        protected += [format_callback(obj) for obj in objs if obj.user]
+        return deleted_objects, model_count, perms_needed, protected
 
     def get_queryset(self, request):
         qs = super(UserProfileAdmin, self).get_queryset(request)
