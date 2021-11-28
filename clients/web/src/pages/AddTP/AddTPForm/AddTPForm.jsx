@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from "prop-types";
 import moment from 'moment';
-import { Form, Button, DatePicker, Select, Badge, Space, Statistic, Popconfirm } from 'antd';
+import { Form, Button, DatePicker, Select, Space, Statistic, Popconfirm } from 'antd';
 import { InfoCircleOutlined, ClockCircleOutlined, LoadingOutlined } from '@ant-design/icons';
 import {
   toast
@@ -13,12 +13,6 @@ const { RangePicker } = DatePicker;
 const { Option } = Select;
 
 const format = 'yyyy-MM-DD HH:mm';
-
-const styleConfirm = {
-  background: "red",
-  borderColor: "yellow",
-  size: 'large',
-};
 
 const AddTPForm = ({ isCreating, isLoadingWiki, stations, okolotoks, users, techCards, onCreateTPWorkToServer }) => {
   const [confirm, setConfirm] = useState(false);
@@ -127,19 +121,7 @@ const AddTPForm = ({ isCreating, isLoadingWiki, stations, okolotoks, users, tech
             },
           ]}
         >
-          <RangePicker showTime onChange={calculateMinutes} style={{ width: '100%' }} format={format} showNow/>
-        </Form.Item>
-
-        <Form.Item
-          label="Отработал минут"
-          tooltip={{
-            title: 'Рассчитывает количество минут потраченных на работу.',
-            icon: <InfoCircleOutlined />,
-          }}>
-          <Space>
-            <Badge count={`${countMinutes} минут`} overflowCount={99999} size="large" style={{ backgroundColor: '#52c41a' }} />
-            <Badge count={<ClockCircleOutlined style={{ color: '#52c41a' }}/>} size="large" />
-          </Space>
+          <RangePicker showTime onChange={calculateMinutes} style={{ width: '100%' }} format={format} showNow placeholder={["Дата начала", "Дата окончания"]} />
         </Form.Item>
 
         <Form.Item
@@ -283,7 +265,7 @@ const AddTPForm = ({ isCreating, isLoadingWiki, stations, okolotoks, users, tech
               okText="Да"
               cancelText="Нет"
             >
-              <Button type="primary" style={styleConfirm}>Разблокировать действие</Button>
+              <Button type="primary" className={style.btnMoe} >Разблокировать действие</Button>
             </Popconfirm>
           </Form.Item>
           }

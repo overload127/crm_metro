@@ -1,4 +1,41 @@
+@mixin gradientAnimation( $degrees, $start, $middle, $end, $transTime ){
+  background-size: 100%;
+  background-image: linear-gradient($degrees, $start, $middle, $end);
+  position: relative;
+  z-index: 100;
+  transition: opacity $transTime;
+  &:before {
+      background-image: linear-gradient($degrees, $end, $middle, $start);
+      content: "";
+      display: block;
+      height: 100%;
+      position: absolute;
+      top: 0; left: 0;
+      opacity: 0;
+      width: 100%;
+      z-index: -100;
+      transition: opacity $transTime;
+  }
+  &:hover {
+    background-image: linear-gradient($degrees, $start, $middle, $end);
+    &:before {
+      background-image: linear-gradient($degrees, $end, $middle, $start);
+      opacity: 1;
+    }
+  }
+  &:focus {
+    background-image: linear-gradient($degrees, $start, $middle, $end);
+    &:before {
+      background-image: linear-gradient($degrees, $end, $middle, $start);
+      opacity: 1;
+    }
+  }
+}
 
 .form {
   max-width: 800px;
+
+  .btnMoe {
+    @include gradientAnimation(144deg, #AF40FF, #5B42F3 50%, #00DDEB, 1s);
+  }
 }

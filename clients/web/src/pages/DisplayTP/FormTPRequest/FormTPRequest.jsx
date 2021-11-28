@@ -141,7 +141,7 @@ function FormTPRequest({ isLoadingWiki, TPWorksisLoading, stations, okolotoks, u
             },
           ]}
         >
-          <DatePicker onChange={()=>console.log('1')} style={{ width: '100%' }}/>
+          <DatePicker onChange={()=>console.log('1')} style={{ width: '100%' }} placeholder="Дата начала" />
         </Form.Item>
 
         <Form.Item
@@ -160,7 +160,7 @@ function FormTPRequest({ isLoadingWiki, TPWorksisLoading, stations, okolotoks, u
             },
           ]}
         >
-          <DatePicker onChange={()=>console.log('1')} style={{ width: '100%' }}/>
+          <DatePicker onChange={()=>console.log('1')} style={{ width: '100%' }} placeholder="Дата окончания" />
         </Form.Item>
 
         <Form.Item
