@@ -29,16 +29,13 @@ SECRET_KEY = secrets_settings.SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = secrets_settings.DEBUG
 
-ALLOWED_HOSTS = [
-    '127.0.0.1',
-    '192.168.1.103',
-    'localhost',
-    '91.122.40.167',
-]
+ALLOWED_HOSTS = secrets_settings.ALLOWED_HOSTS
 
-INTERNAL_IPS = [
-    '127.0.0.1',
-]
+
+INTERNAL_IPS = []
+
+if DEBUG:
+    INTERNAL_IPS.append('127.0.0.1')
 
 
 # Application definition
@@ -110,7 +107,7 @@ WSGI_APPLICATION = 'metro_cms_reset.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
+DATABASES = secrets_settings.DATABASES if hasattr(secrets_settings, 'DATABASES') else {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR.joinpath('db.sqlite3'),
