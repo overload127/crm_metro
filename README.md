@@ -14,7 +14,7 @@ init static for new admin theme 'grappelli'
 python manage.py collectstatic
 
 Инфа про бэк:
-Используется ловушка с фейковым фходом. Для переопределения формы и шаблона пришлось скопировать все приложение к себе в проект.
+Используется ловушка с фейковым входом. Для переопределения формы и шаблона пришлось скопировать все приложение к себе в проект.
 
 /home/crm_metro_user/crm_metro/server/env/bin/gunicorn --access-logfile /home/crm_metro_user/crm_metro/log/gunicorn/access.log --error-logfile /home/crm_metro_user/crm_metro/log/gunicorn/error.log --capture-output -k uvicorn.workers.UvicornWorker --workers 3 --bind unix:/run/gunicorn_crm_metro.sock metro_cms_reset.asgi:application
 
@@ -36,7 +36,7 @@ ssh-add ~/.ssh/KEY
 git clone GIT_URL
 git checkout dev
 
-cp -R /crm_metroget_git/crm_metro/server/ /crm_metro/server
+cp -R /crm_metro/get_git/crm_metro/server/ /crm_metro/server
 cd /crm_service/server
 
 python3 -m venv env
