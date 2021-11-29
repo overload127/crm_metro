@@ -7,6 +7,8 @@ import {
   toast
 } from 'react-toastify';
 
+import ButtonGradient from '../../../components/Buttons/ButtonGradient/ButtonGradient';
+
 import style from './AddTPForm.module.scss';
 
 const { RangePicker } = DatePicker;
@@ -265,7 +267,7 @@ const AddTPForm = ({ isCreating, isLoadingWiki, stations, okolotoks, users, tech
               okText="Да"
               cancelText="Нет"
             >
-              <Button type="primary" className={style.btnMoe} >Разблокировать действие</Button>
+              <ButtonGradient>Разблокировать действие</ButtonGradient>
             </Popconfirm>
           </Form.Item>
           }

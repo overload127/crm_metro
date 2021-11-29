@@ -3,3 +3,38 @@ $color-dev1: #992667;
 $color-dev2: #BF3030;
 $color-dev3: #269926;
 $color-dev4: #86B32D;
+
+@mixin gradientAnimation( $degrees, $start, $middle, $end, $transTime ){
+  background-size: 100%;
+  background-image: linear-gradient($degrees, $start, $middle, $end);
+  position: relative;
+  z-index: 100;
+  transition: opacity $transTime linear;
+  &:before {
+    background-image: linear-gradient($degrees, $end, $middle, $start);
+    content: "";
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0; left: 0;
+    opacity: 0;
+    width: 100%;
+    z-index: -100;
+    transition: opacity $transTime, text-shadow $transTime;
+  }
+  
+  &:hover {
+    background-image: linear-gradient($degrees, $start, $middle, $end);
+    &:before {
+      background-image: linear-gradient($degrees, $end, $middle, $start);
+      opacity: 1;
+    }
+  }
+  &:focus {
+    background-image: linear-gradient($degrees, $start, $middle, $end);
+    &:before {
+      background-image: linear-gradient($degrees, $end, $middle, $start);
+      opacity: 1;
+    }
+  }
+}
