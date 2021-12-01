@@ -1,0 +1,8 @@
+@import "design-tokens/css-variables.scss";
+
+.container {
+  display: inline-block;
+  .mybtn {
+    @include resetColorAntd(#b61e1e, #ff0000, 0.5s);
+  }
+}

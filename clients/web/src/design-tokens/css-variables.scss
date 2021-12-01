@@ -4,7 +4,8 @@ $color-dev2: #BF3030;
 $color-dev3: #269926;
 $color-dev4: #86B32D;
 
-@mixin gradientAnimation( $degrees, $start, $middle, $end, $transTime ){
+
+@mixin linearGradientAnimation( $degrees, $start, $middle, $end, $transTime ){
   background-size: 100%;
   background-image: linear-gradient($degrees, $start, $middle, $end);
   position: relative;
@@ -20,7 +21,7 @@ $color-dev4: #86B32D;
     opacity: 0;
     width: 100%;
     z-index: -100;
-    transition: opacity $transTime, text-shadow $transTime;
+    transition: opacity $transTime linear, text-shadow $transTime;
   }
   
   &:hover {
@@ -34,6 +35,87 @@ $color-dev4: #86B32D;
     background-image: linear-gradient($degrees, $start, $middle, $end);
     &:before {
       background-image: linear-gradient($degrees, $end, $middle, $start);
+      opacity: 1;
+    }
+  }
+}
+
+
+// background-image: radial-gradient(#144bf1 30%, #e93e3e 60%, #0a38e5);
+@mixin resetColorAntd( $color1, $color2, $transTime ){
+  background-size: 100%;
+  position: relative;
+  z-index: 100;
+  background-color: $color1;
+  transition: opacity $transTime;
+  &:before {
+    background-color: $color2;
+    content: "";
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0; left: 0;
+    opacity: 0;
+    width: 100%;
+    z-index: -100;
+    transition: opacity $transTime;
+  }
+  
+  &:hover {
+    background-color: $color1;
+    &:before {
+      background-color: $color2;
+      opacity: 1;
+    }
+  }
+  &:focus {
+    background-color: $color1;
+    &:before {
+      background-color: $color2;
+      opacity: 1;
+    }
+  }
+  &:disabled{
+    background-color: $color1;
+    &:before {
+      background-color: $color2;
+      opacity: 1;
+    }
+  }
+}
+
+
+// background-image: radial-gradient(#144bf1 30%, #e93e3e 60%, #0a38e5);
+@mixin radialGradientAnimation( $start, $middle, $end, $transTime ){
+  background-size: 100%;
+  background-image: radial-gradient($start, $middle, $end);
+  position: relative;
+  z-index: 100;
+  transition: opacity $transTime linear;
+  &:before {
+    background-image: radial-gradient($middle, $middle, $end);
+    content: "";
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0; left: 0;
+    opacity: 0;
+    width: 100%;
+    z-index: -100;
+    transition: opacity $transTime;
+  }
+  
+  &:hover {
+    background-image: radial-gradient($start, $middle, $end);
+    &:before {
+      background-image: radial-gradient($middle, $middle, $end);
+      opacity: 1;
+    }
+  }
+  &:focus {
+    background-image: radial-gradient($start, $middle, $end);
+    &:before {
+      background-image: radial-gradient($middle, $middle, $end);
       opacity: 1;
     }
   }
