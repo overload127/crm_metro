@@ -183,6 +183,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 DJOSER = {
     'SERIALIZERS': {
          'token_create': 'cms.serializers.CapchaTokenCreateSerializer'
+        #  'token_create': 'cms.serializers.TokenCreateSerializer'
     }
 }
 
