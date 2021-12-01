@@ -17,6 +17,7 @@ urlpatterns += [
     path('wiki/device_for_work', views.WikiDeviceForWork.as_view(), name='wiki_device_for_work'),
     path('wiki/tech_card', views.WikiTechCard.as_view(), name='wiki_tech_card'),
     path('wiki/station', views.WikiStation.as_view(), name='wiki_station'),
-    path('service/report_of_work', views.ServiceReportOfWork.as_view(), name='service_create_report_of_work'),
-    path('service/report_of_work/<str:date_start>/<str:date_end>/<int:okolotok>/<int:station>/<int:userprofiles>/<str:du46>/<str:order>/<int:tech_cards>', views.ServiceReportOfWork.as_view(), name='service_request_report_of_work'),
+    path('service/report_of_work', views.ReportOfWorkListApiView.as_view(), name='service_create_report_of_work'),
+    path('service/report_of_work/<str:date_start>/<str:date_end>/<int:okolotok>/<int:station>/<int:userprofiles>/<str:du46>/<str:order>/<int:tech_cards>', views.ReportOfWorkListApiView.as_view(), name='service_request_report_of_work'),
+    path('service/report_of_work/<int:pk>', views.ReportOfWorkDetailApiView.as_view(), name='service_crud_report_of_work'),
 ]

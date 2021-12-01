@@ -6,6 +6,7 @@ from django.utils.timezone import make_aware
 from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.generics import get_object_or_404
 
 from .serializers import UserProfileSerializer, OkolotokSerializers, TechCardSerializers, DeviceForWorkSerializers, StationSerializers, ReportOfWorkCreateSerializers, RequstReportOfWorkSerializer, ReportOfWorkSerializer
 from .models import TechCard, DeviceForWork, Station, ReportOfWork, UserProfile, Okolotok
@@ -86,20 +87,13 @@ class WikiStation(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-class ServiceReportOfWork(APIView):
-    """Создает выполненый техпроцесс для текущего пользователя"""
+class ReportOfWorkListApiView(APIView):
+    """List and create for ReportOfWork"""
 
     permission_classes = (permissions.IsAuthenticated,)
 
-    def post(self, request):
-        serializer = ReportOfWorkCreateSerializers(data=request.data)
-        if(serializer.is_valid(raise_exception=True)):
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-        return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
-
     def get(self, request):
+        """Получает список выполненых техпроцессов по прееданным условиям"""
         query_params = RequstReportOfWorkSerializer.pre_validate(request.query_params)
         reques_serializer = RequstReportOfWorkSerializer(data=query_params)
         if(reques_serializer.is_valid(raise_exception=True)):
@@ -108,6 +102,29 @@ class ServiceReportOfWork(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
 
         return Response(reques_serializer.data, status=status.HTTP_400_BAD_REQUEST)
+
+    def post(self, request):
+        """Создает выполненый техпроцесс по переданным данным (можно создать для любого пользователя)"""
+        serializer = ReportOfWorkCreateSerializers(data=request.data)
+        if(serializer.is_valid(raise_exception=True)):
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ReportOfWorkDetailApiView(APIView):
+    """CRUD for ReportOfWork"""
+
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def delete(self, request, pk):
+        """Удаляет техпроцесс по переданному id"""
+        report_of_work = get_object_or_404(ReportOfWork.objects.all(), pk=pk)
+        report_of_work.delete()
+        return Response({"id": pk}, status=status.HTTP_200_OK)
+
+
 
     # Зачатки оптимизации запросов и сериализации для отдачи выполненых работ
     # Планируется 2 варианта решения - через 2 запроса и через 3 запроса с использованием промежуточной таблицы
