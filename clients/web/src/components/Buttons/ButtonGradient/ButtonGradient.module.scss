@@ -2,8 +2,8 @@
 
 .container {
   display: inline-block;;
-  .bbb {
-    @include gradientAnimation(144deg, #AF40FF, #5B42F3 50%, #00DDEB, 1s);
+  .customButton {
+    @include linearGradientAnimation(144deg, #AF40FF, #5B42F3 50%, #00DDEB, 1s);
     text-shadow: 0px 0px 2px #000000, -2px -2px 4px #000000, 2px 2px 4px #000000;
   }
 }

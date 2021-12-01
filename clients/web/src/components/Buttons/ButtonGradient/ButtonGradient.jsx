@@ -7,7 +7,7 @@ import style from './ButtonGradient.module.scss';
 
 const ButtonGradient = ({ children, ...props }) => (
     <div className={style.container} >
-      <Button type="primary" {...props} className={style.bbb} >{children}</Button>
+      <Button type="primary" {...props} className={style.customButton} >{children}</Button>
     </div>
   );
 
