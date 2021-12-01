@@ -108,15 +108,18 @@ WSGI_APPLICATION = 'metro_cms_reset.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 db_in_secret = hasattr(secrets_settings, 'DATABASES')
-DATABASES = secrets_settings.DATABASES if db_in_secret else None
-if DATABASES == False:
+DATABASES = None
+if db_in_secret:
+    DATABASES = secrets_settings.DATABASES
+else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR.joinpath('db.sqlite3'),
         }
     }
-else:
+
+if not DATABASES:
     raise Exception('bad database in secrets_settings')
 
 
