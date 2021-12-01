@@ -365,7 +365,6 @@ class ReportOfWorkSerializer(serializers.ModelSerializer):
             'subdivision',)
 
 
-
 class CapchaTokenCreateSerializer(TokenCreateSerializer):
     g_recaptcha_response = serializers.CharField()
 
