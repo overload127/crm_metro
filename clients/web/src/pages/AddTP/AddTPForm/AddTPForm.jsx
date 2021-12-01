@@ -270,7 +270,7 @@ const AddTPForm = ({ isCreating, isLoadingWiki, stations, okolotoks, users, tech
               <ButtonGradient>Разблокировать действие</ButtonGradient>
             </Popconfirm>
           </Form.Item>
-          }
+        }
       </Form>
     </div>
   );
