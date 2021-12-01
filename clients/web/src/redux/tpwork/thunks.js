@@ -12,6 +12,9 @@ import {
   setStartLoadingTPWorks,
   setEndLoadingTPWorks,
   setDataTPWorks,
+  setStartDeleteDataTPWork,
+  setFailDeleteDataTPWork,
+  deleteDataTPWork,
 } from './actions';
 
 import {
@@ -90,4 +93,33 @@ export const createTPWorkToServer = (datetimeStart, datetimeEnd, station, typeWo
     });
 
   dispatch(setEndCreating());
+};
+
+
+export const deleteTPWorkData = (id) => async (dispatch) => {
+  dispatch(setStartDeleteDataTPWork(id));
+
+  await TPWorkService.deleteTPWorks(id)
+    .then(response => {
+      toast.success('Запись удалена успешно.', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      dispatch(deleteDataTPWork(response.data.id));
+    })
+    .catch(() => {
+      dispatch(setFailDeleteDataTPWork(id));
+      toast.error('Удалить объект не удалось. Попробуйте позже или обратитесь к админу.', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    });
 };

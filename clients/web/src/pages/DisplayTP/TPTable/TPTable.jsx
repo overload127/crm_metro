@@ -9,6 +9,8 @@ import {
 } from '@ant-design/icons';
 import MakeTable from '../../../components/MakeTable/MakeTable';
 
+import DeleteButtonConfPopup from './DeleteButtonConfPopup/DeleteButtonConfPopup';
+
 // const softGreen = "#52c41a";
 // const softRed = "#eb2f96";
 
@@ -18,7 +20,10 @@ const TPDU46Volcano = "volcano";
 const userOwner = "#95de64";
 const userHelp = "#d3adf7";
 
-function TPTable({ TPWorks, currentUser }) {
+
+
+
+function TPTable({ TPWorks, currentUser, onDeleteTPWorkData }) {
   const [serializeData, setSerializeData] = useState([]);
   const [typeTagsTechCardsCode, setTypeTagsTechCardsCode] = useState({});
   const [typeStations, setTypeStations] = useState([]);
@@ -73,8 +78,10 @@ function TPTable({ TPWorks, currentUser }) {
         owner: (lineData.users.map((user)=>user.id).includes(currentUser.id)) ? <CarryOutTwoTone twoToneColor={userOwner} /> : <CarryOutTwoTone twoToneColor={userHelp}/>,
         workers,
         okolotokName: lineData.okolotokName,
-      };}
-      );
+        buttonDelete: lineData.id,
+        blockButtonDelete: lineData.isDeleting,
+      };
+    });
     return {
       outData,
       outTypeTagsTechCardsCode,
@@ -264,6 +271,17 @@ function TPTable({ TPWorks, currentUser }) {
       },
       ...addSearch('note'),
     },
+    {
+      title: 'Кнопка удаления',
+      dataIndex: 'buttonDelete',
+      key: 'buttonDelete',
+      width: 100,
+      minWidth: 100,
+      maxWidth: 100,
+      render: (id, record) => (
+          <DeleteButtonConfPopup onClickHideBtn={() => onDeleteTPWorkData(id)} isBlockHideBtn={record.blockButtonDelete} />
+        ),
+    },
   ];
 
   return (
@@ -307,6 +325,7 @@ TPTable.propTypes = {
     }).isRequired,
     userProfileId: PropTypes.number.isRequired,
   }).isRequired,
+  onDeleteTPWorkData: PropTypes.func.isRequired,
 };
 
 TPTable.defaultProps = {

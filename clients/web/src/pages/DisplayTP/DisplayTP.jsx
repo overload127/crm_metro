@@ -6,11 +6,11 @@ import TPTable from './TPTable/TPTable';
 import FormTPRequest from './FormTPRequest/FormTPRequest';
 
 
-function DisplayTP({ isLoadingWiki, TPWorks, stations, okolotoks, users, techCards, currentUser, onLoadTPWorkData }) {
+function DisplayTP({ isLoadingWiki, TPWorks, stations, okolotoks, users, techCards, currentUser, onLoadTPWorkData, onDeleteTPWorkData }) {
   return (
     <div>
       <FormTPRequest isLoadingWiki={isLoadingWiki} TPWorksisLoading={TPWorks.isLoading} stations={stations} okolotoks={okolotoks} users={users} techCards={techCards} onLoadTPWorkData={onLoadTPWorkData} />
-      <TPTable TPWorks={TPWorks} currentUser={currentUser} />
+      <TPTable TPWorks={TPWorks} currentUser={currentUser} onDeleteTPWorkData={onDeleteTPWorkData} />
     </div>
   );
 }
@@ -104,6 +104,7 @@ DisplayTP.propTypes = {
     userProfileId: PropTypes.number.isRequired,
   }).isRequired,
   onLoadTPWorkData: PropTypes.func.isRequired,
+  onDeleteTPWorkData: PropTypes.func.isRequired,
 };
 
 DisplayTP.defaultProps = {

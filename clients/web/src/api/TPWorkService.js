@@ -36,6 +36,12 @@ export default class TPWorkService {
       })
     });
   };
+
+  static async deleteTPWorks(id) {
+    return apiCMSPrivate.delete(`service/report_of_work/${id}`, {
+      params: {},
+    });
+  };
 }
 
 window.TPWorkService = TPWorkService;

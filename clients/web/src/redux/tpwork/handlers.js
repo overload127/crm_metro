@@ -41,6 +41,7 @@ const wrapTPWork = (rawData) => {
       techCards,
       devices,
       users,
+      isDeleting: false,
     });
   });
 

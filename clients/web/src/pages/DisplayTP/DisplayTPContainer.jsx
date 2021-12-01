@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { loadTPWorkData } from '../../redux/tpwork/thunks';
+import { loadTPWorkData, deleteTPWorkData } from '../../redux/tpwork/thunks';
 // Локальные компоненты
 import DisplayTP from './DisplayTP';
 
@@ -21,6 +21,9 @@ function mapDispatchToProps( dispatch ) {
   return {
     onLoadTPWorkData: (dateStart, dateEnd, okolotokID, stationID, userProfiles, typeDU46, typeOrder, typePafu, typeJtp, techCards) => {
       dispatch(loadTPWorkData(dateStart, dateEnd, okolotokID, stationID, userProfiles, typeDU46, typeOrder, typePafu, typeJtp, techCards));
+    },
+    onDeleteTPWorkData: (id) => {
+      dispatch(deleteTPWorkData(id));
     },
   };
 }

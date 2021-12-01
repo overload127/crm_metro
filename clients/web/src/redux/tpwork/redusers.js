@@ -9,6 +9,10 @@ import {
   TPWORK_START_LOADDING_TPWORKS,
   TPWORK_END_LOADDING_TPWORKS,
   TPWORK_SET_DATA_TPWORKS,
+  // DELETE PROCESS
+  TPWORK_SET_START_DELETE_DATA_TPWORK,
+  TPWORK_SET_FAIL_DELETE_DATA_TPWORK,
+  TPWORK_DELETE_DATA_TPWORK,
 } from './actions';
 
 const defaultState = {
@@ -26,6 +30,7 @@ const defaultState = {
       //   stationName: '',
       //   stationShortName: '',
       //   techCardsCode: '',
+      //   isDeleting,
       // }
     ],
   }
@@ -77,6 +82,47 @@ const TPWorkReduser = (state = defaultState, action) => {
           data: [
             ...action.data,
           ],
+        },
+      };
+      // DELETE PROCESS
+    case TPWORK_SET_START_DELETE_DATA_TPWORK:
+      return {
+        ...state,
+        TPWorks: {
+          ...state.TPWorks,
+          data: state.TPWorks.data.map((item) => {
+            if (item.id !== action.id) {
+              return item;
+            }
+            return {
+              ...item,
+              isDeleting: true,
+            };
+          })
+        },
+      };
+    case TPWORK_SET_FAIL_DELETE_DATA_TPWORK:
+      return {
+        ...state,
+        TPWorks: {
+          ...state.TPWorks,
+          data: state.TPWorks.data.map((item) => {
+            if (item.id !== action.id) {
+              return item;
+            }
+            return {
+              ...item,
+              isDeleting: false,
+            };
+          })
+        },
+      };
+    case TPWORK_DELETE_DATA_TPWORK:
+      return {
+        ...state,
+        TPWorks: {
+          ...state.TPWorks,
+          data: state.TPWorks.data.filter((item) => item.id !== action.id)
         },
       };
     default:
